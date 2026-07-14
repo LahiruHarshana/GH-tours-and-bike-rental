@@ -5,12 +5,15 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "opennextjs-cloudflare build --skipNextBuild && node scripts/stage-sites.mjs",
+    "preview:worker": "opennextjs-cloudflare preview",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^1.20.1",
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.6.1",
     "jose": "^6.1.0",
@@ -28,7 +31,8 @@
     "eslint-config-next": "^16.2.10",
     "postcss": "^8.5.10",
     "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.110.0"
   },
   "overrides": {
     "next": {

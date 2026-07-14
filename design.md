@@ -1146,3 +1146,4 @@ When an implementation choice is uncertain, prioritize the following in order:
 8. Clear responsive hierarchy.
 
 Do not fill empty space with extra content. The restraint is part of the design.
+
