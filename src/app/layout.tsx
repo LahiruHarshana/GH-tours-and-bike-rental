@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Newsreader } from "next/font/google";
+import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
 import "./theme.css";
 import { siteConfig } from "@/config/site";
@@ -11,11 +11,12 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const newsreader = Newsreader({
+const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["300", "400", "500", "600"],
+  weight: "variable",
   style: ["normal", "italic"],
+  axes: ["opsz", "SOFT", "WONK"],
   display: "swap",
 });
 
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     type: "website",
     locale: "en_LK",
-    images: [{ url: "/og.png", width: 1731, height: 909, alt: "GH Tours — Sri Lanka, at your pace." }],
+    images: [{ url: "/og.png", width: 1672, height: 941, alt: "GH Tours — Sri Lanka, at your pace." }],
   },
   twitter: {
     card: "summary_large_image",
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={`${manrope.variable} ${newsreader.variable}`}>
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={`${manrope.variable} ${fraunces.variable}`}>
       <body>{children}</body>
     </html>
   );

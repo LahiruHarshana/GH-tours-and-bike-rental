@@ -11,6 +11,7 @@ import { MagneticLink } from "@/components/ui/MagneticLink";
 import { EditorialRail } from "@/components/ui/EditorialRail";
 import { getBikes, getTours } from "@/lib/data";
 import { siteConfig } from "@/config/site";
+import { CountUpStats } from "@/components/ui/CountUpStats";
 
 export const dynamic = "force-dynamic";
 
@@ -133,7 +134,7 @@ export default async function HomePage() {
             <span className="eyebrow"><i />Notes from the road</span>
             <blockquote>“It felt less like following a tour and more like travelling with someone who genuinely wanted us to love the island.”</blockquote>
             <div className="guest-stories__author"><strong>Maya & Daniel</strong><span>United Kingdom · Coast to tea country</span></div>
-            <div className="guest-stories__stats"><span><strong>4.9/5</strong>Guest rating</span><span><strong>15–30 min</strong>Typical reply</span><span><strong>100%</strong>Private journeys</span></div>
+            <CountUpStats />
           </Reveal>
         </div>
       </section>

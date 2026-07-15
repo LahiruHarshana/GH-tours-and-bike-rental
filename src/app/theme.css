@@ -842,3 +842,228 @@ p { color: var(--color-ink-soft); }
   .reveal, .catalog-card-stage { opacity: 1; transform: none; }
   .cinematic-heading__line > span { transform: none; }
 }
+
+/* Golden Hour Editorial — cinematic cover and site-wide finishing layer */
+:root {
+  --color-tea: #8ba17d;
+  --color-dawn: #e8a07a;
+  --fs-hero: clamp(4.5rem, 11.5vw, 12rem);
+  --fs-display: clamp(3rem, 6.8vw, 7.4rem);
+  --fs-title: clamp(1.5rem, 2.4vw, 2.25rem);
+  --fs-lead: clamp(1.05rem, 1.4vw, 1.35rem);
+  --dur-reveal: .9s;
+  --dur-slow: 1.3s;
+}
+
+body { font-variant-numeric: oldstyle-nums proportional-nums; }
+h1, h2, h3, blockquote, .brand-mark__text strong { font-optical-sizing: auto; font-variation-settings: "SOFT" 55, "WONK" 1; }
+.button, .eyebrow, nav, small, .guest-stories__stats { font-variant-numeric: tabular-nums; }
+
+.island-hero {
+  display: grid;
+  min-height: max(48rem, 100svh);
+  align-items: end;
+  padding: calc(var(--header-height) + 4rem) 0 clamp(6rem, 9vw, 8.5rem);
+  color: var(--color-paper);
+  background: var(--color-ink);
+}
+.island-hero__media { position: absolute; inset: 0; overflow: hidden; }
+.island-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+  filter: saturate(.82) contrast(1.03) sepia(.06);
+  transform: scale(calc(1.08 - var(--motion-progress, 0) * .07)) translate3d(0, calc(var(--motion-progress, 0) * 1.8rem), 0);
+  transform-origin: center;
+  will-change: transform;
+}
+.island-hero__wash {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(19,31,27,.75) 0%, rgba(19,31,27,.28) 54%, rgba(19,31,27,.14) 100%),
+    linear-gradient(180deg, rgba(19,31,27,.28) 0%, transparent 30%, rgba(19,31,27,.84) 100%);
+}
+.island-hero__grain {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  opacity: .2;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px) 0 0 / 8.333vw 100%;
+}
+.island-hero__sun {
+  z-index: 2;
+  top: 17%;
+  right: 14%;
+  width: clamp(12rem, 24vw, 25rem);
+  opacity: .2;
+  filter: blur(2px);
+  background: radial-gradient(circle at 38% 38%, #fff6d0, var(--color-sun) 38%, rgba(238,194,105,.1) 70%);
+  transform: translate3d(var(--cursor-x, 0), var(--cursor-y, 0), 0);
+  transition: transform .8s var(--ease-island);
+  mix-blend-mode: screen;
+}
+.island-hero__grid--cover {
+  position: relative;
+  z-index: 4;
+  display: block;
+  min-height: 0;
+}
+.island-hero__copy { max-width: none; }
+.island-hero__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255,253,247,.28);
+}
+.island-hero__eyebrow { color: var(--color-sun-soft); }
+.island-hero__greeting {
+  display: flex;
+  align-items: baseline;
+  gap: .7rem;
+  color: var(--color-paper);
+  font-family: var(--display);
+  font-size: 1.15rem;
+  letter-spacing: .02em;
+  opacity: 0;
+  animation: hero-rise 1s var(--ease-island) .18s forwards;
+}
+.island-hero__greeting small { color: rgba(255,253,247,.58); font-family: var(--body); font-size: .5rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+.island-hero h1 {
+  width: 100%;
+  margin: clamp(2rem, 5vh, 4rem) 0 clamp(2rem, 5vh, 4.5rem);
+  color: var(--color-paper);
+  font-size: var(--fs-hero);
+  line-height: .72;
+  letter-spacing: -.065em;
+  text-wrap: balance;
+}
+.island-hero h1 span { padding-right: .1em; }
+.island-hero h1 em {
+  color: var(--color-sun-soft);
+  font-style: italic;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  text-align: right;
+}
+.island-hero__lower { display: grid; grid-template-columns: minmax(17rem, .75fr) minmax(22rem, 1.25fr); gap: clamp(3rem, 10vw, 12rem); align-items: end; }
+.island-hero__lower > p {
+  max-width: 38ch;
+  margin: 0;
+  color: rgba(255,253,247,.78);
+  font-size: var(--fs-lead);
+  opacity: 0;
+  animation: hero-rise 1s var(--ease-island) .32s forwards;
+}
+.island-hero__actions { justify-content: flex-end; margin: 0; }
+.island-hero__actions .text-link { color: var(--color-paper); }
+.island-hero__actions .editorial-link::after { background: var(--color-paper); }
+.island-hero__weather {
+  position: absolute;
+  z-index: 5;
+  right: var(--page-gutter);
+  top: calc(var(--header-height) + 4.4rem);
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .75rem 1rem;
+  color: rgba(255,253,247,.78);
+  border: 1px solid rgba(255,253,247,.25);
+  border-radius: 999px;
+  background: rgba(26,43,37,.2);
+  backdrop-filter: blur(12px);
+  font-size: .54rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  animation: hero-rise 1s var(--ease-island) .55s both;
+}
+.island-hero__weather span { color: var(--color-sun-soft); }
+.island-hero__weather i { width: .25rem; aspect-ratio: 1; border-radius: 50%; background: currentColor; opacity: .5; }
+.island-hero__scroll, .island-hero__index { z-index: 5; color: rgba(255,253,247,.6); }
+.island-hero__scroll i { background: rgba(255,253,247,.25); }
+.island-hero__scroll i::after { background: var(--color-sun); }
+
+.island-reel { height: 500svh; }
+.island-reel__timeline { grid-template-columns: repeat(5, 1fr); }
+.island-reel__frames figure { transition: opacity .2s linear; }
+.island-reel__chapters article > span { line-height: 1.6; }
+
+.route-explorer__path {
+  transform: rotate(8deg) scaleY(clamp(.03, var(--section-progress, 0), 1));
+  transform-origin: top;
+  transition: transform .08s linear;
+}
+.route-explorer__path::after {
+  content: "";
+  position: absolute;
+  left: -.32rem;
+  bottom: -.3rem;
+  width: .65rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-sun);
+  box-shadow: 0 0 0 .4rem rgba(240,201,107,.18);
+}
+.route-explorer__map button.is-active i { animation: route-pulse 2.4s ease-out infinite; }
+@keyframes route-pulse { 50% { box-shadow: 0 0 0 1px var(--color-clay), 0 0 0 .85rem rgba(184,111,75,0); } }
+
+.tour-card, .bike-card { transition: transform .7s var(--ease-island); }
+.tour-card:hover, .bike-card:hover { transform: translateY(-.55rem); }
+.tour-card h3 a, .bike-card h3 { background-image: linear-gradient(var(--color-clay), var(--color-clay)); background-position: 100% 100%; background-repeat: no-repeat; background-size: 0 1px; transition: background-size .65s var(--ease-island); }
+.tour-card:hover h3 a, .bike-card:hover h3 { background-position: 0 100%; background-size: 100% 1px; }
+
+.inner-hero__art figure, .about-page figure, .guest-stories__image figure, .airport-visual-stage, .route-explorer__story figure {
+  box-shadow: 0 45px 100px -70px rgba(35,47,43,.75);
+}
+.inner-hero__art img, .about-page figure img, .guest-stories__image img, .airport-visual-stage img, .route-explorer__story img { transition: transform 1.3s var(--ease-island), filter .8s ease; }
+.inner-hero__art:hover img, .about-page figure:hover img, .guest-stories__image:hover img, .airport-visual-stage:hover img, .route-explorer__story figure:hover img { transform: scale(1.06); filter: saturate(.96); }
+
+.island-marquee {
+  position: relative;
+  overflow: hidden;
+  padding: 1.1rem 0;
+  color: var(--color-paper);
+  background: var(--color-clay);
+  border-block: 1px solid rgba(255,253,247,.22);
+}
+.island-marquee::before, .island-marquee::after { content: ""; position: absolute; z-index: 2; inset: 0 auto 0 0; width: 8vw; background: linear-gradient(90deg, var(--color-clay), transparent); }
+.island-marquee::after { right: 0; left: auto; transform: rotate(180deg); }
+.island-marquee__track { display: flex; width: max-content; animation: island-marquee 34s linear infinite; }
+.island-marquee__track span { display: flex; align-items: center; gap: 2.6rem; padding-left: 2.6rem; font-family: var(--display); font-size: clamp(1.1rem, 2vw, 1.75rem); font-style: italic; white-space: nowrap; }
+.island-marquee__track i { color: var(--color-sun-soft); font-family: var(--body); font-size: .55rem; font-style: normal; }
+@keyframes island-marquee { to { transform: translateX(-50%); } }
+
+.site-footer { padding-top: clamp(7rem, 10vw, 10rem); }
+.footer-intro p { font-style: italic; font-variation-settings: "SOFT" 90, "WONK" 1; }
+
+@media (max-width: 820px) {
+  .island-hero { min-height: max(44rem, 100svh); padding-top: calc(var(--header-height) + 6rem); }
+  .island-hero__grid { display: block; }
+  .island-hero h1 { font-size: clamp(4.7rem, 19vw, 8rem); line-height: .73; }
+  .island-hero__lower { grid-template-columns: 1fr; gap: 2rem; }
+  .island-hero__actions { justify-content: flex-start; }
+  .island-hero__weather { top: calc(var(--header-height) + 1.35rem); }
+  .island-hero__greeting { display: none; }
+  .island-reel { height: 500svh; }
+}
+
+@media (max-width: 560px) {
+  .island-hero { padding-bottom: 5.5rem; }
+  .island-hero__topline { padding-bottom: .9rem; }
+  .island-hero h1 { margin: 2rem 0 2.5rem; font-size: clamp(4.1rem, 20vw, 6.3rem); }
+  .island-hero__lower > p { font-size: 1rem; }
+  .island-hero__actions { gap: 1.25rem; }
+  .island-hero__weather { right: var(--page-gutter); left: var(--page-gutter); width: fit-content; }
+  .island-hero__index { font-size: .47rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .island-hero__media img, .route-explorer__path { transform: none; }
+  .island-reel { height: auto; }
+  .island-marquee__track { width: auto; flex-wrap: wrap; justify-content: center; padding: .5rem var(--page-gutter); animation: none; }
+  .island-marquee__track span:nth-child(n+9) { display: none; }
+  .route-explorer__map button.is-active i { animation: none; }
+}
