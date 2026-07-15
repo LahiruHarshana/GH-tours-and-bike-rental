@@ -70,7 +70,7 @@ export function BikeForm({ bike }: { bike?: BikeDTO }) {
           <label><span>Seats *</span><input name="seats" type="number" min="1" max="3" defaultValue={bike?.seats ?? 2} required /></label>
           <label><span>Fleet quantity *</span><input name="quantity" type="number" min="0" defaultValue={bike?.quantity ?? 1} required /></label>
           <label><span>Status *</span><select name="status" defaultValue={bike?.status ?? "DRAFT"}><option value="DRAFT">Draft</option><option value="PUBLISHED">Published</option></select></label>
-          <label className="admin-form-span-2"><span>Image path or URL *</span><input name="image" defaultValue={bike?.image ?? "/images/bike-scooter.svg"} required /></label>
+          <label className="admin-form-span-2"><span>Image path or URL *</span><input name="image" defaultValue={bike?.image ?? "/images/bike-road.jpg"} required /></label>
           <label className="admin-form-span-2"><span>Features (one per line)</span><textarea name="features" rows={7} defaultValue={bike?.features.join("\n")} placeholder="Helmet included\nPhone holder\nRoadside support" /></label>
           <label className="admin-checkbox"><input name="available" type="checkbox" defaultChecked={bike?.available ?? true} /><span>Available for new rental requests</span></label>
         </div>

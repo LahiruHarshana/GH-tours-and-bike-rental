@@ -18,7 +18,7 @@ export default async function AdminLoginPage() {
           <p>Manage airport transfers, private tours, the bike fleet and guest communication.</p>
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/admin-login.svg" alt="Sri Lanka operations illustration" />
+        <img src="/images/train-hills.jpg" alt="A train crossing Sri Lanka's green hill country" />
       </div>
       <section className="admin-login-panel">
         <div className="admin-login-panel__inner">
