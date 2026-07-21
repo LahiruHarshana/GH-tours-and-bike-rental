@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { LoginForm } from "@/components/admin/LoginForm";
-import { BrandMark } from "@/components/ui/BrandMark";
+import { BrandMark } from "@/components/public/media/BrandMark";
 import { getAdminSession } from "@/lib/auth";
+import Image from "next/image";
 
 export default async function AdminLoginPage() {
   const session = await getAdminSession();
@@ -17,8 +18,7 @@ export default async function AdminLoginPage() {
           <h1>Run every journey<br />from one calm place.</h1>
           <p>Manage airport transfers, private tours, the bike fleet and guest communication.</p>
         </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/train-hills.jpg" alt="A train crossing Sri Lanka's green hill country" />
+                <Image src="/images/train-hills.webp" alt="A train crossing Sri Lanka's green hill country"  width={1920} height={1280} sizes="(max-width: 1024px) 100vw, 50vw"/>
       </div>
       <section className="admin-login-panel">
         <div className="admin-login-panel__inner">

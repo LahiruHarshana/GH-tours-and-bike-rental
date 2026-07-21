@@ -1,11 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TourBookingButton } from "@/components/booking/TourBookingButton";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/public/motion/Reveal";
 import { getTourBySlug } from "@/lib/data";
 import { formatUSD } from "@/lib/utils";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +23,7 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
   return (
     <>
       <section className="tour-detail-hero modern-section">
-        <div className="tour-detail-hero__image"><img src={tour.image} alt={tour.title} /></div>
+        <div className="tour-detail-hero__image"><Image src={tour.image} alt={tour.title}  width={1920} height={1280} sizes="(max-width: 1024px) 100vw, 50vw"/></div>
         <div className="tour-detail-hero__overlay" />
         <div className="container tour-detail-hero__content">
           <Reveal>

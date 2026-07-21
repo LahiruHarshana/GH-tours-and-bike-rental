@@ -1,165 +1,366 @@
-import Link from "next/link";
-import { Reveal } from "@/components/ui/Reveal";
-import { TourCard } from "@/components/public/TourCard";
-import { BikeCard } from "@/components/public/BikeCard";
+import { Reveal } from "@/components/public/motion/Reveal";
+import { TourCard } from "@/components/public/cards/TourCard";
 import { HeroShowcase } from "@/components/public/HeroShowcase";
 import { IslandStoryReel } from "@/components/public/IslandStoryReel";
-import { JourneyPlannerRibbon } from "@/components/public/JourneyPlannerRibbon";
+import { JourneyPlannerRibbon } from "@/components/public/navigation/JourneyPlannerRibbon";
 import { IslandRoute } from "@/components/public/IslandRoute";
-import { CinematicHeading } from "@/components/ui/CinematicHeading";
-import { MagneticLink } from "@/components/ui/MagneticLink";
-import { EditorialRail } from "@/components/ui/EditorialRail";
+import { IslandMarquee } from "@/components/public/navigation/IslandMarquee";
+import { CinematicHeading } from "@/components/public/typography/CinematicHeading";
+import { Section } from "@/components/public/layout/Section";
+import { SectionHeading } from "@/components/public/typography/SectionHeading";
+import { Eyebrow } from "@/components/public/typography/Eyebrow";
+import { TextLink } from "@/components/public/actions/TextLink";
+
+import { MagneticLink } from "@/components/public/actions/MagneticLink";
+import { EditorialRail } from "@/components/public/collections/EditorialRail";
+import { BikeBookingButton } from "@/components/booking/BikeBookingButton";
 import { getBikes, getTours } from "@/lib/data";
 import { siteConfig } from "@/config/site";
-import { CountUpStats } from "@/components/ui/CountUpStats";
+import { formatUSD } from "@/lib/utils";
+import Image from "next/image";
+import type { BikeDTO } from "@/types";
 
 export const dynamic = "force-dynamic";
+
+const bikeCategoryLabel: Record<BikeDTO["category"], string> = {
+  SCOOTER: "Scooter",
+  MOTORBIKE: "Motorbike",
+  ADVENTURE: "Adventure",
+};
+
+const bikeBestFor: Record<BikeDTO["category"], string> = {
+  SCOOTER: "City & coast",
+  MOTORBIKE: "Mixed terrain",
+  ADVENTURE: "Hills & backroads",
+};
+
+const guestStats = [
+  { value: 4.9, decimals: 1, suffix: "/5", label: "Guest rating" },
+  { value: 20, decimals: 0, suffix: " min", label: "Typical reply" },
+  { value: 100, decimals: 0, suffix: "%", label: "Private journeys" },
+];
 
 export default async function HomePage() {
   const [tours, bikes] = await Promise.all([
     getTours({ featured: true, limit: 12 }),
-    getBikes({ limit: 12 }),
+    getBikes({ limit: 4 }),
   ]);
 
   return (
     <>
+      <div id="hero-sentinel" style={{ position: "absolute", top: 0, height: "80vh", width: 1, pointerEvents: "none" }} />
       <HeroShowcase />
       <JourneyPlannerRibbon />
 
-      <section className="section intro-section modern-section">
-        <div className="container intro-grid">
-          <Reveal direction="left" className="intro-heading-reveal">
-            <div className="section-heading intro-heading">
-              <span className="eyebrow"><i />One small island · endless change</span>
-              <CinematicHeading lines={["One small island.", "A thousand", "different journeys."]} />
-              <p>From the first airport welcome to the last coastal sunset, the essential details are handled by a real local team.</p>
-            </div>
-          </Reveal>
-          <Reveal delay={140} direction="right">
-            <div className="intro-copy">
-              <span className="intro-copy__marker" aria-hidden="true" />
-              <p className="dropcap">Sri Lanka is small on the map, but every road changes the story. Ancient stone cities become tea-covered mountains, then wild parks, fishing villages and warm Indian Ocean shores.</p>
-              <div className="signature-line"><span>ආයුබෝවන්</span><small>May you live long</small></div>
-            </div>
-          </Reveal>
+      <Section id="manifesto" className="manifesto" spacing="airy" data-chapter="01 / MANIFESTO">
+        <div className="manifesto__inner">
+          <div className="manifesto__greeting" data-scroll-motion>
+            <span lang="si" className="manifesto__greeting-word">ආයුබෝවන්</span>
+            <span className="manifesto__translation">May you live long</span>
+          </div>
+
+          <p className="manifesto__copy" data-scroll-motion>
+            {(() => {
+              const manifestoText = "Sri Lanka is small on the map, but every road changes the story. Ancient stone cities become tea-covered mountains, then wild parks, fishing villages and warm Indian Ocean shores.";
+              const words = manifestoText.split(" ");
+              return words.map((word, index) => {
+                if (index === 0 && word.length > 0) {
+                  return (
+                    <span className="manifesto-word" style={{ "--i": index } as React.CSSProperties} key={`${word}-${index}`}>
+                      <span className="manifesto__dropcap" data-scroll-3d="dolly" style={{ "--depth": 0.5 } as React.CSSProperties}>{word[0]}</span>
+                      {word.slice(1)}{" "}
+                    </span>
+                  );
+                }
+                return (
+                  <span className="manifesto-word" style={{ "--i": index } as React.CSSProperties} key={`${word}-${index}`}>
+                    {word}{" "}
+                  </span>
+                );
+              });
+            })()}
+          </p>
+
+          <span className="manifesto__mark" aria-hidden="true" />
         </div>
-      </section>
+      </Section>
 
       <IslandStoryReel />
 
-      <section className="section section--sand featured-tours modern-section">
-        <div className="container section-topline">
+      <Section data-chapter="03 / JOURNEYS" tone="sand" className="featured-tours modern-section">
+        <div className="section-topline">
           <Reveal>
-            <div className="section-heading journeys-heading">
-              <span className="eyebrow"><i />Signature journeys</span>
-              <CinematicHeading lines={["Sri Lanka,", "thoughtfully arranged."]} />
+            <SectionHeading
+              className="journeys-heading"
+              eyebrow="Signature journeys"
+              title={<CinematicHeading lines={["Sri Lanka,", "thoughtfully arranged."]} />}
+            >
               <p>Start with one of our most-loved routes. Every itinerary can be adjusted around your arrival, pace and interests.</p>
-            </div>
+            </SectionHeading>
           </Reveal>
-          <Link className="text-link text-link--dark editorial-link" href="/tours"><span>View all tours</span><b aria-hidden="true">↗</b></Link>
+          <TextLink variant="dark" className="editorial-link" href="/tours"><span>View all tours</span><b aria-hidden="true">↗</b></TextLink>
         </div>
-        <div className="container collection-shell">
-          <EditorialRail label="Signature journey collection" variant="journeys">
-            {tours.map((tour, index) => (
-              <Reveal key={tour.id} delay={(index % 4) * 90} direction="scale">
-                <TourCard tour={tour} index={index} />
-              </Reveal>
-            ))}
-          </EditorialRail>
-        </div>
-      </section>
-
-      <IslandRoute />
-
-      <section className="section airport-story modern-section">
-        <div className="container airport-story__grid">
-          <Reveal direction="left" className="airport-story__visual scroll-image">
-            <div className="airport-visual-stage" data-scroll-motion>
-              <span className="airport-sun" aria-hidden="true" />
-              <span className="airport-route airport-route--one" aria-hidden="true" />
-              <span className="airport-route airport-route--two" aria-hidden="true" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/south-coast.jpg" alt="A calm coastal road view after arriving in Sri Lanka" loading="lazy" decoding="async" />
-            </div>
-            <div className="airport-stamp" data-scroll-motion><small>Bandaranaike International</small><strong>CMB</strong><span>We track your flight</span></div>
-          </Reveal>
-          <Reveal delay={120} direction="right" className="airport-story__content">
-            <div className="section-heading airport-heading">
-              <span className="eyebrow"><i />Your first good decision</span>
-              <CinematicHeading lines={["From arrivals hall", "to island calm."]} />
-              <p>Your driver waits with your name, helps with luggage and takes the best route—whether you are heading to Colombo, Galle, Kandy, Ella or beyond.</p>
-            </div>
-            <div className="check-grid">
-              <span><i>01</i> Flight delay monitoring</span><span><i>02</i> Fixed quotation before arrival</span><span><i>03</i> Cars, vans & minibuses</span><span><i>04</i> Child seats on request</span>
-            </div>
-            <MagneticLink className="button button--dark" href="#book-airport">Arrange my transfer <span aria-hidden="true">↑</span></MagneticLink>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section bike-showcase modern-section">
-        <div className="container bike-layout">
-          <div className="bike-intro">
-            <Reveal>
-              <div className="section-heading bike-heading">
-                <span className="eyebrow"><i />Freedom on two wheels</span>
-                <CinematicHeading lines={["Choose the ride.", "Follow the coast."]} />
-                <p>Well-maintained bikes, transparent daily rates and local assistance from pickup to return.</p>
-              </div>
-            </Reveal>
-            <Link className="text-link text-link--dark editorial-link" href="/bikes"><span>See full fleet</span><b aria-hidden="true">↗</b></Link>
-          </div>
-          <div className="bike-collection">
-            <EditorialRail label="Motorbike rental collection" variant="bikes">
-              {bikes.map((bike, index) => (
-                <Reveal key={bike.id} delay={(index % 4) * 90} direction="scale">
-                  <BikeCard bike={bike} index={index} />
-                </Reveal>
+        <div className="collection-shell">
+          <div className="journey-grid" data-scroll-3d="deck" data-range="enter">
+            <EditorialRail label="Signature journey collection" variant="journeys">
+              {tours.map((tour, index) => (
+                <div
+                  className={index === 0 ? "journey-grid__item journey-grid__item--featured" : "journey-grid__item"}
+                  style={{ "--i": index } as React.CSSProperties}
+                  key={tour.id}
+                >
+                  <TourCard tour={tour} featured={index === 0} />
+                </div>
               ))}
             </EditorialRail>
           </div>
         </div>
-      </section>
+      </Section>
 
-      <section className="section guest-stories modern-section">
-        <div className="container guest-stories__grid">
-          <Reveal direction="left" className="guest-stories__image scroll-image">
-            <figure data-scroll-motion>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/sigiriya.jpg" alt="Sigiriya rock fortress surrounded by green forest" loading="lazy" decoding="async" />
-              <figcaption>Sigiriya · Cultural Triangle</figcaption>
-            </figure>
-          </Reveal>
-          <Reveal delay={100} direction="right" className="guest-stories__copy">
-            <span className="eyebrow"><i />Notes from the road</span>
-            <blockquote>“It felt less like following a tour and more like travelling with someone who genuinely wanted us to love the island.”</blockquote>
-            <div className="guest-stories__author"><strong>Maya & Daniel</strong><span>United Kingdom · Coast to tea country</span></div>
-            <CountUpStats />
-          </Reveal>
-        </div>
-      </section>
+      <IslandRoute />
 
-      <section className="section values-section modern-section">
-        <div className="container values-grid">
-          <Reveal direction="left"><div className="values-quote" data-scroll-motion><span>“</span><blockquote>The best journeys leave room for the unexpected.</blockquote><p><i />We plan the essentials and keep the day human.</p></div></Reveal>
-          <div className="values-list">
-            <Reveal delay={60}><article><span>01</span><div><h3>Local, not scripted</h3><p>Meet a team that knows the roads, seasons and small details that maps cannot tell you.</p></div><b aria-hidden="true">Local knowledge</b></article></Reveal>
-            <Reveal delay={120}><article><span>02</span><div><h3>Clear, honest pricing</h3><p>Receive a confirmed quotation before you travel. No surprise stops or hidden commissions.</p></div><b aria-hidden="true">No surprises</b></article></Reveal>
-            <Reveal delay={180}><article><span>03</span><div><h3>Support that answers</h3><p>WhatsApp assistance from a real person before, during and after your booking.</p></div><b aria-hidden="true">Real people</b></article></Reveal>
+      <Section id="airport" data-chapter="05 / AIRPORT TRANSFERS" width="full" className="airport-story">
+        <div className="airport-story__stage">
+          <figure className="airport-story__photo" data-scroll-3d="curtain" data-range="enter">
+            <Image
+              src="/images/south-coast.webp"
+              alt="A calm coastal road view after arriving in Sri Lanka"
+              loading="lazy"
+              decoding="async"
+              width={1920}
+              height={1280}
+              sizes="(max-width: 1024px) 100vw, 62vw"
+            />
+          </figure>
+
+          <div className="airport-story__flight" data-scroll-motion data-range="enter" aria-hidden="true">
+            <svg className="airport-story__flightsvg" viewBox="0 0 220 130">
+              <path
+                className="airport-story__flightpath"
+                d="M18,112 Q112,8 202,42"
+                pathLength="100"
+              />
+            </svg>
+            <span className="airport-story__aircraft" />
+          </div>
+
+          <div className="airport-story__card" data-scroll-3d="door" data-range="enter">
+            <span className="airport-story__cmb" aria-hidden="true">CMB</span>
+
+            <Reveal>
+              <SectionHeading
+                className="airport-heading"
+                eyebrow="Your first good decision"
+                title={<CinematicHeading lines={["From arrivals hall", "to island calm."]} />}
+              >
+                <p>Your driver waits with your name, helps with luggage and takes the best route—whether you are heading to Colombo, Galle, Kandy, Ella or beyond.</p>
+              </SectionHeading>
+            </Reveal>
+
+            <ul className="airport-story__strip">
+              <li style={{ "--i": 0 } as React.CSSProperties} data-scroll-3d="tilt-reveal" data-range="enter"><span>Flight tracked</span><strong>Live</strong></li>
+              <li style={{ "--i": 1 } as React.CSSProperties} data-scroll-3d="tilt-reveal" data-range="enter"><span>Fixed fare</span><strong>Quoted</strong></li>
+              <li style={{ "--i": 2 } as React.CSSProperties} data-scroll-3d="tilt-reveal" data-range="enter"><span>Meet &amp; greet</span><strong>Nameboard</strong></li>
+              <li style={{ "--i": 3 } as React.CSSProperties} data-scroll-3d="tilt-reveal" data-range="enter"><span>Child seats</span><strong>On request</strong></li>
+            </ul>
+
+            <MagneticLink className="button button--dark" href="/airport-hire">Arrange my transfer <span aria-hidden="true">↑</span></MagneticLink>
           </div>
         </div>
-      </section>
+      </Section>
 
-      <section className="cta-section modern-cta">
-        <div className="container cta-section__inner">
-          <Reveal>
-            <span className="eyebrow eyebrow--light"><i />Your island story starts here</span>
-            <CinematicHeading lines={["Tell us where you want", "to wake up next."]} />
-            <p>Share your dates, interests and travel style. We will shape a route that feels unmistakably yours.</p>
-            <div><MagneticLink className="button button--gold" href="/contact">Plan a custom journey <span aria-hidden="true">↗</span></MagneticLink><a className="text-link" href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noreferrer"><span>Chat on WhatsApp</span> ↗</a></div>
-          </Reveal>
+      <Section id="fleet" data-chapter="06 / MOTORBIKE FLEET" width="full" spacing="compact" className="fleet modern-section">
+        <figure className="fleet__band">
+          <Image
+            src="/images/bike-road.webp"
+            alt="A motorbike parked on a quiet coastal Sri Lankan road"
+            loading="lazy"
+            decoding="async"
+            width={1920}
+            height={1000}
+            sizes="100vw"
+          />
+          <div className="fleet__band-inner container">
+            <Reveal>
+              <SectionHeading
+                className="fleet-heading"
+                eyebrowVariant="light"
+                eyebrow="Freedom on two wheels"
+                title={<CinematicHeading lines={["Choose the ride.", "Follow the coast."]} />}
+              >
+                <p>Well-maintained bikes, transparent daily rates and local assistance from pickup to return.</p>
+              </SectionHeading>
+            </Reveal>
+            <TextLink variant="light" className="editorial-link" href="/bikes"><span>See full fleet</span><b aria-hidden="true">↗</b></TextLink>
+          </div>
+        </figure>
+
+        <div className="container fleet__table-wrap">
+          <table className="fleet__table">
+            <caption className="visually-hidden">Comparison of engine size, type, transmission, best-for terrain and daily rate across the motorbike fleet</caption>
+            <thead>
+              <tr>
+                <th scope="col" className="fleet__row-label" data-col="label"><span className="visually-hidden">Specification</span></th>
+                {bikes.map((bike, index) => (
+                  <th scope="col" className="fleet__column" data-col={index} data-scroll-3d="tilt-reveal" data-range="enter" data-cursor-depth style={{ "--i": index } as React.CSSProperties} key={bike.id}>
+                    <span className="fleet__image">
+                      <Image src={bike.image} alt={`${bike.name} motorbike`} loading="lazy" decoding="async" width={640} height={640} sizes="(max-width: 640px) 40vw, 220px" />
+                    </span>
+                    <span className="fleet__name">{bike.name}</span>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={{ "--row-i": 0 } as React.CSSProperties}>
+                <th scope="row">Engine</th>
+                {bikes.map((bike, index) => <td className="fleet__cell" data-col={index} key={bike.id}>{bike.engineCC}cc</td>)}
+              </tr>
+              <tr style={{ "--row-i": 1 } as React.CSSProperties}>
+                <th scope="row">Type</th>
+                {bikes.map((bike, index) => <td className="fleet__cell" data-col={index} key={bike.id}>{bikeCategoryLabel[bike.category]}</td>)}
+              </tr>
+              <tr style={{ "--row-i": 2 } as React.CSSProperties}>
+                <th scope="row">Transmission</th>
+                {bikes.map((bike, index) => <td className="fleet__cell" data-col={index} key={bike.id}>{bike.transmission === "AUTOMATIC" ? "Automatic" : "Manual"}</td>)}
+              </tr>
+              <tr style={{ "--row-i": 3 } as React.CSSProperties}>
+                <th scope="row">Best for</th>
+                {bikes.map((bike, index) => <td className="fleet__cell" data-col={index} key={bike.id}>{bikeBestFor[bike.category]}</td>)}
+              </tr>
+              <tr className="fleet__row--price" style={{ "--row-i": 4 } as React.CSSProperties}>
+                <th scope="row">Per day</th>
+                {bikes.map((bike, index) => <td className="fleet__cell" data-col={index} key={bike.id}><strong>{formatUSD(bike.dailyRateUSD)}</strong></td>)}
+              </tr>
+              <tr className="fleet__row--book" style={{ "--row-i": 5 } as React.CSSProperties}>
+                <th scope="row" className="visually-hidden">Book</th>
+                {bikes.map((bike, index) => (
+                  <td className="fleet__cell" data-col={index} key={bike.id}>
+                    <BikeBookingButton bike={bike} disabled={!bike.available || bike.quantity < 1} />
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </section>
+      </Section>
+
+      <Section id="proof" data-chapter="07 / PROOF" spacing="compact" tone="ink" className="proof-bar">
+        <div className="container proof-bar__grid">
+          {guestStats.map((stat, index) => {
+            const display = `${stat.value.toFixed(stat.decimals)}${stat.suffix}`;
+            return (
+              <div className="proof-bar__stat" data-scroll-motion data-range="enter" style={{ "--i": index } as React.CSSProperties} key={stat.label}>
+                <span className="proof-bar__value" aria-hidden="true">
+                  {stat.value.toFixed(stat.decimals).split("").map((char, charIndex) =>
+                    /[0-9]/.test(char) ? (
+                      <span className="stat-digit" style={{ "--target": Number(char) } as React.CSSProperties} key={charIndex}>
+                        {Array.from({ length: 10 }).map((_, face) => (
+                          <span className="stat-digit__face" style={{ "--i": face } as React.CSSProperties} key={face}>{face}</span>
+                        ))}
+                      </span>
+                    ) : (
+                      <span className="proof-bar__char" key={charIndex}>{char}</span>
+                    )
+                  )}
+                  <span className="proof-bar__char">{stat.suffix}</span>
+                </span>
+                <span className="visually-hidden">{display} {stat.label}</span>
+                <span className="proof-bar__label" aria-hidden="true">{stat.label}</span>
+              </div>
+            );
+          })}
+        </div>
+      </Section>
+
+      <Section id="guest-stories" data-chapter="08 / GUEST STORIES" className="guest-stories">
+        <div className="container guest-stories__inner">
+          <Eyebrow>Notes from the road</Eyebrow>
+          <article className="guest-stories__card" data-scroll-3d="tilt-reveal" data-range="enter">
+            <span className="guest-stories__mark" aria-hidden="true">&ldquo;</span>
+            <blockquote>It felt less like following a tour and more like travelling with someone who genuinely wanted us to love the island.</blockquote>
+            <div className="guest-stories__author">
+              <strong>Maya &amp; Daniel</strong>
+              <span>United Kingdom</span>
+              <TextLink variant="dark" href="/tours"><span>The journey they took</span> ↗</TextLink>
+            </div>
+          </article>
+        </div>
+      </Section>
+
+      <Section id="values" data-chapter="09 / OUR VALUES" spacing="compact" className="values-section">
+        <div className="container values-inner">
+          <p className="values-quote" data-scroll-motion>
+            <span className="values-quote__mark" aria-hidden="true">&ldquo;</span>
+            {"The best journeys leave room for the unexpected.".split(" ").map((word, index) => (
+              <span className="values-word" style={{ "--i": index } as React.CSSProperties} key={`${word}-${index}`}>
+                {word}{" "}
+              </span>
+            ))}
+          </p>
+
+          <div className="values-row">
+            {[
+              { title: "Local, not scripted", copy: "Meet a team that knows the roads, seasons and small details that maps cannot tell you." },
+              { title: "Clear, honest pricing", copy: "Receive a confirmed quotation before you travel. No surprise stops or hidden commissions." },
+              { title: "Support that answers", copy: "WhatsApp assistance from a real person before, during and after your booking." },
+            ].map((value, index) => (
+              <article className="values-item" data-scroll-3d="tilt-reveal" data-range="enter" style={{ "--i": index } as React.CSSProperties} key={value.title}>
+                <span className="values-item__number">{String(index + 1).padStart(2, "0")}</span>
+                <h3>{value.title}</h3>
+                <p>{value.copy}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <IslandMarquee tours={tours} />
+
+      <Section id="cta" data-chapter="10 / THE INVITATION" width="full" spacing="airy" tone="ink" className="cta-section">
+        <div className="cta-section__stage" data-scroll-motion data-range="enter">
+          <div className="cta-photo">
+            <Image
+              src="/images/hero-coast.webp"
+              alt="Sri Lanka's coastline at dusk"
+              loading="lazy"
+              decoding="async"
+              fill
+              sizes="100vw"
+              style={{ objectFit: "cover" }}
+            />
+          </div>
+          <span className="cta-bloom" aria-hidden="true" />
+
+          <div className="container cta-section__inner">
+            <Reveal>
+              <div className="cta-headline">
+                <SectionHeading
+                  align="center"
+                  eyebrow="Your island story starts here"
+                  eyebrowVariant="light"
+                  title={
+                    <CinematicHeading
+                      lines={["Tell us where", "you want to", <><em>wake up</em> next.</>]}
+                    />
+                  }
+                >
+                  <p>Share your dates, interests and travel style. We will shape a route that feels unmistakably yours.</p>
+                </SectionHeading>
+                <div className="cta-section__actions">
+                  <MagneticLink className="button button--gold" href="/contact">Plan a custom journey <span aria-hidden="true">↗</span></MagneticLink>
+                  <TextLink variant="light" external href={`https://wa.me/${siteConfig.whatsapp}`}><span>Chat on WhatsApp</span> ↗</TextLink>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          <div className="cta-section__foot container">
+            <span className="hairline" aria-hidden="true" />
+            <span className="cta-index" aria-hidden="true">06&deg; 01&apos; N &middot; 80&deg; 47&apos; E</span>
+          </div>
+        </div>
+      </Section>
     </>
   );
 }

@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import { BookingForm } from "@/components/booking/BookingForm";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/public/motion/Reveal";
+import Image from "next/image";
 
 export const metadata: Metadata = { title: "Sri Lanka Airport Hire", description: "Book a reliable private transfer from Colombo Bandaranaike International Airport." };
 
@@ -11,7 +11,7 @@ export default function AirportHirePage() {
       <section className="inner-hero inner-hero--airport modern-section">
         <div className="container inner-hero__grid">
           <Reveal><div><span className="eyebrow eyebrow--light"><i />Bandaranaike International Airport</span><h1>Your driver waits.<br /><em>Your holiday begins.</em></h1><p>Flight-tracked private transfers from CMB airport to every corner of Sri Lanka.</p></div></Reveal>
-          <Reveal delay={100} className="inner-hero__art" direction="right"><figure data-scroll-motion><img src="/images/south-coast.jpg" alt="The Sri Lankan coast waiting beyond the airport" /><figcaption><span>CMB</span><strong>Flight tracked · Driver waiting</strong></figcaption></figure></Reveal>
+          <Reveal delay={100} className="inner-hero__art" direction="right"><figure data-scroll-motion><Image src="/images/south-coast.webp" alt="The Sri Lankan coast waiting beyond the airport"  width={1920} height={1280} sizes="(max-width: 1024px) 100vw, 50vw"/><figcaption><span>CMB</span><strong>Flight tracked · Driver waiting</strong></figcaption></figure></Reveal>
         </div>
       </section>
       <section className="section airport-page modern-section">

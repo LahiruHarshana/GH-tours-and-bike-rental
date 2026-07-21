@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { BrandMark } from "@/components/ui/BrandMark";
+import { BrandMark } from "@/components/public/media/BrandMark";
 
 const links = [
   { href: "/admin", label: "Overview", icon: "⌘" },

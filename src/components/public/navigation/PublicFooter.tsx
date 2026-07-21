@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BrandMark } from "@/components/ui/BrandMark";
+import { BrandMark } from "@/components/public/media/BrandMark";
 import { navigation, siteConfig } from "@/config/site";
 
 export function PublicFooter() {
@@ -10,8 +10,12 @@ export function PublicFooter() {
         <p>Until the next road.</p>
         <span>Independent journeys across Sri Lanka</span>
       </div>
+      <div className="container footer-farewell">
+        <span lang="si">යළි හමුවෙමු</span>
+        <small>Until we meet again</small>
+      </div>
       <div className="container footer-grid">
-        <div className="footer-brand footer-column">
+        <div className="footer-brand footer-column" data-scroll-3d="tilt-reveal" data-range="enter" style={{ "--i": 0 } as React.CSSProperties}>
           <BrandMark dark />
           <p>{siteConfig.description}</p>
           <a className="footer-whatsapp" href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noreferrer">
@@ -19,13 +23,13 @@ export function PublicFooter() {
             <strong>{siteConfig.phone}</strong>
           </a>
         </div>
-        <div className="footer-column">
+        <div className="footer-column" data-scroll-3d="tilt-reveal" data-range="enter" style={{ "--i": 1 } as React.CSSProperties}>
           <h3><span>01</span> Explore</h3>
           <div className="footer-links">
             {navigation.slice(0, 5).map((item) => <Link key={item.href} href={item.href}><span>{item.label}</span><b aria-hidden="true">↗</b></Link>)}
           </div>
         </div>
-        <div className="footer-column">
+        <div className="footer-column" data-scroll-3d="tilt-reveal" data-range="enter" style={{ "--i": 2 } as React.CSSProperties}>
           <h3><span>02</span> Book</h3>
           <div className="footer-links">
             <Link href="/airport-hire"><span>Airport transfer</span><b aria-hidden="true">↗</b></Link>
@@ -34,7 +38,7 @@ export function PublicFooter() {
             <Link href="/contact"><span>Custom itinerary</span><b aria-hidden="true">↗</b></Link>
           </div>
         </div>
-        <div className="footer-column">
+        <div className="footer-column" data-scroll-3d="tilt-reveal" data-range="enter" style={{ "--i": 3 } as React.CSSProperties}>
           <h3><span>03</span> Find us</h3>
           <address>
             {siteConfig.address}<br />

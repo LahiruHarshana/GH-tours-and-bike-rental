@@ -79,7 +79,7 @@ export function TourForm({ tour }: { tour?: TourDTO }) {
           <label><span>Duration in days *</span><input name="durationDays" type="number" min="1" defaultValue={tour?.durationDays ?? 5} required /></label>
           <label><span>Starting price (USD) *</span><input name="priceFrom" type="number" min="0" step="1" defaultValue={tour?.priceFrom ?? 500} required /></label>
           <label><span>Status *</span><select name="status" defaultValue={tour?.status ?? "DRAFT"}><option value="DRAFT">Draft</option><option value="PUBLISHED">Published</option></select></label>
-          <label className="admin-form-span-2"><span>Image path or URL *</span><input name="image" defaultValue={tour?.image ?? "/images/sigiriya.jpg"} required /><small>Use a public URL or a file placed inside /public/images.</small></label>
+          <label className="admin-form-span-2"><span>Image path or URL *</span><input name="image" defaultValue={tour?.image ?? "/images/sigiriya.webp"} required /><small>Use a public URL or a file placed inside /public/images.</small></label>
           <label className="admin-form-span-2"><span>Card summary *</span><textarea name="shortDescription" rows={3} defaultValue={tour?.shortDescription} maxLength={260} required /></label>
           <label className="admin-form-span-2"><span>Full description *</span><textarea name="description" rows={6} defaultValue={tour?.description} required /></label>
           <label className="admin-checkbox"><input name="featured" type="checkbox" defaultChecked={tour?.featured} /><span>Show as a featured journey on the home page</span></label>

@@ -1,22 +1,25 @@
 import type { Metadata } from "next";
-import { Fraunces, Manrope } from "next/font/google";
-import "./globals.css";
-import "./theme.css";
+import { Instrument_Sans, Instrument_Serif } from "next/font/google";
+import "./styles/01-reset.css";
+import "./styles/02-tokens.css";
+import "./styles/03-base.css";
+import "./styles/04-motion.css";
+import "./styles/05-components.css";
 import { siteConfig } from "@/config/site";
 
-const manrope = Manrope({
+const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
   variable: "--font-body",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: "variable",
+  style: ["normal", "italic"],
   display: "swap",
 });
 
-const fraunces = Fraunces({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: "variable",
+  weight: "400",
   style: ["normal", "italic"],
-  axes: ["opsz", "SOFT", "WONK"],
   display: "swap",
 });
 
@@ -45,7 +48,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={`${manrope.variable} ${fraunces.variable}`}>
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={`${instrumentSans.variable} ${instrumentSerif.variable}`}>
       <body>{children}</body>
     </html>
   );

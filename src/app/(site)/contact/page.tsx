@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { BookingForm } from "@/components/booking/BookingForm";
-import { Reveal } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/public/motion/Reveal";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = { title: "Plan Your Journey" };

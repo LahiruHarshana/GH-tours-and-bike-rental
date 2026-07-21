@@ -12,7 +12,7 @@ export function Reveal({
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  direction?: "up" | "left" | "right" | "scale";
+  direction?: "up" | "left" | "right" | "scale" | "tilt" | "dolly";
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);

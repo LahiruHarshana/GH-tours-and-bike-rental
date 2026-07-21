@@ -1,0 +1,164 @@
+/* src/app/styles/04-motion.css */
+/* 04-motion.css - 3D primitives and utilities */
+
+.reveal {
+  opacity: 0;
+  filter: none;
+  transition: opacity 900ms ease, transform 1100ms var(--ease-island);
+  will-change: opacity, transform;
+}
+
+.reveal--up {
+  transform: translate3d(0, 3.5rem, 0);
+}
+
+.reveal--left {
+  transform: translate3d(-4.5rem, 1rem, 0);
+}
+
+.reveal--right {
+  transform: translate3d(4.5rem, 1rem, 0);
+}
+
+.reveal--scale {
+  transform: translate3d(0, 2.5rem, 0) scale(0.94);
+}
+
+.reveal--tilt {
+  transform-origin: 50% 100%;
+  transform: rotateX(24deg) translateZ(calc(60px * var(--depth-scale, 1)));
+}
+
+.reveal--dolly {
+  transform: translateZ(calc(120px * var(--depth-scale, 1))) translateY(3rem);
+}
+
+.reveal--visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* 3D Foundation - Stage */
+.stage {
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+.stage > * {
+  transform-style: preserve-3d;
+}
+
+/* 1. Dolly */
+[data-scroll-3d="dolly"] {
+  transform:
+    translateZ(calc(var(--p, 0) * 120px * var(--depth, 1) * var(--depth-scale, 1)))
+    translateY(calc((1 - var(--p, 0)) * 3rem));
+  opacity: calc(.3 + var(--p, 0) * .7);
+}
+
+/* 2. Layers */
+.layers {
+  transform: translateY(calc(var(--p, 0) * -6rem));
+}
+.layers > [data-layer="back"] {
+  transform: translateZ(calc(-300px * var(--depth-scale, 1))) scale(1.27);
+}
+.layers > [data-layer="mid"] {
+  transform: translateZ(calc(-100px * var(--depth-scale, 1))) scale(1.08);
+}
+.layers > [data-layer="front"] {
+  transform: translateZ(calc(80px * var(--depth-scale, 1))) scale(.94);
+}
+
+/* 3. Tilt-Reveal */
+[data-scroll-3d="tilt-reveal"] {
+  transform-origin: 50% 100%;
+  transform:
+    rotateX(calc((1 - var(--p, 0)) * 24deg))
+    translateZ(calc(var(--p, 0) * 60px * var(--depth-scale, 1)));
+  opacity: var(--p, 0);
+}
+
+/* 4. Deck */
+.deck > * {
+  --i: 0;
+  transform:
+    translateZ(calc(var(--i) * -60px * (1 - var(--p, 0)) * var(--depth-scale, 1)))
+    translateY(calc(var(--i) * -1.5rem * (1 - var(--p, 0))))
+    rotateX(calc((1 - var(--p, 0)) * 8deg));
+}
+
+/* 5. Door */
+[data-scroll-3d="door"] {
+  transform-origin: left center;
+  transform: rotateY(calc((1 - var(--p, 0)) * -55deg));
+}
+
+/* 6. Cylinder */
+.cylinder {
+  transform: rotateX(calc(var(--p, 0) * -90deg));
+}
+.cylinder > * {
+  position: absolute;
+  inset: 0;
+  transform: rotateX(calc(var(--i) * 30deg)) translateZ(calc(320px * var(--depth-scale, 1)));
+}
+
+/* 7. Focus-Pull */
+[data-scroll-3d="focus-pull"] {
+  --dist: abs(calc(var(--p, 0) - .5));
+  filter: blur(calc(var(--dist) * 8px));
+  opacity: calc(1 - var(--dist) * .8);
+}
+
+/* 8. Curtain */
+[data-scroll-3d="curtain"] {
+  clip-path: inset(calc((1 - var(--p, 0)) * 100%) 0 0 0);
+}
+[data-scroll-3d="curtain"] > img, [data-scroll-3d="curtain"] > * {
+  transform: translateZ(calc((1 - var(--p, 0)) * -140px * var(--depth-scale, 1))) scale(1.1);
+}
+
+/* Native scroll-timeline fallback where supported */
+@supports (animation-timeline: view()) {
+  [data-scroll-3d="dolly"] {
+    animation: dolly linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 50%;
+  }
+}
+
+@keyframes dolly {
+  from {
+    transform: translateZ(0) translateY(3rem);
+    opacity: 0.3;
+  }
+  to {
+    transform: translateZ(calc(120px * var(--depth, 1) * var(--depth-scale, 1))) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    --depth-scale: 0;
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  [data-scroll-3d] {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    clip-path: none !important;
+  }
+}
