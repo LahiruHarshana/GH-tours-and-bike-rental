@@ -158,6 +158,13 @@ export function IslandStoryReel() {
 
       <div className="story-reel__sticky">
         <div className="story-reel__stage">
+          <div className="story-reel__chrome" aria-hidden="true">
+            <span className="story-reel__chrome-label"><i />The island in five movements</span>
+            <span className="story-reel__chrome-count">
+              {String(activeIndex + 1).padStart(2, "0")} <i /> {String(frames.length).padStart(2, "0")}
+            </span>
+          </div>
+
           <div className="story-reel__orbit" aria-hidden="true">
             <span>Stone · Tea · Wild · Road · Sea ·</span>
           </div>
@@ -172,7 +179,7 @@ export function IslandStoryReel() {
                     width={1920}
                     height={1280}
                     sizes="(max-width: 1024px) 100vw, 100vw"
-                    priority={true} // Eager load all for the reel
+                    priority={index === 0}
                   />
                 </div>
                 {/* Visual number behind the text */}
@@ -184,18 +191,21 @@ export function IslandStoryReel() {
           <div className="story-reel__content-layer">
             {frames.map((item) => (
               <article data-reel-copy key={item.number} className="story-reel__copy">
-                <div className="story-reel__place">
-                  {item.eyebrow.includes("·") ? (
-                    <>
-                      <span className="story-reel__place-en">{item.eyebrow.split("·")[0].trim()}</span>
-                      <span className="story-reel__place-si" lang="si">{item.eyebrow.split("·")[1].trim()}</span>
-                    </>
-                  ) : (
-                    <span className="story-reel__place-en">{item.eyebrow}</span>
-                  )}
+                <div className="story-reel__copy-card">
+                  <div className="story-reel__place">
+                    {item.eyebrow.includes("·") ? (
+                      <>
+                        <span className="story-reel__place-en">{item.eyebrow.split("·")[0].trim()}</span>
+                        <span className="story-reel__place-si" lang="si">{item.eyebrow.split("·")[1].trim()}</span>
+                      </>
+                    ) : (
+                      <span className="story-reel__place-en">{item.eyebrow}</span>
+                    )}
+                  </div>
+                  <h3>{item.title}</h3>
+                  <p>{item.copy}</p>
+                  <span className="story-reel__card-mark" aria-hidden="true">Explore slowly <i>↗</i></span>
                 </div>
-                <h3>{item.title}</h3>
-                <p>{item.copy}</p>
               </article>
             ))}
           </div>
@@ -210,7 +220,8 @@ export function IslandStoryReel() {
                 aria-current={activeIndex === index ? "step" : undefined}
                 onClick={() => jumpTo(index)}
               >
-                <span className="visually-hidden">{chapter.number}</span>
+                <span aria-hidden="true">{chapter.number}</span>
+                <span className="visually-hidden">{chapter.title}</span>
               </button>
             ))}
           </nav>

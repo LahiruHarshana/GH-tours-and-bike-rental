@@ -3,14 +3,14 @@ import type { TourDTO } from "@/types";
 import { formatUSD } from "@/lib/utils";
 import Image from "next/image";
 
-export function TourCard({ tour, featured = false }: { tour: TourDTO; featured?: boolean; index?: number }) {
+export function TourCard({ tour, featured = false, index = 0 }: { tour: TourDTO; featured?: boolean; index?: number }) {
   // `tour.location` is a free-form string. Do not infer regions or route lines from it.
   const routeLine = null;
   
   const durationText = tour.durationDays === 1 ? "1 DAY" : `${tour.durationDays} DAYS`;
   
   return (
-    <article className="tour-card" data-cursor-depth>
+    <article className={featured ? "tour-card tour-card--featured" : "tour-card"} data-cursor-depth>
       <Link href={`/tours/${tour.slug}`} className="tour-card__link">
         <div className="tour-card__media">
           <div className="tour-card__image">
@@ -25,6 +25,9 @@ export function TourCard({ tour, featured = false }: { tour: TourDTO; featured?:
             />
           </div>
           <div className="tour-card__glare" aria-hidden="true" />
+          <div className="tour-card__veil" aria-hidden="true" />
+          <span className="tour-card__index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+          <span className="tour-card__badge">{featured ? "Featured journey" : "Private journey"}</span>
         </div>
         <div className="tour-card__body">
           <p className="tour-card__meta">
@@ -37,10 +40,7 @@ export function TourCard({ tour, featured = false }: { tour: TourDTO; featured?:
           {routeLine ? (
             <p className="tour-card__route">{routeLine}</p>
           ) : (
-            <p className="tour-card__route" aria-hidden="true">
-              <span className="sr-only">Route information needed</span>
-              <span style={{ opacity: 0.3 }}>[DATA NEEDED]</span>
-            </p>
+            <p className="tour-card__route">Private route · Flexible pacing</p>
           )}
 
           <div className="tour-card__footer">
@@ -49,7 +49,7 @@ export function TourCard({ tour, featured = false }: { tour: TourDTO; featured?:
               <small>from</small> <strong>{formatUSD(tour.priceFrom)}</strong>
             </span>
             <span className="tour-card__affordance" aria-hidden="true">
-              Explore
+              Explore <i>↗</i>
             </span>
           </div>
         </div>

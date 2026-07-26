@@ -1,0 +1,647 @@
+/* Cinematic home hero — its --p value is driven by ScrollExperience. */
+.island-hero-modern {
+  --hero-progress: clamp(0, var(--p, 0), 1);
+  --hero-exit: clamp(0, calc(var(--hero-progress) * 1.15), 1);
+  position: relative;
+  min-height: max(47rem, 100svh);
+  overflow-x: clip;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  perspective: 1200px;
+  padding: calc(var(--header-height) + 2rem) 0 10rem;
+  background: #08130f;
+  color: var(--paper-100);
+}
+
+.island-hero-modern__media {
+  position: absolute;
+  inset: -7%;
+  z-index: -3;
+  filter: saturate(calc(.94 - var(--hero-progress) * .16))
+    contrast(calc(1.04 + var(--hero-progress) * .08))
+    brightness(calc(1 - var(--hero-progress) * .2));
+  transform: translate3d(calc(var(--hero-progress) * -1.5%), calc(var(--hero-progress) * 10%), 0)
+    scale(calc(1.04 + var(--hero-progress) * .12));
+  transform-origin: 50% 48%;
+  will-change: transform;
+}
+
+.island-hero-modern__scene {
+  --scene-delay: calc(var(--scene) * 7s);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  overflow: hidden;
+  will-change: opacity;
+  animation: hero-scene-cycle 21s linear var(--scene-delay) infinite;
+}
+
+.island-hero-modern__scene img {
+  object-position: 50% center;
+  filter: saturate(.96) contrast(1.06);
+  transform: scale(1.055);
+  will-change: transform;
+  animation: hero-scene-camera 21s ease-in-out var(--scene-delay) infinite;
+}
+
+.island-hero-modern__scene:nth-child(1) img { object-position: 52% center; }
+.island-hero-modern__scene:nth-child(2) img { object-position: 56% center; }
+.island-hero-modern__scene:nth-child(3) img { object-position: 50% center; }
+
+.island-hero-modern:hover .island-hero-modern__scene,
+.island-hero-modern:hover .island-hero-modern__scene img,
+.island-hero-modern:hover .island-hero-modern__scene-label,
+.island-hero-modern:hover .island-hero-modern__reel > span,
+.island-hero-modern:hover .island-hero-modern__scene-count > span::after {
+  animation-play-state: paused;
+}
+
+.island-hero-modern__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgb(4 13 10 / .76) 0%, rgb(4 13 10 / .28) 50%, rgb(4 13 10 / .12) 73%, rgb(4 13 10 / .48) 100%),
+    linear-gradient(180deg, rgb(4 11 9 / .64) 0%, transparent 28%, transparent 52%, rgb(4 11 9 / .9) 100%);
+}
+
+.island-hero-modern__light {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: calc(.7 - var(--hero-progress) * .35);
+  background:
+    radial-gradient(circle at 72% 32%, rgb(247 223 157 / .42), transparent 8%),
+    radial-gradient(ellipse at 72% 35%, rgb(240 201 107 / .18), transparent 28%);
+  mix-blend-mode: screen;
+  animation: hero-light-breathe 7s ease-in-out 2s infinite alternate;
+}
+
+.island-hero-modern__grain {
+  position: absolute;
+  inset: -50%;
+  z-index: 3;
+  opacity: .075;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 20% 30%, #fff 0 .7px, transparent .8px),
+    radial-gradient(circle at 80% 60%, #fff 0 .6px, transparent .7px),
+    radial-gradient(circle at 40% 80%, #000 0 .65px, transparent .75px);
+  background-size: 5px 5px, 7px 7px, 4px 4px;
+  mix-blend-mode: soft-light;
+  animation: hero-grain-shift .24s steps(2) infinite;
+}
+
+.island-hero-modern__frame {
+  position: absolute;
+  z-index: 3;
+  inset: calc(var(--header-height) + 1rem) var(--page-gutter) 6.5rem;
+  border: 1px solid rgb(255 255 255 / .16);
+  pointer-events: none;
+  opacity: calc(1 - var(--hero-exit));
+  clip-path: inset(calc(var(--hero-progress) * 9%) calc(var(--hero-progress) * 14%));
+  transform: translateZ(calc(var(--hero-progress) * -7rem)) scale(calc(1 - var(--hero-progress) * .035));
+  animation: hero-frame-in 1.5s var(--ease-island) .2s backwards;
+}
+
+.island-hero-modern__frame::before,
+.island-hero-modern__frame::after {
+  content: "";
+  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-color: var(--sun-300);
+  opacity: .8;
+}
+
+.island-hero-modern__frame::before {
+  top: -.0625rem;
+  left: -.0625rem;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.island-hero-modern__frame::after {
+  right: -.0625rem;
+  bottom: -.0625rem;
+  border-right: 2px solid;
+  border-bottom: 2px solid;
+}
+
+.island-hero-modern__frame > span {
+  position: absolute;
+  top: 50%;
+  padding: .5rem;
+  background: rgb(8 19 15 / .3);
+  color: rgb(255 255 255 / .58);
+  font-size: .56rem;
+  letter-spacing: .23em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+.island-hero-modern__frame > span:first-child { left: -.8rem; }
+.island-hero-modern__frame > span:last-child { right: -.8rem; transform: rotate(180deg); }
+.island-hero-modern__frame > i { display: none; }
+
+.island-hero-modern__ghost {
+  position: absolute;
+  z-index: -1;
+  right: -1vw;
+  bottom: 4rem;
+  color: transparent;
+  font-family: var(--display);
+  font-size: clamp(7rem, 21vw, 22rem);
+  font-style: italic;
+  line-height: .7;
+  letter-spacing: -.06em;
+  -webkit-text-stroke: 1px rgb(255 255 255 / .095);
+  opacity: calc(.75 - var(--hero-progress) * .75);
+  transform: translate3d(calc(var(--hero-progress) * 7rem), calc(var(--hero-progress) * -3.5rem), calc(var(--hero-progress) * -5rem));
+  pointer-events: none;
+  user-select: none;
+}
+
+.island-hero-modern__content {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.05rem;
+  padding-inline: clamp(1.75rem, 5vw, 5rem);
+  opacity: calc(1 - var(--hero-exit));
+  filter: blur(calc(var(--hero-progress) * 3px));
+  transform: translate3d(0, calc(var(--hero-progress) * -7rem), calc(var(--hero-progress) * 2rem))
+    scale(calc(1 - var(--hero-progress) * .035));
+  transform-origin: left center;
+  will-change: transform, opacity, filter;
+}
+
+.island-hero-modern__topline {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  width: min(100%, 27rem);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgb(255 255 255 / .28);
+  opacity: calc(1 - var(--hero-progress) * 1.7);
+  transform: translate3d(calc(var(--hero-progress) * -4rem), 0, 0);
+  animation: hero-rise .9s var(--ease-island) .15s backwards;
+}
+
+.island-hero-modern__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  color: var(--sun-300);
+  font-size: .69rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.island-hero-modern__eyebrow i {
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+}
+
+.island-hero-modern__greeting {
+  display: flex;
+  align-items: baseline;
+  gap: .55rem;
+  margin-left: auto;
+  font-family: var(--display);
+  font-size: clamp(1.1rem, 2vw, 1.55rem);
+}
+
+.island-hero-modern__greeting small {
+  color: rgb(255 255 255 / .58);
+  font-family: var(--body);
+  font-size: .52rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.island-hero-modern__title {
+  max-width: 12ch;
+  margin: clamp(.65rem, 2vh, 1.5rem) 0 clamp(.45rem, 1vh, .8rem);
+  color: var(--paper-100);
+  font-family: var(--body);
+  font-size: clamp(4.2rem, 10.5vw, 10.5rem);
+  font-weight: 650;
+  line-height: .78;
+  letter-spacing: -.07em;
+  text-wrap: balance;
+}
+
+.island-hero-modern__title .cinematic-heading__line {
+  display: block;
+  overflow: hidden;
+  padding: .08em .12em .3em 0;
+  margin-bottom: -.2em;
+  will-change: transform, opacity;
+}
+
+.island-hero-modern__title .cinematic-heading__line:nth-child(1) {
+  opacity: calc(1 - var(--hero-progress) * 1.15);
+  transform: translate3d(calc(var(--hero-progress) * -7vw), calc(var(--hero-progress) * -1rem), 0);
+}
+
+.island-hero-modern__title .cinematic-heading__line:nth-child(2) {
+  opacity: calc(1 - var(--hero-progress) * 1.35);
+  transform: translate3d(calc(var(--hero-progress) * 8vw), calc(var(--hero-progress) * 1.25rem), 0);
+}
+
+.island-hero-modern__title .cinematic-heading__line > span {
+  display: block;
+  color: inherit;
+  animation: hero-title-in 1.25s var(--ease-island) both;
+}
+
+.island-hero-modern__title .cinematic-heading__line:nth-child(1) > span { animation-delay: .28s; }
+.island-hero-modern__title .cinematic-heading__line:nth-child(2) > span { animation-delay: .4s; }
+
+.island-hero-modern__title em {
+  display: block;
+  padding-left: clamp(1.5rem, 9vw, 8rem);
+  color: var(--sun-300);
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: -.045em;
+}
+
+.island-hero-modern__lower {
+  display: grid;
+  grid-template-columns: minmax(15rem, 1fr) auto;
+  align-items: end;
+  gap: clamp(2rem, 6vw, 5rem);
+  width: min(100%, 50rem);
+  animation: hero-rise 1s var(--ease-island) .62s both;
+}
+
+.island-hero-modern__lower p {
+  margin: 0;
+  color: rgb(255 255 255 / .72);
+  font-size: clamp(.95rem, 1.25vw, 1.12rem);
+  line-height: 1.65;
+}
+
+.island-hero-modern__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.island-hero-modern__actions .button {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.45rem;
+  border: 1px solid rgb(247 223 157 / .8);
+  border-radius: 999px;
+  background: var(--sun-300);
+  box-shadow: 0 1.2rem 4rem rgb(0 0 0 / .2);
+  color: var(--ink-900);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-decoration: none;
+  transition: box-shadow .5s var(--ease-island), transform .5s var(--ease-island);
+}
+
+.island-hero-modern__actions .button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / .55) 50%, transparent 70%);
+  transform: translateX(-130%);
+  transition: transform .7s var(--ease-island);
+}
+
+.island-hero-modern__actions .button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / .34), 0 0 0 .35rem rgb(247 223 157 / .11);
+}
+
+.island-hero-modern__actions .button:hover::before { transform: translateX(130%); }
+.island-hero-modern__arrow { font-size: 1rem; transition: transform .45s var(--ease-island); }
+.island-hero-modern__actions .button:hover .island-hero-modern__arrow { transform: rotate(45deg); }
+
+.island-hero-modern__actions .text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+  padding-bottom: .25rem;
+  border-bottom: 1px solid rgb(255 255 255 / .35);
+  color: var(--paper-100);
+  font-size: .78rem;
+  text-decoration: none;
+}
+
+.island-hero-modern__chips {
+  position: absolute;
+  z-index: 5;
+  right: 0;
+  bottom: 7.7rem;
+  left: 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  opacity: calc(1 - var(--hero-progress) * 1.55);
+  transform: translate3d(0, calc(var(--hero-progress) * 3rem), 0);
+  animation: hero-rise 1s var(--ease-island) .85s backwards;
+}
+
+.island-hero-modern__scene-meta {
+  justify-self: start;
+  display: grid;
+  grid-template-columns: auto minmax(8.5rem, 12rem);
+  align-items: center;
+  gap: .65rem 1rem;
+  min-width: min(23rem, 40vw);
+  padding: .7rem .85rem;
+  border: 1px solid rgb(255 255 255 / .16);
+  border-radius: .2rem;
+  background: linear-gradient(110deg, rgb(9 22 17 / .54), rgb(9 22 17 / .16));
+  backdrop-filter: blur(18px) saturate(1.15);
+  box-shadow: inset 0 1px rgb(255 255 255 / .08), 0 1rem 3rem rgb(0 0 0 / .12);
+}
+
+.island-hero-modern__scene-count {
+  grid-row: 1 / span 2;
+  color: rgb(255 255 255 / .42);
+  font-size: .59rem;
+  font-weight: 650;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.island-hero-modern__scene-count > span {
+  color: var(--sun-300);
+}
+
+.island-hero-modern__scene-count > span::after {
+  content: "1";
+  animation: hero-scene-number 21s steps(1, end) infinite;
+}
+
+.island-hero-modern__scene-copy {
+  position: relative;
+  height: 2rem;
+  overflow: hidden;
+}
+
+.island-hero-modern__scene-label {
+  --scene-delay: calc(var(--scene) * 7s);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(.7rem);
+  animation: hero-label-cycle 21s var(--ease-island) var(--scene-delay) infinite;
+}
+
+.island-hero-modern__scene-label strong {
+  color: var(--paper-100);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.island-hero-modern__scene-label small {
+  margin-top: .18rem;
+  color: rgb(255 255 255 / .5);
+  font-size: .48rem;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.island-hero-modern__scene-line {
+  grid-column: 2;
+  display: block;
+  width: 100%;
+  height: 1px;
+  overflow: hidden;
+  background: rgb(255 255 255 / .13);
+}
+
+.island-hero-modern__scene-line i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--sun-300), #fff);
+  transform-origin: left;
+  animation: hero-scene-progress 7s linear infinite;
+}
+
+.island-hero-modern__scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .65rem;
+  color: rgb(255 255 255 / .65);
+  font-size: .54rem;
+  letter-spacing: .23em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.island-hero-modern__scroll > i {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 2.7rem;
+  overflow: hidden;
+  background: rgb(255 255 255 / .24);
+}
+
+.island-hero-modern__scroll > i b {
+  position: absolute;
+  inset: 0;
+  background: var(--sun-300);
+  animation: hero-scroll-line 1.8s var(--ease-gentle) infinite;
+}
+
+.island-hero-modern__index {
+  justify-self: end;
+  color: rgb(255 255 255 / .52);
+  font-size: .58rem;
+  letter-spacing: .2em;
+}
+
+.island-hero-modern__reel {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+}
+
+.island-hero-modern__reel > span {
+  --scene-delay: calc(var(--scene) * 7s);
+  display: block;
+  width: 1.9rem;
+  height: 2px;
+  overflow: hidden;
+  background: rgb(255 255 255 / .24);
+}
+
+.island-hero-modern__reel > span i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--sun-300);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.island-hero-modern__reel > span {
+  animation: hero-reel-cycle 21s linear var(--scene-delay) infinite;
+}
+
+@keyframes hero-scene-cycle {
+  0% { opacity: 0; }
+  2.5%, 30.8% { opacity: 1; }
+  33.333%, 100% { opacity: 0; }
+}
+
+@keyframes hero-scene-camera {
+  0% { transform: scale(1.08) translate3d(-.7%, -.35%, 0); }
+  33.333% { transform: scale(1.015) translate3d(.7%, .35%, 0); }
+  100% { transform: scale(1.015) translate3d(.7%, .35%, 0); }
+}
+
+@keyframes hero-label-cycle {
+  0% { opacity: 0; transform: translateY(.7rem); }
+  2.5%, 29% { opacity: 1; transform: translateY(0); }
+  33.333%, 100% { opacity: 0; transform: translateY(-.7rem); }
+}
+
+@keyframes hero-reel-cycle {
+  0%, 33.333% { background: var(--sun-300); transform: scaleX(1); }
+  33.334%, 100% { background: rgb(255 255 255 / .24); transform: scaleX(1); }
+}
+
+@keyframes hero-scene-number {
+  0%, 33.332% { content: "1"; }
+  33.333%, 66.665% { content: "2"; }
+  66.666%, 100% { content: "3"; }
+}
+
+@keyframes hero-scene-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes hero-grain-shift {
+  0% { transform: translate3d(-1%, 1%, 0); }
+  25% { transform: translate3d(1%, -2%, 0); }
+  50% { transform: translate3d(2%, 1%, 0); }
+  75% { transform: translate3d(-2%, -1%, 0); }
+  100% { transform: translate3d(1%, 2%, 0); }
+}
+
+@keyframes hero-title-in {
+  from { opacity: 0; transform: translateY(115%) rotate(2deg); }
+  to { opacity: 1; transform: translateY(0) rotate(0); }
+}
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(1.5rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hero-frame-in {
+  from { opacity: 0; clip-path: inset(0 50%); }
+  to { opacity: 1; clip-path: inset(0); }
+}
+
+@keyframes hero-light-breathe {
+  from { transform: scale(.96); filter: blur(1px); }
+  to { transform: scale(1.08); filter: blur(5px); }
+}
+
+@keyframes hero-scroll-line {
+  0% { transform: translateY(-105%) scaleY(.35); }
+  50% { transform: translateY(0) scaleY(1); }
+  100% { transform: translateY(105%) scaleY(.35); }
+}
+
+@media (max-width: 768px) {
+  .island-hero-modern {
+    min-height: max(44rem, 100svh);
+    place-items: end center;
+    padding-top: calc(var(--header-height) + 1rem);
+    padding-bottom: 11rem;
+  }
+
+  .island-hero-modern__media { inset: -4%; }
+  .island-hero-modern__scene:nth-child(1) img { object-position: 61% center; }
+  .island-hero-modern__scene:nth-child(2) img { object-position: 64% center; }
+  .island-hero-modern__scene:nth-child(3) img { object-position: 58% center; }
+  .island-hero-modern__frame { inset: calc(var(--header-height) + .5rem) 1rem 6.4rem; }
+  .island-hero-modern__frame > span { display: none; }
+  .island-hero-modern__ghost { bottom: 9rem; font-size: 31vw; }
+  .island-hero-modern__content { gap: .9rem; padding-inline: .25rem; }
+  .island-hero-modern__topline { gap: .75rem; }
+  .island-hero-modern__eyebrow { font-size: .57rem; letter-spacing: .14em; }
+  .island-hero-modern__eyebrow i { width: 1rem; }
+  .island-hero-modern__greeting small { display: none; }
+  .island-hero-modern__title { font-size: clamp(3.7rem, 18vw, 6.8rem); line-height: .82; }
+  .island-hero-modern__title em { padding-left: clamp(.75rem, 8vw, 3rem); }
+  .island-hero-modern__lower { grid-template-columns: 1fr; gap: 1.4rem; }
+  .island-hero-modern__lower p { max-width: 31ch; font-size: .9rem; }
+  .island-hero-modern__actions { justify-content: flex-start; gap: 1.25rem; }
+  .island-hero-modern__actions .button { padding: .9rem 1.15rem; }
+  .island-hero-modern__chips { bottom: 7.2rem; grid-template-columns: 1fr auto; }
+  .island-hero-modern__scroll { display: none; }
+  .island-hero-modern__index { font-size: .48rem; letter-spacing: .12em; }
+  .island-hero-modern__scene-meta {
+    grid-template-columns: auto minmax(7rem, 10rem);
+    min-width: 0;
+    padding: .62rem .7rem;
+  }
+  .island-hero-modern__scene-count { font-size: .52rem; }
+  .island-hero-modern__reel { gap: .3rem; }
+  .island-hero-modern__reel > span { width: 1rem; }
+}
+
+@media (max-width: 430px) {
+  .island-hero-modern__actions .text-link { display: none; }
+  .island-hero-modern__scene-meta { grid-template-columns: auto 7rem; }
+  .island-hero-modern__scene-label small { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .island-hero-modern__media,
+  .island-hero-modern__content,
+  .island-hero-modern__ghost { transform: none; }
+  .island-hero-modern__media,
+  .island-hero-modern__content { filter: none; }
+  .island-hero-modern__frame { clip-path: none; transform: none; }
+  .island-hero-modern__topline,
+  .island-hero-modern__title .cinematic-heading__line,
+  .island-hero-modern__chips { transform: none; }
+  .island-hero-modern__scene:not(:first-child),
+  .island-hero-modern__scene-label:not(:first-child),
+  .island-hero-modern__scene img,
+  .island-hero-modern__grain,
+  .island-hero-modern__light,
+  .island-hero-modern__frame,
+  .island-hero-modern__topline,
+  .island-hero-modern__title .cinematic-heading__line > span,
+  .island-hero-modern__lower,
+  .island-hero-modern__chips,
+  .island-hero-modern__scene-count > span::after,
+  .island-hero-modern__scene-line i,
+  .island-hero-modern__reel > span { animation: none; opacity: 1; }
+  .island-hero-modern__scene:first-child,
+  .island-hero-modern__scene-label:first-child { opacity: 1; transform: none; }
+}

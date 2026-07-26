@@ -1,0 +1,195 @@
+/* Real-island route explorer — the supplied SVG is used as a scalable mask. */
+.route-explorer {
+  position: relative;
+  overflow: hidden;
+  color: var(--paper-100);
+  background:
+    radial-gradient(circle at 18% 38%, rgb(240 201 107 / .12), transparent 23rem),
+    radial-gradient(circle at 85% 72%, rgb(83 109 97 / .3), transparent 30rem),
+    #071712;
+}
+
+.route-explorer::before {
+  content: "ROUTES";
+  position: absolute;
+  right: -2vw;
+  top: 4rem;
+  color: transparent;
+  font-family: var(--display);
+  font-size: clamp(8rem, 21vw, 22rem);
+  font-style: italic;
+  line-height: .7;
+  letter-spacing: -.07em;
+  -webkit-text-stroke: 1px rgb(247 223 157 / .08);
+  pointer-events: none;
+}
+
+.route-explorer .eyebrow { color: var(--sun-300); }
+.route-explorer__head { position: relative; z-index: 2; }
+.route-explorer__head h2 { color: var(--paper-100); }
+.route-explorer__head > p { color: rgb(255 255 255 / .58); }
+
+.route-explorer__grid {
+  position: relative;
+  z-index: 2;
+  grid-template-columns: minmax(25rem, .92fr) minmax(28rem, 1.08fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  padding: clamp(1.25rem, 2.5vw, 2.5rem);
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / .12);
+  border-radius: clamp(1.25rem, 2.5vw, 2.25rem);
+  background: linear-gradient(135deg, rgb(255 255 255 / .07), rgb(255 255 255 / .025));
+  box-shadow: 0 3rem 8rem -5rem rgb(0 0 0 / .8);
+  backdrop-filter: blur(18px);
+}
+
+.route-explorer__grid::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 47%;
+  width: 1px;
+  background: linear-gradient(transparent, rgb(255 255 255 / .13) 15% 85%, transparent);
+  pointer-events: none;
+}
+
+.route-map {
+  min-height: clamp(38rem, 72vh, 49rem);
+  max-height: none;
+  aspect-ratio: auto;
+  isolation: isolate;
+}
+
+.route-map::before,
+.route-map::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border: 1px solid rgb(247 223 157 / .09);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.route-map::before { inset: 9% 2% 4%; }
+.route-map::after { inset: 20% 13% 15%; }
+
+.route-map__island-art {
+  position: absolute;
+  z-index: 0;
+  inset: 1% 9% 2%;
+  background:
+    radial-gradient(circle at 37% 73%, var(--sun-300), var(--sun-500) 22%, #8ea58f 62%, #365b4d 100%);
+  -webkit-mask: url("/images/sri-lanka.svg") center / contain no-repeat;
+  mask: url("/images/sri-lanka.svg") center / contain no-repeat;
+  filter: drop-shadow(0 2rem 2.5rem rgb(0 0 0 / .34));
+  opacity: .82;
+  transform: translateZ(-1px) scale(calc(.96 + var(--p, 0) * .04));
+  transform-origin: center;
+}
+
+.route-map__svg { z-index: 2; }
+.route-map__path {
+  stroke: rgb(255 255 255 / .3);
+  stroke-width: .35;
+  filter: drop-shadow(0 0 .25rem rgb(247 223 157 / .28));
+}
+.route-map__segment {
+  stroke: var(--sun-300);
+  stroke-width: .7;
+  opacity: 1;
+  filter: drop-shadow(0 0 .3rem rgb(240 201 107 / .45));
+}
+
+.route-map__annotations { z-index: 3; color: rgb(255 255 255 / .46); }
+.route-map__annotation {
+  padding: .35rem .55rem;
+  border: 1px solid rgb(255 255 255 / .08);
+  border-radius: 999px;
+  background: rgb(7 23 18 / .38);
+  backdrop-filter: blur(8px);
+  font-size: .52rem;
+  letter-spacing: .14em;
+}
+
+.route-map__pins { z-index: 4; }
+.route-map__pin-visual {
+  width: .72rem;
+  height: .72rem;
+  border: 2px solid rgb(7 23 18 / .8);
+  background: var(--sun-300);
+  box-shadow: 0 0 0 1px rgb(247 223 157 / .8), 0 .5rem 1rem rgb(0 0 0 / .28);
+}
+.route-map__pin:hover .route-map__pin-visual,
+.route-map__pin.is-active .route-map__pin-visual {
+  background: var(--paper-100);
+  box-shadow: 0 0 0 2px #0b261e, 0 0 0 .45rem rgb(240 201 107 / .3), 0 0 1.4rem rgb(240 201 107 / .55);
+}
+.route-map__pin:focus-visible { outline-color: var(--sun-300); }
+.route-map__pin-label {
+  padding: .45rem .65rem;
+  border: 1px solid rgb(255 255 255 / .1);
+  border-radius: .55rem;
+  color: var(--paper-100);
+  background: rgb(7 23 18 / .82);
+  box-shadow: 0 .8rem 2rem rgb(0 0 0 / .22);
+  backdrop-filter: blur(12px);
+  font-family: var(--body);
+  font-size: .72rem;
+  font-weight: 650;
+}
+
+.route-story { min-height: 100%; }
+.route-story__inner {
+  overflow: hidden;
+  padding: clamp(2rem, 4vw, 4rem);
+  border: 1px solid rgb(16 32 27 / .08);
+  border-radius: clamp(1rem, 2vw, 1.5rem);
+  background:
+    radial-gradient(circle at 100% 0%, rgb(240 201 107 / .22), transparent 14rem),
+    linear-gradient(145deg, #fdfbf5, #f1ecdf);
+  box-shadow: 0 2.5rem 6rem -3.5rem rgb(0 0 0 / .72);
+}
+.route-story__inner::after {
+  content: attr(data-chapter);
+  position: absolute;
+  right: -.04em;
+  bottom: -.22em;
+  color: rgb(16 32 27 / .035);
+  font-family: var(--display);
+  font-size: clamp(8rem, 16vw, 15rem);
+  line-height: 1;
+  pointer-events: none;
+}
+.route-story__content { position: relative; z-index: 2; }
+.route-story__number { color: var(--clay-500); }
+.route-story__title {
+  max-width: 11ch;
+  margin: 1rem 0 1.4rem;
+  color: var(--ink-900);
+  font-size: clamp(2.8rem, 4.8vw, 5.4rem);
+  line-height: .9;
+  letter-spacing: -.045em;
+}
+.route-story__copy { max-width: 34rem; color: var(--ink-500); }
+.route-story__notes { border-color: rgb(16 32 27 / .12); }
+.route-story__note-label { color: var(--ink-500); }
+.route-story__note-value { color: var(--ink-900); font-family: var(--body); font-weight: 600; }
+
+@media (max-width: 1023px) {
+  .route-explorer__grid { grid-template-columns: 1fr; }
+  .route-explorer__grid::before { display: none; }
+  .route-map { min-height: 40rem; max-height: none; }
+  .route-story { min-height: auto; }
+}
+
+@media (max-width: 560px) {
+  .route-explorer__grid { padding: .75rem; border-radius: 1.1rem; }
+  .route-map { min-height: 34rem; }
+  .route-map__island-art { inset-inline: 2%; }
+  .route-map__annotation { font-size: .44rem; }
+  .route-map__pin-label { font-size: .64rem; }
+  .route-story__inner { padding: 2rem 1.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-map__island-art { transform: none; }
+}

@@ -5,6 +5,10 @@ import "./styles/02-tokens.css";
 import "./styles/03-base.css";
 import "./styles/04-motion.css";
 import "./styles/05-components.css";
+import "./styles/06-hero-modern.css";
+import "./styles/07-story-modern.css";
+import "./styles/08-journeys-modern.css";
+import "./styles/09-route-modern.css";
 import { siteConfig } from "@/config/site";
 
 const instrumentSans = Instrument_Sans({

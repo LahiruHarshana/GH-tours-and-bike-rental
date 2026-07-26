@@ -88,7 +88,7 @@ export default async function HomePage() {
       <IslandStoryReel />
 
       <Section data-chapter="03 / JOURNEYS" tone="sand" className="featured-tours modern-section">
-        <div className="section-topline">
+        <div className="section-topline" data-scroll-motion data-range="enter">
           <Reveal>
             <SectionHeading
               className="journeys-heading"
@@ -98,6 +98,23 @@ export default async function HomePage() {
               <p>Start with one of our most-loved routes. Every itinerary can be adjusted around your arrival, pace and interests.</p>
             </SectionHeading>
           </Reveal>
+          {tours[0] && (
+            <figure className="featured-tours__intro-art" data-scroll-motion data-range="enter">
+              <Image
+                src={tours[0].image}
+                alt=""
+                aria-hidden="true"
+                width={900}
+                height={1100}
+                sizes="(max-width: 768px) 70vw, 28vw"
+              />
+              <figcaption>
+                <span>Designed around you</span>
+                <strong>Private · Flexible · Local</strong>
+              </figcaption>
+              <i aria-hidden="true">03</i>
+            </figure>
+          )}
           <TextLink variant="dark" className="editorial-link" href="/tours"><span>View all tours</span><b aria-hidden="true">↗</b></TextLink>
         </div>
         <div className="collection-shell">
@@ -109,7 +126,7 @@ export default async function HomePage() {
                   style={{ "--i": index } as React.CSSProperties}
                   key={tour.id}
                 >
-                  <TourCard tour={tour} featured={index === 0} />
+                  <TourCard tour={tour} featured={index === 0} index={index} />
                 </div>
               ))}
             </EditorialRail>

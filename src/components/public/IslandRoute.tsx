@@ -10,8 +10,9 @@ const places = [
     label: "Colombo",
     title: "Arrival and rhythm.",
     copy: "A coastal city where colonial history meets a modern beat. The perfect place to start your journey.",
+    note: "Coastal gateway · City energy",
     x: 12,
-    y: 48,
+    y: 74,
   },
   {
     id: "sigiriya",
@@ -19,8 +20,9 @@ const places = [
     label: "Cultural triangle",
     title: "Ancient stone, early light.",
     copy: "Climb Sigiriya before the heat, walk through old capitals and slow down for temple evenings.",
-    x: 35,
-    y: 35,
+    note: "Living history · First light",
+    x: 34,
+    y: 46,
   },
   {
     id: "kandy",
@@ -28,8 +30,9 @@ const places = [
     label: "Kandy",
     title: "The sacred valley.",
     copy: "Climb through the hills to reach the ancient capital, where temple drums echo across the lake.",
-    x: 35,
-    y: 52,
+    note: "Sacred city · Hill country",
+    x: 28,
+    y: 62,
   },
   {
     id: "ella",
@@ -37,8 +40,9 @@ const places = [
     label: "Ella",
     title: "Cool air, green horizons.",
     copy: "Follow the highland railway through tea fields, waterfalls and small towns made for unhurried mornings.",
-    x: 42,
-    y: 65,
+    note: "Tea country · Slow mornings",
+    x: 38,
+    y: 69,
   },
   {
     id: "yala",
@@ -46,8 +50,9 @@ const places = [
     label: "The wild south",
     title: "Quiet roads, sudden wonder.",
     copy: "Pair wildlife country with rural roads, lagoons and the kind of local stops no fixed script can predict.",
-    x: 52,
-    y: 75,
+    note: "Wildlife country · Open roads",
+    x: 49,
+    y: 80,
   },
   {
     id: "mirissa",
@@ -55,8 +60,9 @@ const places = [
     label: "Southern coast",
     title: "Salt air, room to stay.",
     copy: "Finish among palm-fringed bays, fishing villages, old fort walls and long Indian Ocean sunsets.",
-    x: 28,
-    y: 85,
+    note: "Southern coast · Sunset finish",
+    x: 26,
+    y: 91,
   },
 ] as const;
 
@@ -161,15 +167,8 @@ export function IslandRoute() {
           } as CSSProperties}
         >
           <div className="route-map__plane">
+            <div className="route-map__island-art" aria-hidden="true" />
             <svg className="route-map__svg" viewBox="0 0 62 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-              <text x="5" y="10" fontSize="2" fill="rgba(16, 32, 27, 0.4)">[ASSET NEEDED] Real Sri Lanka SVG outline</text>
-              <path
-                className="route-map__outline"
-                d="M31,2 C45,10 58,40 50,75 C45,95 35,98 25,95 C10,90 8,60 15,30 Z" // Temp fake blob but within viewBox bounds to stand in for outline
-                fill="rgba(16,32,27,0.03)"
-                stroke="rgba(16,32,27,0.15)"
-                strokeWidth="0.2"
-              />
               <path
                 ref={lineRef}
                 className="route-map__path"
@@ -190,11 +189,9 @@ export function IslandRoute() {
             </svg>
 
             <div className="route-map__annotations" aria-hidden="true">
-              <span className="route-map__annotation" style={{ left: "10%", top: "45%" }}>Arrival</span>
-              <span className="route-map__annotation" style={{ left: "55%", top: "45%" }}>Highlands</span>
-              <span className="route-map__annotation" style={{ left: "60%", top: "25%" }}>Ancient cities</span>
-              <span className="route-map__annotation" style={{ left: "62%", top: "82%" }}>Wild country</span>
-              <span className="route-map__annotation" style={{ left: "15%", top: "85%" }}>Southern coast</span>
+              <span className="route-map__annotation" style={{ left: "65%", top: "38%" }}>Cultural north</span>
+              <span className="route-map__annotation" style={{ left: "60%", top: "62%" }}>Tea country</span>
+              <span className="route-map__annotation" style={{ left: "23%", top: "92%" }}>Southern coast</span>
             </div>
 
             <div className="route-map__pins">
@@ -229,6 +226,7 @@ export function IslandRoute() {
           <div
             className={`route-story__inner route-story__inner--${transitionState}`}
             aria-live="polite"
+            data-chapter={displayedPlace.number}
           >
             <div className="route-story__shade" aria-hidden="true" />
             <div className="route-story__content">
@@ -237,8 +235,8 @@ export function IslandRoute() {
               <p className="route-story__copy">{displayedPlace.copy}</p>
 
               <div className="route-story__notes">
-                <span className="route-story__note-label">Coordinates</span>
-                <span className="route-story__note-value">[DATA NEEDED]</span>
+                <span className="route-story__note-label">Journey character</span>
+                <span className="route-story__note-value">{displayedPlace.note}</span>
               </div>
 
               <Link className="text-link text-link--dark editorial-link" href="/tours">
