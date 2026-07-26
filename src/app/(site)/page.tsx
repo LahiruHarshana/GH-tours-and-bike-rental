@@ -35,9 +35,9 @@ const bikeBestFor: Record<BikeDTO["category"], string> = {
 };
 
 const guestStats = [
-  { value: 4.9, decimals: 1, suffix: "/5", label: "Guest rating" },
-  { value: 20, decimals: 0, suffix: " min", label: "Typical reply" },
-  { value: 100, decimals: 0, suffix: "%", label: "Private journeys" },
+  { value: "4.9", suffix: "/5", label: "Guest rating", detail: "From travellers who explored with us" },
+  { value: "20", suffix: " min", label: "Typical reply", detail: "A real local team, ready every day" },
+  { value: "100", suffix: "%", label: "Private journeys", detail: "Every route shaped around your pace" },
 ];
 
 export default async function HomePage() {
@@ -262,31 +262,41 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      <Section id="proof" data-chapter="07 / PROOF" spacing="compact" tone="ink" className="proof-bar">
-        <div className="container proof-bar__grid">
-          {guestStats.map((stat, index) => {
-            const display = `${stat.value.toFixed(stat.decimals)}${stat.suffix}`;
-            return (
-              <div className="proof-bar__stat" data-scroll-motion data-range="enter" style={{ "--i": index } as React.CSSProperties} key={stat.label}>
-                <span className="proof-bar__value" aria-hidden="true">
-                  {stat.value.toFixed(stat.decimals).split("").map((char, charIndex) =>
-                    /[0-9]/.test(char) ? (
-                      <span className="stat-digit" style={{ "--target": Number(char) } as React.CSSProperties} key={charIndex}>
-                        {Array.from({ length: 10 }).map((_, face) => (
-                          <span className="stat-digit__face" style={{ "--i": face } as React.CSSProperties} key={face}>{face}</span>
-                        ))}
-                      </span>
-                    ) : (
-                      <span className="proof-bar__char" key={charIndex}>{char}</span>
-                    )
-                  )}
-                  <span className="proof-bar__char">{stat.suffix}</span>
-                </span>
-                <span className="visually-hidden">{display} {stat.label}</span>
-                <span className="proof-bar__label" aria-hidden="true">{stat.label}</span>
-              </div>
-            );
-          })}
+      <Section id="proof" data-chapter="07 / PROOF" spacing="compact" tone="ink" width="full" className="proof-bar">
+        <div className="container proof-bar__shell">
+          <div className="proof-bar__intro" data-scroll-motion data-range="enter">
+            <div>
+              <span className="proof-bar__eyebrow"><i />Why travel with us</span>
+              <h2>Small details.<br /><em>Big difference.</em></h2>
+            </div>
+            <p>Thoughtful planning, quick answers and a journey that always feels like your own.</p>
+          </div>
+
+          <div className="proof-bar__grid">
+            {guestStats.map((stat, index) => (
+              <article
+                className="proof-bar__stat"
+                data-scroll-motion
+                data-range="enter"
+                style={{ "--i": index } as React.CSSProperties}
+                key={stat.label}
+              >
+                <span className="proof-bar__index" aria-hidden="true">0{index + 1}</span>
+                <p className="proof-bar__value">
+                  <strong>{stat.value}</strong><span>{stat.suffix}</span>
+                </p>
+                <h3>{stat.label}</h3>
+                <p className="proof-bar__detail">{stat.detail}</p>
+                <span className="proof-bar__rule" aria-hidden="true"><i /></span>
+              </article>
+            ))}
+          </div>
+
+          <div className="proof-bar__foot" aria-hidden="true">
+            <span>Based in Sri Lanka</span>
+            <i />
+            <span>Private · Flexible · Local</span>
+          </div>
         </div>
       </Section>
 
