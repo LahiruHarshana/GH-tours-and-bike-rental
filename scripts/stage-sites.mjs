@@ -1,4 +1,4 @@
-import { cpSync, copyFileSync, existsSync, lstatSync, mkdirSync, readdirSync, realpathSync, rmSync } from "node:fs";
+import { cpSync, copyFileSync, existsSync, lstatSync, mkdirSync, readdirSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const output = ".open-next";
@@ -27,6 +27,15 @@ mkdirSync(dist, { recursive: true });
 cpSync(output, `${dist}/server`, { dereference: true, recursive: true });
 materializeSymlinks(`${dist}/server`);
 copyFileSync(`${output}/worker.js`, `${dist}/server/index.js`);
+
+// Next ships a multi-megabyte font metric database used by build-time font
+// tooling. Our fonts are already compiled into static CSS, so the runtime only
+// needs a valid fallback object. Keeping the full database can push a Worker
+// deployment over its upload limit.
+const fontMetrics = `${dist}/server/server-functions/default/node_modules/next/dist/server/capsize-font-metrics.json`;
+if (existsSync(fontMetrics)) {
+  writeFileSync(fontMetrics, "{}");
+}
 
 if (existsSync(`${output}/assets`)) {
   cpSync(`${output}/assets`, `${dist}/client`, { dereference: true, recursive: true });
