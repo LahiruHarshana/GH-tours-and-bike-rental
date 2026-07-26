@@ -39,6 +39,9 @@ if (existsSync(fontMetrics)) {
 
 if (existsSync(`${output}/assets`)) {
   cpSync(`${output}/assets`, `${dist}/client`, { dereference: true, recursive: true });
+  // Static files are uploaded from dist/client. Leaving a second copy inside
+  // dist/server makes the same images count against the Worker upload limit.
+  rmSync(`${dist}/server/assets`, { force: true, recursive: true });
 }
 
 mkdirSync(`${dist}/.openai`, { recursive: true });
