@@ -126,9 +126,6 @@ export async function getBookings(): Promise<BookingDTO[]> {
     vehicleType: doc.vehicleType ? String(doc.vehicleType) : undefined,
     notes: doc.notes ? String(doc.notes) : undefined,
     adminNotes: doc.adminNotes ? String(doc.adminNotes) : undefined,
-    notificationStatus: doc.notificationStatus as BookingDTO["notificationStatus"],
-    notificationError: doc.notificationError ? String(doc.notificationError) : undefined,
-    notifiedAt: doc.notifiedAt ? new Date(doc.notifiedAt as Date).toISOString() : undefined,
     createdAt: new Date(doc.createdAt as Date).toISOString(),
   }));
 }

@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { SiteContent } from "@/lib/site-content";
+import { CloudinaryImageField } from "@/components/admin/CloudinaryImageField";
 
 function lines(value: string) {
   return value.split("\n").map((item) => item.trim()).filter(Boolean);
@@ -128,7 +129,7 @@ export function ContentForm({ content }: { content: SiteContent }) {
           {field("heroCaption", "Image caption", content.home.heroCaption)}
           {field("heroTitle", "Main heading", content.home.heroTitle, { area: true, help: "Use a new line to control the heading break." })}
           {field("heroPromise", "Promise copy", content.home.heroPromise, { area: true })}
-          {field("heroImage", "Hero image path or URL", content.home.heroImage, { wide: true })}
+          <CloudinaryImageField name="heroImage" label="Hero image" defaultValue={content.home.heroImage} />
           {field("heroImageAlt", "Hero image description", content.home.heroImageAlt, { wide: true })}
           {field("assurances", "Assurance pills", content.home.assurances.join("\n"), { area: true, wide: true, help: "One item per line." })}
         </div>
@@ -172,7 +173,7 @@ export function ContentForm({ content }: { content: SiteContent }) {
           {field("testimonialByline", "Testimonial byline", content.home.testimonialByline)}
           {field("storyEyebrow", "Story eyebrow", content.home.storyEyebrow)}
           {field("storyTitle", "Story heading", content.home.storyTitle)}
-          {field("storyImage", "Story image path or URL", content.home.storyImage)}
+          <CloudinaryImageField name="storyImage" label="Story image" defaultValue={content.home.storyImage} wide={false} />
           {field("storyImageAlt", "Story image description", content.home.storyImageAlt)}
           {field("storyMovements", "Story movement labels", content.home.storyMovements.join("\n"), { area: true, wide: true, help: "One item per line." })}
           {field("finalEyebrow", "Final eyebrow", content.home.finalEyebrow)}
@@ -191,4 +192,3 @@ export function ContentForm({ content }: { content: SiteContent }) {
     </form>
   );
 }
-

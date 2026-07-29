@@ -40,7 +40,7 @@ export function BookingForm({
   const [step, setStep] = useState<1 | 2>(1);
   const [submitting, setSubmitting] = useState(false);
   const [pickupDate, setPickupDate] = useState(initialValues.travelDate ?? "");
-  const [successCode, setSuccessCode] = useState<string | null>(null);
+  const [success, setSuccess] = useState<{ bookingCode: string; whatsappUrl: string } | null>(null);
   const [message, setMessage] = useState<{ type: "error"; text: string } | null>(null);
   const today = localToday();
 
@@ -79,7 +79,7 @@ export function BookingForm({
       const bookingCode = result.data.bookingCode as string;
       formElement.reset();
       setPickupDate("");
-      setSuccessCode(bookingCode);
+      setSuccess({ bookingCode, whatsappUrl: String(result.data.whatsappUrl ?? "") });
       onSuccess?.(bookingCode);
     } catch (error) {
       setMessage({ type: "error", text: error instanceof Error ? error.message : "Could not submit booking." });
@@ -89,10 +89,10 @@ export function BookingForm({
   }
 
   useEffect(() => {
-    if (message || successCode) {
+    if (message || success) {
       window.requestAnimationFrame(() => feedbackRef.current?.focus());
     }
-  }, [message, successCode]);
+  }, [message, success]);
 
   const contactFields = (
     <div className="form-grid form-grid--2">
@@ -201,15 +201,20 @@ export function BookingForm({
     </label>
   );
 
-  if (successCode) {
+  if (success) {
     return (
       <div ref={feedbackRef} className="booking-success" role="status" tabIndex={-1}>
         <span className="booking-success__icon" aria-hidden="true">✓</span>
         <p>Request received</p>
         <h3>We are checking the details.</h3>
-        <p>Our local team will reply by WhatsApp or email. Keep this reference for your records.</p>
-        <strong>{successCode}</strong>
-        <button className="button button--dark" type="button" onClick={() => { setSuccessCode(null); setStep(1); }}>
+        <p>Your request is safely saved. Open WhatsApp to send the prepared details to our admin, then press Send in WhatsApp.</p>
+        <strong>{success.bookingCode}</strong>
+        {success.whatsappUrl && (
+          <a className="button button--gold" href={success.whatsappUrl} target="_blank" rel="noreferrer">
+            Open prepared WhatsApp message ↗
+          </a>
+        )}
+        <button className="button button--dark" type="button" onClick={() => { setSuccess(null); setStep(1); }}>
           Make another request
         </button>
       </div>

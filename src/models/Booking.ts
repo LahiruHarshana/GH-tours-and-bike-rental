@@ -35,14 +35,6 @@ const bookingSchema = new Schema(
     licenseNumber: { type: String, trim: true },
     notes: { type: String, trim: true },
     adminNotes: { type: String, trim: true },
-    notificationStatus: {
-      type: String,
-      enum: ["PENDING", "SENT", "FAILED", "SKIPPED"],
-      default: "PENDING",
-    },
-    notificationError: { type: String, trim: true },
-    notificationMessageId: { type: String, trim: true },
-    notifiedAt: { type: Date },
   },
   { timestamps: true },
 );

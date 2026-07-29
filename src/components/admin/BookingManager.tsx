@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { BookingDTO, BookingStatus, PaymentStatus } from "@/types";
 import { formatDate, formatUSD } from "@/lib/utils";
+import { buildCustomerReplyMessage, buildWhatsAppUrl } from "@/lib/whatsapp-links";
 
 type BookingUpdate = {
   status: BookingStatus;
@@ -11,6 +12,22 @@ type BookingUpdate = {
   totalAmountUSD?: FormDataEntryValue;
   adminNotes?: FormDataEntryValue | null;
 };
+
+function WhatsAppReplyComposer({ booking }: { booking: BookingDTO }) {
+  const [message, setMessage] = useState(() => buildCustomerReplyMessage(booking));
+  return (
+    <div className="booking-whatsapp-composer">
+      <div>
+        <small>WhatsApp reply to customer</small>
+        <strong>Prepared automatically — edit before opening WhatsApp</strong>
+      </div>
+      <textarea value={message} onChange={(event) => setMessage(event.target.value)} rows={9} aria-label="Prepared WhatsApp reply" />
+      <a className="admin-whatsapp-button" href={buildWhatsAppUrl(booking.whatsapp || booking.phone, message)} target="_blank" rel="noreferrer">
+        Open in WhatsApp — press Send there ↗
+      </a>
+    </div>
+  );
+}
 
 export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
   const router = useRouter();
@@ -74,22 +91,6 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
     });
   }
 
-  async function retryNotification() {
-    if (!selected) return;
-    setSaving(true);
-    setMessage("");
-    const response = await fetch(`/api/admin/bookings/${selected.id}/notify`, { method: "POST" });
-    const result = await response.json().catch(() => null);
-    setSaving(false);
-    if (!response.ok || result?.data?.status === "FAILED" || result?.data?.status === "SKIPPED") {
-      window.alert(result?.data?.error ?? result?.message ?? "Could not send WhatsApp alert.");
-      router.refresh();
-      return;
-    }
-    setMessage("WhatsApp alert sent.");
-    router.refresh();
-  }
-
   return (
     <div className="booking-manager">
       <div className="booking-manager__list">
@@ -126,7 +127,7 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
                 <small>Customer</small><strong>{selected.customerName}</strong>
                 <a href={`mailto:${selected.email}`}>{selected.email}</a>
                 <a href={`tel:${selected.phone}`}>{selected.phone}</a>
-                <a href={`https://wa.me/${selected.phone.replace(/\D/g, "")}`} target="_blank" rel="noreferrer">Message guest on WhatsApp ↗</a>
+                <a href={buildWhatsAppUrl(selected.whatsapp || selected.phone, buildCustomerReplyMessage(selected))} target="_blank" rel="noreferrer">Open prepared WhatsApp reply ↗</a>
               </div>
               <div>
                 <small>Travel date</small><strong>{formatDate(selected.travelDate)}</strong>
@@ -142,10 +143,10 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
               </div>
             )}
 
-            <div className="booking-notification">
-              <div><small>Admin WhatsApp alert</small><strong>{selected.notificationStatus ?? "PENDING"}</strong>{selected.notificationError && <span>{selected.notificationError}</span>}</div>
-              {selected.notificationStatus !== "SENT" && <button type="button" className="admin-secondary-button" disabled={saving} onClick={retryNotification}>Retry alert</button>}
-            </div>
+            <WhatsAppReplyComposer
+              key={`${selected.id}-${selected.status}-${selected.totalAmountUSD ?? ""}-${selected.adminNotes ?? ""}`}
+              booking={selected}
+            />
 
             <div className="booking-route">
               <small>Service</small><strong>{selected.sourceTitle ?? selected.type}</strong>

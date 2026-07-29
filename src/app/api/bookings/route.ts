@@ -3,7 +3,8 @@ import { apiSuccess, handleApiError } from "@/lib/api";
 import { connectDB } from "@/lib/db";
 import { bookingSchema } from "@/lib/validation";
 import { Booking } from "@/models/Booking";
-import { sendAdminBookingNotification } from "@/lib/whatsapp";
+import { getWebsiteContent } from "@/lib/data";
+import { buildAdminRequestMessage, buildWhatsAppUrl } from "@/lib/whatsapp-links";
 
 function bookingCode() {
   const date = new Date().toISOString().slice(2, 10).replaceAll("-", "");
@@ -19,27 +20,32 @@ export async function POST(request: Request) {
       bookingCode: bookingCode(),
       status: "PENDING",
       paymentStatus: "UNPAID",
-      notificationStatus: "PENDING",
     });
-    const notification = await sendAdminBookingNotification({
+    const content = await getWebsiteContent();
+    const message = buildAdminRequestMessage({
       bookingCode: booking.bookingCode,
       type: booking.type,
       customerName: booking.customerName,
+      email: booking.email,
       phone: booking.phone,
+      country: booking.country,
+      sourceTitle: booking.sourceTitle,
       travelDate: booking.travelDate,
+      returnDate: booking.returnDate,
+      guests: booking.guests,
       pickupLocation: booking.pickupLocation,
       dropoffLocation: booking.dropoffLocation,
+      flightNumber: booking.flightNumber,
+      arrivalTime: booking.arrivalTime,
+      vehicleType: booking.vehicleType,
+      notes: booking.notes,
     });
-    booking.notificationStatus = notification.status;
-    if ("error" in notification) booking.notificationError = notification.error;
-    if ("messageId" in notification) booking.notificationMessageId = notification.messageId;
-    if (notification.status === "SENT") booking.notifiedAt = new Date();
-    await booking.save();
     return apiSuccess(
       {
         bookingCode: booking.bookingCode,
         status: booking.status,
         message: "Booking request received.",
+        whatsappUrl: buildWhatsAppUrl(content.global.whatsapp, message),
       },
       201,
     );

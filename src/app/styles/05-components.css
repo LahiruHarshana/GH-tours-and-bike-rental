@@ -779,6 +779,13 @@ html[data-scroll-dir="up"] .site-header--condensed {
 .booking-notification small { color: #7b8981; font-size: .65rem; text-transform: uppercase; letter-spacing: .08em; }
 .booking-notification strong { font-size: .78rem; color: #286242; }
 .booking-notification span { color: #8a3d32; font-size: .7rem; max-width: 460px; }
+.booking-whatsapp-composer { display: grid; gap: 12px; margin-bottom: 18px; padding: 18px; border: 1px solid #cfe3d4; border-radius: 14px; background: #f2faf4; }
+.booking-whatsapp-composer > div { display: grid; gap: 2px; }
+.booking-whatsapp-composer small { color: #477257; font-size: .65rem; text-transform: uppercase; letter-spacing: .08em; }
+.booking-whatsapp-composer strong { font-size: .8rem; color: #244d32; }
+.booking-whatsapp-composer textarea { width: 100%; resize: vertical; border: 1px solid #bed5c4; border-radius: 11px; padding: 12px; background: white; color: #17241f; }
+.admin-whatsapp-button { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 12px; background: #1d9b50; color: white; font-size: .8rem; font-weight: 800; }
+.admin-whatsapp-button:hover { background: #168442; }
 .booking-update-form > div { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
 .booking-total { margin-top: 18px; padding-top: 18px; border-top: 1px solid #e5e9e5; display: flex; justify-content: space-between; }
 .booking-total strong { font-family: var(--display); font-size: 1.5rem; }
@@ -789,6 +796,16 @@ html[data-scroll-dir="up"] .site-header--condensed {
 .admin-overlay { display: none; }
 .admin-nested-card { display: grid; gap: 13px; padding: 16px; border: 1px solid rgba(16,35,38,.08); border-radius: 15px; background: #f7faf8; }
 .admin-form-grid--spaced { margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(16,35,38,.08); }
+.cloudinary-field { display: grid; gap: 8px; }
+.cloudinary-field > label > span { font-size: .72rem; font-weight: 750; color: #4e5d56; }
+.cloudinary-field__body { display: grid; grid-template-columns: 180px minmax(0,1fr); gap: 16px; padding: 14px; border: 1px solid rgba(15,35,38,.1); border-radius: 15px; background: #f7faf8; }
+.cloudinary-field__preview { position: relative; min-height: 125px; overflow: hidden; border-radius: 11px; background: #e6ece8; display: grid; place-items: center; color: #829087; font-size: .72rem; }
+.cloudinary-field__preview img { object-fit: cover; }
+.cloudinary-field__controls { display: grid; align-content: center; justify-items: start; gap: 9px; }
+.cloudinary-field__controls input { width: 100%; }
+.cloudinary-field__controls small { color: #7f8b84; font-size: .68rem; }
+.cloudinary-field__file { position: absolute; width: 1px !important; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+.cloudinary-field__error { color: #963d31; font-size: .72rem; }
 
 @media (max-width: 1100px) {
   .desktop-nav { display: none; }
@@ -925,6 +942,7 @@ html[data-scroll-dir="up"] .site-header--condensed {
   .booking-update-form > div { grid-template-columns: 1fr; }
   .booking-decisions { grid-template-columns: 1fr; }
   .booking-notification { align-items: stretch; flex-direction: column; }
+  .cloudinary-field__body { grid-template-columns: 1fr; }
 }
 
 

@@ -75,8 +75,5 @@ export type BookingDTO = {
   vehicleType?: string;
   notes?: string;
   adminNotes?: string;
-  notificationStatus?: "PENDING" | "SENT" | "FAILED" | "SKIPPED";
-  notificationError?: string;
-  notifiedAt?: string;
   createdAt: string;
 };
