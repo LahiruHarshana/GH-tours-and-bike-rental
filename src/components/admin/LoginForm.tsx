@@ -34,8 +34,8 @@ export function LoginForm() {
     <form className="admin-login-form" onSubmit={submit}>
       <label><span>Email address</span><input name="email" type="email" required autoComplete="email" placeholder="admin@ghtours.lk" /></label>
       <label><span>Password</span><input name="password" type="password" required minLength={8} autoComplete="current-password" placeholder="••••••••" /></label>
-      {error && <div className="admin-alert admin-alert--error">{error}</div>}
-      <button className="admin-primary-button" disabled={loading}>{loading ? "Signing in..." : "Sign in to dashboard"}</button>
+      {error && <div className="admin-alert admin-alert--error" role="alert">{error}</div>}
+      <button className="admin-primary-button" disabled={loading} aria-busy={loading}>{loading ? "Signing in..." : "Sign in to dashboard"}</button>
     </form>
   );
 }

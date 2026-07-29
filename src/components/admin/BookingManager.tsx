@@ -1,16 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { BookingDTO, BookingStatus, PaymentStatus } from "@/types";
 import { formatDate, formatUSD } from "@/lib/utils";
 
 export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
   const router = useRouter();
-  const [selected, setSelected] = useState<BookingDTO | null>(bookings[0] ?? null);
+  const [selectedId, setSelectedId] = useState<string | null>(bookings[0]?.id ?? null);
   const [filter, setFilter] = useState<"ALL" | BookingDTO["type"]>("ALL");
   const [saving, setSaving] = useState(false);
-  const filtered = filter === "ALL" ? bookings : bookings.filter((booking) => booking.type === filter);
+  const [message, setMessage] = useState("");
+  const filtered = useMemo(
+    () => filter === "ALL" ? bookings : bookings.filter((booking) => booking.type === filter),
+    [bookings, filter],
+  );
+  const selected = filtered.find((booking) => booking.id === selectedId) ?? filtered[0] ?? null;
+
+  function changeFilter(nextFilter: typeof filter) {
+    setFilter(nextFilter);
+    setMessage("");
+    const nextBookings = nextFilter === "ALL" ? bookings : bookings.filter((booking) => booking.type === nextFilter);
+    setSelectedId(nextBookings[0]?.id ?? null);
+  }
 
   async function update(form: FormData) {
     if (!selected) return;
@@ -21,6 +33,7 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
       totalAmountUSD: form.get("totalAmountUSD") || undefined,
       adminNotes: form.get("adminNotes"),
     };
+    setMessage("");
     const response = await fetch(`/api/admin/bookings/${selected.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -32,17 +45,18 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
       window.alert(result?.message ?? "Could not update booking.");
       return;
     }
+    setMessage("Booking updated successfully.");
     router.refresh();
   }
 
   return (
     <div className="booking-manager">
       <div className="booking-manager__list">
-        <div className="booking-filters">{(["ALL", "AIRPORT", "TOUR", "BIKE"] as const).map((item) => <button key={item} className={filter === item ? "is-active" : ""} onClick={() => setFilter(item)}>{item === "ALL" ? "All" : item.toLowerCase()}</button>)}</div>
+        <div className="booking-filters" aria-label="Filter bookings">{(["ALL", "AIRPORT", "TOUR", "BIKE"] as const).map((item) => <button key={item} type="button" className={filter === item ? "is-active" : ""} aria-pressed={filter === item} onClick={() => changeFilter(item)}>{item === "ALL" ? "All" : item.toLowerCase()}</button>)}</div>
         <div className="booking-list">
           {filtered.length === 0 && <div className="admin-empty"><span>◌</span><h3>No bookings found</h3><p>New public booking requests will appear here.</p></div>}
           {filtered.map((booking) => (
-            <button key={booking.id} className={selected?.id === booking.id ? "is-active" : ""} onClick={() => setSelected(booking)}>
+            <button key={booking.id} type="button" className={selected?.id === booking.id ? "is-active" : ""} aria-pressed={selected?.id === booking.id} onClick={() => { setSelectedId(booking.id); setMessage(""); }}>
               <div><span className={`type-dot type-dot--${booking.type.toLowerCase()}`} /> <strong>{booking.customerName}</strong><small>{booking.bookingCode}</small></div>
               <div><span className={`admin-status admin-status--${booking.status.toLowerCase()}`}>{booking.status.replace("_", " ")}</span><small>{formatDate(booking.travelDate)}</small></div>
             </button>
@@ -60,6 +74,7 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
               <label><span>Confirmed total (USD)</span><input name="totalAmountUSD" type="number" min="0" step="1" defaultValue={selected.totalAmountUSD ?? ""} key={`${selected.id}-amount`} placeholder="0" /></label>
               <label><span>Internal notes</span><textarea name="adminNotes" rows={4} key={`${selected.id}-notes`} placeholder="Driver assignment, payment details, special handling..." /></label>
               <button className="admin-primary-button" disabled={saving}>{saving ? "Saving..." : "Update booking"}</button>
+              {message && <p className="admin-save-message" role="status">{message}</p>}
             </form>
             {selected.totalAmountUSD && <div className="booking-total"><span>Confirmed value</span><strong>{formatUSD(selected.totalAmountUSD)}</strong></div>}
           </>

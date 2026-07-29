@@ -137,7 +137,7 @@ export default async function HomePage() {
           </Link>
 
           {bikes.slice(0, 2).map((bike) => (
-            <article className="ss-product-card ss-product-card--dark" key={bike.id}>
+            <Link href="/bikes" className="ss-product-card ss-product-card--dark ss-product-card--link" key={bike.id} aria-label={`View ${bike.name} rental details`}>
               <span className="ss-product-card__image">
                 <Image
                   src={bike.image}
@@ -154,12 +154,13 @@ export default async function HomePage() {
                   <em>{bike.available ? "Available" : "Unavailable"}</em>
                   <b>{formatUSD(bike.dailyRateUSD)}<small>/day</small></b>
                 </span>
+                <span className="ss-product-card__action">View rental details <b aria-hidden="true">→</b></span>
               </span>
-            </article>
+            </Link>
           ))}
 
           {bikes[2] && (
-            <article className="ss-product-card ss-product-card--dark">
+            <Link href="/bikes" className="ss-product-card ss-product-card--dark ss-product-card--link" aria-label={`View ${bikes[2].name} rental details`}>
               <span className="ss-product-card__image">
                 <Image
                   src={bikes[2].image}
@@ -176,8 +177,9 @@ export default async function HomePage() {
                   <em>{bikes[2].available ? "Available" : "Unavailable"}</em>
                   <b>{formatUSD(bikes[2].dailyRateUSD)}<small>/day</small></b>
                 </span>
+                <span className="ss-product-card__action">View rental details <b aria-hidden="true">→</b></span>
               </span>
-            </article>
+            </Link>
           )}
 
           <div className="ss-proof-card">

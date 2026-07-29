@@ -5,8 +5,9 @@ import { ScrollExperience } from "@/components/public/motion/ScrollExperience";
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <PublicHeader />
-      <main>{children}</main>
+      <main id="main-content" tabIndex={-1}>{children}</main>
       <ScrollExperience />
       <PublicFooter />
     </>

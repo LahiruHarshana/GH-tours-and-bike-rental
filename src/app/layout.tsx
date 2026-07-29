@@ -16,6 +16,7 @@ import "./styles/08-journeys-modern.css";
 import "./styles/09-route-modern.css";
 import "./styles/10-editorial-polish.css";
 import "./styles/11-stayscape-template.css";
+import "./styles/12-usability.css";
 import { siteConfig } from "@/config/site";
 
 const instrumentSans = Instrument_Sans({

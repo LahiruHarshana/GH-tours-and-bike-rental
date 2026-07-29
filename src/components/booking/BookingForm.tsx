@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import type { BookingType } from "@/types";
 
 export type BookingInitialValues = Partial<{
@@ -36,6 +36,7 @@ export function BookingForm({
   onSuccess?: (bookingCode: string) => void;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
+  const feedbackRef = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState<1 | 2>(1);
   const [submitting, setSubmitting] = useState(false);
   const [pickupDate, setPickupDate] = useState(initialValues.travelDate ?? "");
@@ -86,6 +87,12 @@ export function BookingForm({
       setSubmitting(false);
     }
   }
+
+  useEffect(() => {
+    if (message || successCode) {
+      window.requestAnimationFrame(() => feedbackRef.current?.focus());
+    }
+  }, [message, successCode]);
 
   const contactFields = (
     <div className="form-grid form-grid--2">
@@ -196,8 +203,8 @@ export function BookingForm({
 
   if (successCode) {
     return (
-      <div className="booking-success" role="status">
-        <span className="booking-success__icon">✓</span>
+      <div ref={feedbackRef} className="booking-success" role="status" tabIndex={-1}>
+        <span className="booking-success__icon" aria-hidden="true">✓</span>
         <p>Request received</p>
         <h3>We are checking the details.</h3>
         <p>Our local team will reply by WhatsApp or email. Keep this reference for your records.</p>
@@ -231,7 +238,7 @@ export function BookingForm({
           {notesField}
         </fieldset>
 
-        {message && <div className="form-message form-message--error">{message.text}</div>}
+        {message && <div ref={feedbackRef} className="form-message form-message--error" role="alert" tabIndex={-1}>{message.text}</div>}
         <div className="booking-form__actions">
           {step === 1 ? (
             <button className="button button--gold button--wide" type="button" onClick={continueToContact}>
@@ -240,7 +247,7 @@ export function BookingForm({
           ) : (
             <>
               <button className="booking-form__back" type="button" onClick={() => setStep(1)}>← Back</button>
-              <button className="button button--gold" disabled={submitting}>
+              <button className="button button--gold" disabled={submitting} aria-busy={submitting}>
                 {submitting ? "Sending request..." : type === "AIRPORT" ? "Request transfer" : type === "BIKE" ? "Request this bike" : "Request this tour"}
               </button>
             </>
@@ -253,11 +260,11 @@ export function BookingForm({
 
   return (
     <form ref={formRef} className="booking-form" onSubmit={submit}>
-      {contactFields}
       {detailFields}
+      {contactFields}
       {notesField}
-      {message && <div className="form-message form-message--error">{message.text}</div>}
-      <button className="button button--gold button--wide" disabled={submitting}>
+      {message && <div ref={feedbackRef} className="form-message form-message--error" role="alert" tabIndex={-1}>{message.text}</div>}
+      <button className="button button--gold button--wide" disabled={submitting} aria-busy={submitting}>
         {submitting ? "Sending request..." : type === "AIRPORT" ? "Request airport transfer" : type === "BIKE" ? "Request this bike" : "Request this tour"}
       </button>
       <p className="form-footnote">No online payment required. Our local team confirms availability and the final price by WhatsApp or email.</p>

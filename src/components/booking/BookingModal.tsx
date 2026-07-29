@@ -45,6 +45,7 @@ export function BookingModal({
   );
   const modalRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
+  const descriptionId = useId();
   const copy = modalCopy[type];
 
   useEffect(() => {
@@ -102,6 +103,7 @@ export function BookingModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
+        aria-describedby={descriptionId}
         onMouseDown={(event) => event.stopPropagation()}
       >
         <button className="modal-close" onClick={onClose} aria-label="Close booking form">×</button>
@@ -110,7 +112,7 @@ export function BookingModal({
           <span className="booking-modal__type">{copy.label}</span>
           <p className="booking-modal__selected">Your selection</p>
           <h2 id={titleId}>{sourceTitle ?? "Start your Sri Lanka journey"}</h2>
-          <p className="booking-modal__description">{copy.description}</p>
+          <p id={descriptionId} className="booking-modal__description">{copy.description}</p>
           <ul>
             {copy.benefits.map((benefit) => <li key={benefit}><span>✓</span>{benefit}</li>)}
           </ul>

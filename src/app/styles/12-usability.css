@@ -1,0 +1,462 @@
+/* Usability and accessibility layer
+   Kept last in the cascade so interaction behavior stays consistent across themes. */
+
+.skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: .75rem;
+  left: .75rem;
+  padding: .75rem 1rem;
+  border-radius: 999px;
+  background: #080909;
+  color: #fff;
+  font-weight: 750;
+  transform: translateY(-180%);
+  transition: transform .2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+#main-content:focus {
+  outline: none;
+}
+
+/* Direct desktop navigation avoids hiding every destination behind a menu. */
+.ss-header__desktop-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 2vw, 2rem);
+  justify-self: center;
+}
+
+.ss-header__desktop-nav a {
+  position: relative;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ss-ink);
+  font-size: .78rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.ss-header__desktop-nav a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: .25rem;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ss-orange);
+  transform: scaleX(0);
+  transition: transform .2s ease;
+}
+
+.ss-header__desktop-nav a:hover::after,
+.ss-header__desktop-nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+@media (min-width: 1051px) {
+  .ss-header__inner {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: clamp(1.5rem, 3vw, 4rem);
+  }
+
+  .ss-header__brand {
+    justify-self: start;
+  }
+
+  .ss-header__menu {
+    display: none;
+  }
+}
+
+@media (max-width: 1050px) {
+  .ss-header__desktop-nav {
+    display: none;
+  }
+
+  .ss-header__menu {
+    display: inline-flex;
+  }
+
+  .ss-header__menu b {
+    font: inherit;
+  }
+}
+
+/* Make home-page rental cards clearly actionable. */
+.ss-product-card--link {
+  display: block;
+  color: inherit;
+}
+
+.ss-product-card__action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: .9rem;
+  border-top: 1px solid rgb(255 255 255 / .18);
+  color: rgb(255 255 255 / .82);
+  font-size: .72rem;
+  font-weight: 650;
+}
+
+.ss-product-card__action b {
+  font-size: 1rem;
+  transition: transform .2s ease;
+}
+
+.ss-product-card--link:hover .ss-product-card__action b {
+  transform: translateX(.3rem);
+}
+
+/* Complete the booking dialog and two-step form layout. */
+.booking-modal {
+  display: grid;
+  width: min(64rem, 100%);
+  grid-template-columns: minmax(17rem, .8fr) minmax(0, 1.2fr);
+  max-height: min(52rem, calc(100dvh - 2rem));
+  padding: 0;
+  overflow: hidden;
+}
+
+.booking-modal__summary {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(2rem, 4vw, 3.25rem);
+}
+
+.booking-modal__type {
+  margin-bottom: 2rem;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.booking-modal__selected {
+  margin: 0 0 .5rem;
+  color: rgb(255 255 255 / .58);
+  font-size: .68rem;
+  font-weight: 750;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.booking-modal__summary h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2rem, 3.5vw, 3.25rem);
+  line-height: 1;
+}
+
+.booking-modal__description {
+  margin: 1.25rem 0;
+  font-size: .92rem;
+  line-height: 1.6;
+}
+
+.booking-modal__summary ul {
+  display: grid;
+  gap: .65rem;
+  margin: .5rem 0 2rem;
+  padding: 0;
+  list-style: none;
+  color: rgb(255 255 255 / .86);
+  font-size: .82rem;
+}
+
+.booking-modal__summary li {
+  display: flex;
+  gap: .65rem;
+  align-items: flex-start;
+}
+
+.booking-modal__summary li span {
+  color: var(--color-sun, #f8d98f);
+}
+
+.booking-modal__help {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgb(255 255 255 / .16);
+}
+
+.booking-modal__help small {
+  color: #fff;
+  font-weight: 750;
+}
+
+.booking-modal__help p {
+  margin: .4rem 0 0;
+  font-size: .78rem;
+}
+
+.booking-modal__form-panel {
+  min-width: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--color-paper, #f7f4ec);
+}
+
+.booking-form--compact {
+  min-height: 100%;
+  align-content: start;
+  padding: clamp(4.5rem, 7vw, 5.5rem) clamp(1.25rem, 4vw, 3.25rem) 2rem;
+}
+
+.booking-progress {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--color-line, rgb(0 0 0 / .12));
+}
+
+.booking-progress span {
+  display: flex;
+  gap: .6rem;
+  align-items: center;
+  padding: 0 0 .9rem;
+  color: var(--color-ink-soft, #66706b);
+  font-size: .72rem;
+}
+
+.booking-progress span i {
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  border-radius: 50%;
+  font-style: normal;
+}
+
+.booking-progress span b {
+  font-weight: 700;
+}
+
+.booking-progress span.is-active {
+  color: var(--color-ink, #17241f);
+}
+
+.booking-form__heading {
+  margin-bottom: .5rem;
+}
+
+.booking-form__heading > span {
+  color: var(--color-moss, #356b56);
+  font-size: .67rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.booking-form__heading h3 {
+  margin: .5rem 0;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.05;
+}
+
+.booking-form__heading p {
+  margin: 0 0 1.25rem;
+  color: var(--color-ink-soft, #66706b);
+  font-size: .84rem;
+}
+
+.booking-form__step {
+  display: none;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.booking-form__step.is-active {
+  display: block;
+}
+
+.booking-form--compact .form-grid {
+  gap: 1.2rem 1rem;
+}
+
+.booking-form--compact label {
+  min-width: 0;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  min-height: 3rem;
+  padding-inline: .25rem;
+}
+
+.booking-form textarea {
+  resize: vertical;
+}
+
+.booking-form__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: .25rem;
+}
+
+.booking-form__back {
+  min-height: 2.75rem;
+  border: 0;
+  padding: 0 .5rem;
+  color: var(--color-ink-soft, #66706b);
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.form-message {
+  line-height: 1.45;
+}
+
+.form-message:focus,
+.booking-success:focus {
+  outline: none;
+}
+
+.booking-success {
+  display: grid;
+  min-height: 30rem;
+  place-content: center;
+  justify-items: center;
+  padding: clamp(2rem, 5vw, 4rem);
+  text-align: center;
+}
+
+.booking-success__icon {
+  display: grid;
+  width: 4rem;
+  height: 4rem;
+  place-items: center;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: #dfeee6;
+  color: #235c42;
+  font-size: 1.5rem;
+}
+
+.booking-success > p:first-of-type {
+  margin: 0;
+  color: #356b56;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.booking-success h3 {
+  margin: .5rem 0;
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 500;
+}
+
+.booking-success > strong {
+  margin: 1rem 0 1.5rem;
+  padding: .6rem 1rem;
+  border-radius: .6rem;
+  background: rgb(0 0 0 / .06);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .08em;
+}
+
+/* Clearer admin interaction states. */
+.admin-menu-button {
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: .75rem;
+  background: #fff;
+  border: 1px solid rgb(16 35 38 / .12);
+}
+
+.admin-menu-button span {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.admin-save-message {
+  margin: 0;
+  padding: .75rem 1rem;
+  border-radius: .65rem;
+  background: #e1f0e7;
+  color: #245e41;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .booking-modal {
+    display: block;
+    max-height: calc(100dvh - 1rem);
+    overflow-y: auto;
+  }
+
+  .modal-backdrop {
+    padding: .5rem;
+  }
+
+  .booking-modal__summary {
+    padding: 1.5rem;
+  }
+
+  .booking-modal__description,
+  .booking-modal__summary ul {
+    margin-bottom: 1rem;
+  }
+
+  .booking-modal__help {
+    display: none;
+  }
+
+  .booking-form--compact {
+    padding-top: 3.5rem;
+  }
+
+  .booking-progress span b {
+    font-size: .66rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .ss-header__menu b {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .ss-header__menu {
+    width: 2.7rem;
+    padding: 0;
+  }
+
+  .ss-header__cta {
+    padding-inline: .8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link,
+  .ss-header__desktop-nav a::after,
+  .ss-product-card__action b {
+    transition: none;
+  }
+}

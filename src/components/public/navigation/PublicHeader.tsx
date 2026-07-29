@@ -26,14 +26,22 @@ export function PublicHeader() {
   return (
     <header className={`site-header ss-header ${pathname === "/" ? "ss-header--home" : "ss-header--inner"}`}>
       <div className="ss-header__inner">
-        <button className="ss-header__pill ss-header__menu" type="button" onClick={() => setOpen(true)} aria-expanded={open} aria-controls="mobile-nav-dialog">
-          <span aria-hidden="true">••</span> Menu
+        <button className="ss-header__pill ss-header__menu" type="button" onClick={() => setOpen(true)} aria-expanded={open} aria-controls="mobile-nav-dialog" aria-label="Open navigation menu">
+          <span aria-hidden="true">••</span><b>Menu</b>
         </button>
 
         <Link href="/" className="ss-header__brand" aria-label={siteConfig.name}>
           <i aria-hidden="true">GH</i>
           <span>GH Tours</span>
         </Link>
+
+        <nav className="ss-header__desktop-nav" aria-label="Main navigation">
+          {navigation.slice(1, 5).map((item) => (
+            <Link key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined}>
+              {item.label}
+            </Link>
+          ))}
+        </nav>
 
         <Link className="ss-header__pill ss-header__cta" href="/contact">Plan your journey</Link>
       </div>
@@ -52,10 +60,10 @@ export function PublicHeader() {
       >
         <div className="ss-menu-dialog__panel">
           <div className="ss-menu-dialog__top">
-            <Link href="/" className="ss-header__brand" onClick={() => setOpen(false)}>
+            <Link href="/" className="ss-header__brand" onClick={() => setOpen(false)} aria-label={siteConfig.name}>
               <i aria-hidden="true">GH</i><span>GH Tours</span>
             </Link>
-            <button type="button" onClick={() => setOpen(false)} aria-label="Close navigation">Close</button>
+            <button type="button" onClick={() => setOpen(false)} aria-label="Close navigation menu">Close</button>
           </div>
           <nav aria-label="Main navigation">
             {navigation.map((item, index) => (
