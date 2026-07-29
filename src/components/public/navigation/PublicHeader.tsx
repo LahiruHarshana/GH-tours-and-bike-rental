@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { navigation, siteConfig } from "@/config/site";
+import { navigation } from "@/config/site";
+import type { SiteContent } from "@/lib/site-content";
 
-export function PublicHeader() {
+export function PublicHeader({ content }: { content: SiteContent["global"] }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -30,9 +31,9 @@ export function PublicHeader() {
           <span aria-hidden="true">••</span><b>Menu</b>
         </button>
 
-        <Link href="/" className="ss-header__brand" aria-label={siteConfig.name}>
+        <Link href="/" className="ss-header__brand" aria-label={content.brandName}>
           <i aria-hidden="true">GH</i>
-          <span>GH Tours</span>
+          <span>{content.brandName}</span>
         </Link>
 
         <nav className="ss-header__desktop-nav" aria-label="Main navigation">
@@ -60,8 +61,8 @@ export function PublicHeader() {
       >
         <div className="ss-menu-dialog__panel">
           <div className="ss-menu-dialog__top">
-            <Link href="/" className="ss-header__brand" onClick={() => setOpen(false)} aria-label={siteConfig.name}>
-              <i aria-hidden="true">GH</i><span>GH Tours</span>
+            <Link href="/" className="ss-header__brand" onClick={() => setOpen(false)} aria-label={content.brandName}>
+              <i aria-hidden="true">GH</i><span>{content.brandName}</span>
             </Link>
             <button type="button" onClick={() => setOpen(false)} aria-label="Close navigation menu">Close</button>
           </div>
@@ -73,8 +74,8 @@ export function PublicHeader() {
             ))}
           </nav>
           <div className="ss-menu-dialog__foot">
-            <p>{siteConfig.description}</p>
-            <a href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noreferrer">Chat on WhatsApp ↗</a>
+            <p>Private Sri Lanka journeys, airport transfers and reliable motorbike rentals.</p>
+            <a href={`https://wa.me/${content.whatsapp}`} target="_blank" rel="noreferrer">Chat on WhatsApp ↗</a>
           </div>
         </div>
       </dialog>

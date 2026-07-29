@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { PublicFooter } from "@/components/public/navigation/PublicFooter";
 import { PublicHeader } from "@/components/public/navigation/PublicHeader";
+import { getWebsiteContent } from "@/lib/data";
 
-export default function NotFound() {
+export default async function NotFound() {
+  const content = await getWebsiteContent();
   return (
     <>
-      <PublicHeader />
+      <PublicHeader content={content.global} />
       <main id="main-content" className="ss-state-page">
         <div className="ss-state-page__number" aria-hidden="true">404</div>
         <div className="ss-state-page__card">
@@ -18,7 +20,7 @@ export default function NotFound() {
           </div>
         </div>
       </main>
-      <PublicFooter />
+      <PublicFooter content={content.global} />
     </>
   );
 }

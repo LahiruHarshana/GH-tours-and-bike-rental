@@ -1,43 +1,45 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AirportQuickBook } from "@/components/booking/AirportQuickBook";
-import { getBikes, getTours } from "@/lib/data";
+import { getBikes, getTours, getWebsiteContent } from "@/lib/data";
 import { formatUSD } from "@/lib/utils";
-import { siteConfig } from "@/config/site";
 
 export const dynamic = "force-dynamic";
 
-const guestStats = [
-  { value: "4.9/5", label: "Guest rating", detail: "From travellers who explored with us" },
-  { value: "20 min", label: "Typical reply", detail: "A real local team, ready every day" },
-  { value: "100%", label: "Private journeys", detail: "Every route shaped around your pace" },
-];
+function Multiline({ text }: { text: string }) {
+  return text.split("\n").map((line, index) => (
+    <span key={`${line}-${index}`}>{index > 0 && <br />}{line}</span>
+  ));
+}
 
 export default async function HomePage() {
-  const [tours, bikes] = await Promise.all([
+  const [tours, bikes, content] = await Promise.all([
     getTours({ featured: true, limit: 3 }),
     getBikes({ limit: 3 }),
+    getWebsiteContent(),
   ]);
+  const home = content.home;
 
   return (
     <div className="stayscape-home">
       <div id="hero-sentinel" className="stayscape-sentinel" />
 
       <section className="ss-hero" aria-labelledby="ss-hero-title">
-        <p className="ss-hero__eyebrow">Private Sri Lanka journeys</p>
-        <h1 id="ss-hero-title">Sri Lanka,<br />at your pace.</h1>
+        <p className="ss-hero__eyebrow">{home.heroEyebrow}</p>
+        <h1 id="ss-hero-title"><Multiline text={home.heroTitle} /></h1>
 
         <div className="ss-hero__visual">
           <Image
-            src="/images/hero-sigiriya-cinematic.webp"
-            alt="Sigiriya rock fortress rising above Sri Lanka's green central plains"
+            src={home.heroImage}
+            alt={home.heroImageAlt}
             fill
             priority
             sizes="(max-width: 700px) 100vw, 96vw"
+            unoptimized={home.heroImage.startsWith("http")}
           />
           <div className="ss-hero__caption">
             <span>7.8731° N</span>
-            <strong>Ancient wonder</strong>
+            <strong>{home.heroCaption}</strong>
             <span>80.7718° E</span>
           </div>
         </div>
@@ -59,11 +61,9 @@ export default async function HomePage() {
         </div>
 
         <div className="ss-hero__promise">
-          <p>From the first airport hello to the last ocean sunset, every private journey is shaped around how you want the island to feel.</p>
+          <p>{home.heroPromise}</p>
           <ul aria-label="Journey assurances">
-            <li>Locally planned</li>
-            <li>Flexible by design</li>
-            <li>Real support, every day</li>
+            {home.assurances.map((assurance) => <li key={assurance}>{assurance}</li>)}
           </ul>
         </div>
       </section>
@@ -77,9 +77,9 @@ export default async function HomePage() {
       </section>
 
       <section className="ss-experiences" aria-labelledby="ss-experiences-title">
-        <p className="ss-section-kicker">Signature journeys</p>
-        <h2 id="ss-experiences-title">Sri Lanka,<br />thoughtfully arranged.</h2>
-        <p className="ss-section-copy">Start with one of our most-loved routes. Every itinerary can be adjusted around your arrival, pace and interests.</p>
+        <p className="ss-section-kicker">{home.experiencesEyebrow}</p>
+        <h2 id="ss-experiences-title"><Multiline text={home.experiencesTitle} /></h2>
+        <p className="ss-section-copy">{home.experiencesCopy}</p>
 
         <nav className="ss-pills" aria-label="Explore our services">
           <Link href="/tours" className="is-active">Tours</Link>
@@ -122,10 +122,10 @@ export default async function HomePage() {
 
         <section className="ss-journey-chooser" aria-labelledby="ss-journey-chooser-title">
           <header className="ss-journey-chooser__intro">
-            <span>Choose your way in</span>
-            <div>
-              <h3 id="ss-journey-chooser-title">How do you want<br />to explore?</h3>
-              <p>Start with the feeling you want. We will help shape the details around your dates, pace and interests.</p>
+          <span>{home.chooserEyebrow}</span>
+          <div>
+              <h3 id="ss-journey-chooser-title"><Multiline text={home.chooserTitle} /></h3>
+              <p>{home.chooserCopy}</p>
             </div>
           </header>
 
@@ -156,15 +156,15 @@ export default async function HomePage() {
 
       <section className="ss-dark" aria-labelledby="ss-dark-title">
         <div className="ss-dark__intro">
-          <p>Freedom on two wheels</p>
-          <h2 id="ss-dark-title">Choose the ride.<br />Follow the coast.</h2>
+          <p>{home.bikeEyebrow}</p>
+          <h2 id="ss-dark-title"><Multiline text={home.bikeTitle} /></h2>
         </div>
 
         <div className="ss-mosaic">
           <Link href="/airport-hire" className="ss-orange-card ss-orange-card--wide">
             <span>
-              <strong>From arrivals hall<br />to island calm.</strong>
-              <small>Your driver waits with your name, helps with luggage and takes the best route—whether you are heading to Colombo, Galle, Kandy, Ella or beyond.</small>
+              <strong><Multiline text={home.airportCardTitle} /></strong>
+              <small>{home.airportCardCopy}</small>
             </span>
             <i className="ss-round-arrow">↗</i>
             <span className="ss-service-tags">Flight tracked · Fixed fare · Meet &amp; greet</span>
@@ -218,11 +218,11 @@ export default async function HomePage() {
 
           <div className="ss-proof-card">
             <div className="ss-proof-card__intro">
-              <strong>Small details.<br />Big difference.</strong>
-              <p>Thoughtful planning, quick answers and a journey that always feels like your own.</p>
+              <strong><Multiline text={home.proofTitle} /></strong>
+              <p>{home.proofCopy}</p>
             </div>
             <div className="ss-proof-card__stats">
-              {guestStats.map((stat) => (
+              {home.guestStats.map((stat) => (
                 <div key={stat.label}>
                   <strong>{stat.value}</strong>
                   <span>{stat.label}</span>
@@ -234,23 +234,19 @@ export default async function HomePage() {
         </div>
 
         <blockquote className="ss-quote">
-          “It felt less like following a tour and more like travelling with someone who genuinely wanted us to love the island.”
-          <footer>Maya &amp; Daniel · United Kingdom · Cultural Triangle</footer>
+          “{home.testimonial}”
+          <footer>{home.testimonialByline}</footer>
         </blockquote>
       </section>
 
       <section className="ss-story" aria-labelledby="ss-story-title">
-        <p className="ss-section-kicker">The island in five movements</p>
-        <h2 id="ss-story-title">Sri Lanka</h2>
+        <p className="ss-section-kicker">{home.storyEyebrow}</p>
+        <h2 id="ss-story-title">{home.storyTitle}</h2>
 
         <div className="ss-story__portrait">
-          <Image src="/images/elephant.webp" alt="An elephant in the Sri Lankan wilderness" fill sizes="(max-width: 700px) 72vw, 28vw" />
+          <Image src={home.storyImage} alt={home.storyImageAlt} fill sizes="(max-width: 700px) 72vw, 28vw" unoptimized={home.storyImage.startsWith("http")} />
           <div className="ss-story__overlay">
-            <span>Stone</span>
-            <span>Tea</span>
-            <span>Wild</span>
-            <span>Road</span>
-            <span>Sea</span>
+            {home.storyMovements.map((movement) => <span key={movement}>{movement}</span>)}
           </div>
         </div>
 
@@ -262,14 +258,14 @@ export default async function HomePage() {
         </div>
 
         <div className="ss-final-cta">
-          <p>Your island story starts here</p>
-          <h2>Tell us where<br />you want to<br /><em>wake up</em> next.</h2>
+          <p>{home.finalEyebrow}</p>
+          <h2><Multiline text={home.finalTitle} /><br /><em>{home.finalAccent}</em> next.</h2>
           <span className="ss-final-cta__arrow">↗</span>
           <div className="ss-final-cta__copy">
-            <p>Share your dates, interests and travel style. We will shape a route that feels unmistakably yours.</p>
+            <p>{home.finalCopy}</p>
             <div>
               <Link href="/contact">Plan a custom journey</Link>
-              <a href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noreferrer">Chat on WhatsApp ↗</a>
+              <a href={`https://wa.me/${content.global.whatsapp}`} target="_blank" rel="noreferrer">Chat on WhatsApp ↗</a>
             </div>
           </div>
         </div>

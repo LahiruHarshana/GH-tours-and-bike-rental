@@ -3,6 +3,7 @@ import { apiSuccess, handleApiError } from "@/lib/api";
 import { connectDB } from "@/lib/db";
 import { bookingSchema } from "@/lib/validation";
 import { Booking } from "@/models/Booking";
+import { sendAdminBookingNotification } from "@/lib/whatsapp";
 
 function bookingCode() {
   const date = new Date().toISOString().slice(2, 10).replaceAll("-", "");
@@ -18,7 +19,22 @@ export async function POST(request: Request) {
       bookingCode: bookingCode(),
       status: "PENDING",
       paymentStatus: "UNPAID",
+      notificationStatus: "PENDING",
     });
+    const notification = await sendAdminBookingNotification({
+      bookingCode: booking.bookingCode,
+      type: booking.type,
+      customerName: booking.customerName,
+      phone: booking.phone,
+      travelDate: booking.travelDate,
+      pickupLocation: booking.pickupLocation,
+      dropoffLocation: booking.dropoffLocation,
+    });
+    booking.notificationStatus = notification.status;
+    if ("error" in notification) booking.notificationError = notification.error;
+    if ("messageId" in notification) booking.notificationMessageId = notification.messageId;
+    if (notification.status === "SENT") booking.notifiedAt = new Date();
+    await booking.save();
     return apiSuccess(
       {
         bookingCode: booking.bookingCode,

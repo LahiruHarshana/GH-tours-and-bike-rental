@@ -8,6 +8,7 @@ import { BrandMark } from "@/components/public/media/BrandMark";
 const links = [
   { href: "/admin", label: "Overview", icon: "⌘" },
   { href: "/admin/bookings", label: "Bookings", icon: "▦" },
+  { href: "/admin/content", label: "Website content", icon: "✎" },
   { href: "/admin/tours", label: "Tour packages", icon: "◆" },
   { href: "/admin/bikes", label: "Bike fleet", icon: "◉" },
 ];

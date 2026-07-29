@@ -700,6 +700,7 @@ html[data-scroll-dir="up"] .site-header--condensed {
 .admin-status--in_progress { background: #dde9f4; color: #2c5e86; }
 .admin-status--completed { background: #e3e6ef; color: #4b5677; }
 .admin-status--cancelled { background: #f3dfdc; color: #8a3d32; }
+.admin-status--declined { background: #f3dfdc; color: #8a3d32; }
 .revenue-total { padding: 27px 24px; display: grid; background: linear-gradient(135deg,#0b2f3a,#117a89); color: white; }
 .revenue-total span { font-size: .72rem; opacity: .7; }
 .revenue-total strong { font-family: var(--body); font-weight: 900; font-size: 3rem; color: var(--gold-bright); }
@@ -770,6 +771,14 @@ html[data-scroll-dir="up"] .site-header--condensed {
 .booking-route p span { color: #89938d; }
 .booking-route blockquote { background: #f5f1e8; border-left: 3px solid var(--gold); margin: 14px 0 0; padding: 12px; color: #5e6b64; font-size: .8rem; }
 .booking-update-form { display: grid; gap: 14px; margin-top: 20px; }
+.booking-decisions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.admin-decline-button { min-height: 44px; border: 1px solid #e6bbb4; border-radius: 12px; background: #fff4f2; color: #923f33; font-weight: 800; }
+.admin-decline-button:hover { background: #f7dfdb; }
+.booking-notification { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; padding: 14px 16px; border: 1px solid #dce6df; border-radius: 12px; background: #f5faf7; }
+.booking-notification > div { display: grid; gap: 2px; }
+.booking-notification small { color: #7b8981; font-size: .65rem; text-transform: uppercase; letter-spacing: .08em; }
+.booking-notification strong { font-size: .78rem; color: #286242; }
+.booking-notification span { color: #8a3d32; font-size: .7rem; max-width: 460px; }
 .booking-update-form > div { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
 .booking-total { margin-top: 18px; padding-top: 18px; border-top: 1px solid #e5e9e5; display: flex; justify-content: space-between; }
 .booking-total strong { font-family: var(--display); font-size: 1.5rem; }
@@ -778,6 +787,8 @@ html[data-scroll-dir="up"] .site-header--condensed {
 .admin-empty h3 { margin: 10px 0 0; color: #53625a; }
 .admin-empty p { margin: 5px 0; font-size: .78rem; }
 .admin-overlay { display: none; }
+.admin-nested-card { display: grid; gap: 13px; padding: 16px; border: 1px solid rgba(16,35,38,.08); border-radius: 15px; background: #f7faf8; }
+.admin-form-grid--spaced { margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(16,35,38,.08); }
 
 @media (max-width: 1100px) {
   .desktop-nav { display: none; }
@@ -912,6 +923,8 @@ html[data-scroll-dir="up"] .site-header--condensed {
   .itinerary-editor__row textarea { grid-column: 2 / 4; }
   .booking-manager__detail { padding: 17px; }
   .booking-update-form > div { grid-template-columns: 1fr; }
+  .booking-decisions { grid-template-columns: 1fr; }
+  .booking-notification { align-items: stretch; flex-direction: column; }
 }
 
 

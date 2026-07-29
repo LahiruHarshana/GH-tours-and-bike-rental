@@ -90,8 +90,60 @@ export const bikeSchema = z.object({
 });
 
 export const bookingStatusSchema = z.object({
-  status: z.enum(["PENDING", "CONFIRMED", "IN_PROGRESS", "COMPLETED", "CANCELLED"]),
+  status: z.enum(["PENDING", "CONFIRMED", "DECLINED", "IN_PROGRESS", "COMPLETED", "CANCELLED"]),
   paymentStatus: z.enum(["UNPAID", "PARTIAL", "PAID", "REFUNDED"]),
   totalAmountUSD: z.coerce.number().min(0).optional(),
   adminNotes: optionalText,
+});
+
+const contentText = z.string().trim().min(1).max(2000);
+const contentImage = z.string().trim().min(1).max(500);
+
+export const websiteContentSchema = z.object({
+  global: z.object({
+    brandName: contentText.max(80),
+    footerLead: contentText.max(160),
+    footerTagline: contentText.max(200),
+    address: contentText.max(240),
+    phone: contentText.max(40),
+    whatsapp: contentText.max(30),
+    email: z.string().trim().email().max(200),
+  }),
+  home: z.object({
+    heroEyebrow: contentText.max(120),
+    heroTitle: contentText.max(160),
+    heroImage: contentImage,
+    heroImageAlt: contentText.max(240),
+    heroCaption: contentText.max(120),
+    heroPromise: contentText,
+    assurances: z.array(contentText.max(100)).min(1).max(8),
+    experiencesEyebrow: contentText.max(120),
+    experiencesTitle: contentText.max(180),
+    experiencesCopy: contentText,
+    chooserEyebrow: contentText.max(120),
+    chooserTitle: contentText.max(180),
+    chooserCopy: contentText,
+    bikeEyebrow: contentText.max(120),
+    bikeTitle: contentText.max(180),
+    airportCardTitle: contentText.max(180),
+    airportCardCopy: contentText,
+    proofTitle: contentText.max(180),
+    proofCopy: contentText,
+    guestStats: z.array(z.object({
+      value: contentText.max(40),
+      label: contentText.max(100),
+      detail: contentText.max(240),
+    })).min(1).max(6),
+    testimonial: contentText,
+    testimonialByline: contentText.max(240),
+    storyEyebrow: contentText.max(120),
+    storyTitle: contentText.max(120),
+    storyImage: contentImage,
+    storyImageAlt: contentText.max(240),
+    storyMovements: z.array(contentText.max(40)).min(1).max(8),
+    finalEyebrow: contentText.max(120),
+    finalTitle: contentText.max(180),
+    finalAccent: contentText.max(80),
+    finalCopy: contentText,
+  }),
 });

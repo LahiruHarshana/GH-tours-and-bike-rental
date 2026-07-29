@@ -1,9 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { BookingDTO, BookingStatus, PaymentStatus } from "@/types";
 import { formatDate, formatUSD } from "@/lib/utils";
+
+type BookingUpdate = {
+  status: BookingStatus;
+  paymentStatus: PaymentStatus;
+  totalAmountUSD?: FormDataEntryValue;
+  adminNotes?: FormDataEntryValue | null;
+};
 
 export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
   const router = useRouter();
@@ -17,6 +24,11 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
   );
   const selected = filtered.find((booking) => booking.id === selectedId) ?? filtered[0] ?? null;
 
+  useEffect(() => {
+    const interval = window.setInterval(() => router.refresh(), 10000);
+    return () => window.clearInterval(interval);
+  }, [router]);
+
   function changeFilter(nextFilter: typeof filter) {
     setFilter(nextFilter);
     setMessage("");
@@ -24,15 +36,9 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
     setSelectedId(nextBookings[0]?.id ?? null);
   }
 
-  async function update(form: FormData) {
+  async function save(payload: BookingUpdate) {
     if (!selected) return;
     setSaving(true);
-    const payload = {
-      status: form.get("status") as BookingStatus,
-      paymentStatus: form.get("paymentStatus") as PaymentStatus,
-      totalAmountUSD: form.get("totalAmountUSD") || undefined,
-      adminNotes: form.get("adminNotes"),
-    };
     setMessage("");
     const response = await fetch(`/api/admin/bookings/${selected.id}`, {
       method: "PATCH",
@@ -49,12 +55,53 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
     router.refresh();
   }
 
+  async function update(form: FormData) {
+    await save({
+      status: form.get("status") as BookingStatus,
+      paymentStatus: form.get("paymentStatus") as PaymentStatus,
+      totalAmountUSD: form.get("totalAmountUSD") || undefined,
+      adminNotes: form.get("adminNotes"),
+    });
+  }
+
+  async function quickDecision(status: "CONFIRMED" | "DECLINED") {
+    if (!selected) return;
+    await save({
+      status,
+      paymentStatus: selected.paymentStatus,
+      totalAmountUSD: selected.totalAmountUSD ? String(selected.totalAmountUSD) : undefined,
+      adminNotes: selected.adminNotes,
+    });
+  }
+
+  async function retryNotification() {
+    if (!selected) return;
+    setSaving(true);
+    setMessage("");
+    const response = await fetch(`/api/admin/bookings/${selected.id}/notify`, { method: "POST" });
+    const result = await response.json().catch(() => null);
+    setSaving(false);
+    if (!response.ok || result?.data?.status === "FAILED" || result?.data?.status === "SKIPPED") {
+      window.alert(result?.data?.error ?? result?.message ?? "Could not send WhatsApp alert.");
+      router.refresh();
+      return;
+    }
+    setMessage("WhatsApp alert sent.");
+    router.refresh();
+  }
+
   return (
     <div className="booking-manager">
       <div className="booking-manager__list">
-        <div className="booking-filters" aria-label="Filter bookings">{(["ALL", "AIRPORT", "TOUR", "BIKE"] as const).map((item) => <button key={item} type="button" className={filter === item ? "is-active" : ""} aria-pressed={filter === item} onClick={() => changeFilter(item)}>{item === "ALL" ? "All" : item.toLowerCase()}</button>)}</div>
+        <div className="booking-filters" aria-label="Filter bookings">
+          {(["ALL", "AIRPORT", "TOUR", "BIKE"] as const).map((item) => (
+            <button key={item} type="button" className={filter === item ? "is-active" : ""} aria-pressed={filter === item} onClick={() => changeFilter(item)}>
+              {item === "ALL" ? "All" : item.toLowerCase()}
+            </button>
+          ))}
+        </div>
         <div className="booking-list">
-          {filtered.length === 0 && <div className="admin-empty"><span>◌</span><h3>No bookings found</h3><p>New public booking requests will appear here.</p></div>}
+          {filtered.length === 0 && <div className="admin-empty"><span>◌</span><h3>No bookings found</h3><p>New public booking requests will appear here automatically.</p></div>}
           {filtered.map((booking) => (
             <button key={booking.id} type="button" className={selected?.id === booking.id ? "is-active" : ""} aria-pressed={selected?.id === booking.id} onClick={() => { setSelectedId(booking.id); setMessage(""); }}>
               <div><span className={`type-dot type-dot--${booking.type.toLowerCase()}`} /> <strong>{booking.customerName}</strong><small>{booking.bookingCode}</small></div>
@@ -63,16 +110,60 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
           ))}
         </div>
       </div>
+
       <div className="booking-manager__detail">
-        {!selected ? <div className="admin-empty"><span>◫</span><h3>Select a booking</h3><p>Choose a request from the list to view details.</p></div> : (
+        {!selected ? (
+          <div className="admin-empty"><span>◫</span><h3>Select a booking</h3><p>Choose a request from the list to view details.</p></div>
+        ) : (
           <>
-            <div className="booking-detail__head"><div><span>{selected.type} BOOKING</span><h2>{selected.bookingCode}</h2></div><span className={`admin-status admin-status--${selected.status.toLowerCase()}`}>{selected.status.replace("_", " ")}</span></div>
-            <div className="booking-contact"><div><small>Customer</small><strong>{selected.customerName}</strong><a href={`mailto:${selected.email}`}>{selected.email}</a><a href={`tel:${selected.phone}`}>{selected.phone}</a></div><div><small>Travel date</small><strong>{formatDate(selected.travelDate)}</strong>{selected.returnDate && <span>Return: {formatDate(selected.returnDate)}</span>}<span>{selected.guests ?? 1} guest(s)</span></div></div>
-            <div className="booking-route"><small>Service</small><strong>{selected.sourceTitle ?? selected.type}</strong>{selected.pickupLocation && <p><span>From</span>{selected.pickupLocation}</p>}{selected.dropoffLocation && <p><span>To</span>{selected.dropoffLocation}</p>}{selected.flightNumber && <p><span>Flight</span>{selected.flightNumber}</p>}{selected.vehicleType && <p><span>Vehicle</span>{selected.vehicleType}</p>}{selected.notes && <blockquote>{selected.notes}</blockquote>}</div>
+            <div className="booking-detail__head">
+              <div><span>{selected.type} BOOKING</span><h2>{selected.bookingCode}</h2></div>
+              <span className={`admin-status admin-status--${selected.status.toLowerCase()}`}>{selected.status.replace("_", " ")}</span>
+            </div>
+
+            <div className="booking-contact">
+              <div>
+                <small>Customer</small><strong>{selected.customerName}</strong>
+                <a href={`mailto:${selected.email}`}>{selected.email}</a>
+                <a href={`tel:${selected.phone}`}>{selected.phone}</a>
+                <a href={`https://wa.me/${selected.phone.replace(/\D/g, "")}`} target="_blank" rel="noreferrer">Message guest on WhatsApp ↗</a>
+              </div>
+              <div>
+                <small>Travel date</small><strong>{formatDate(selected.travelDate)}</strong>
+                {selected.returnDate && <span>Return: {formatDate(selected.returnDate)}</span>}
+                <span>{selected.guests ?? 1} guest(s)</span>
+              </div>
+            </div>
+
+            {selected.status === "PENDING" && (
+              <div className="booking-decisions">
+                <button type="button" className="admin-primary-button" disabled={saving} onClick={() => quickDecision("CONFIRMED")}>Approve request</button>
+                <button type="button" className="admin-decline-button" disabled={saving} onClick={() => quickDecision("DECLINED")}>Decline</button>
+              </div>
+            )}
+
+            <div className="booking-notification">
+              <div><small>Admin WhatsApp alert</small><strong>{selected.notificationStatus ?? "PENDING"}</strong>{selected.notificationError && <span>{selected.notificationError}</span>}</div>
+              {selected.notificationStatus !== "SENT" && <button type="button" className="admin-secondary-button" disabled={saving} onClick={retryNotification}>Retry alert</button>}
+            </div>
+
+            <div className="booking-route">
+              <small>Service</small><strong>{selected.sourceTitle ?? selected.type}</strong>
+              {selected.pickupLocation && <p><span>From</span>{selected.pickupLocation}</p>}
+              {selected.dropoffLocation && <p><span>To</span>{selected.dropoffLocation}</p>}
+              {selected.flightNumber && <p><span>Flight</span>{selected.flightNumber}</p>}
+              {selected.arrivalTime && <p><span>Time</span>{selected.arrivalTime}</p>}
+              {selected.vehicleType && <p><span>Vehicle</span>{selected.vehicleType}</p>}
+              {selected.notes && <blockquote>{selected.notes}</blockquote>}
+            </div>
+
             <form action={update} className="booking-update-form">
-              <div><label><span>Booking status</span><select name="status" defaultValue={selected.status} key={`${selected.id}-status`}><option value="PENDING">Pending</option><option value="CONFIRMED">Confirmed</option><option value="IN_PROGRESS">In progress</option><option value="COMPLETED">Completed</option><option value="CANCELLED">Cancelled</option></select></label><label><span>Payment status</span><select name="paymentStatus" defaultValue={selected.paymentStatus} key={`${selected.id}-payment`}><option value="UNPAID">Unpaid</option><option value="PARTIAL">Partial</option><option value="PAID">Paid</option><option value="REFUNDED">Refunded</option></select></label></div>
+              <div>
+                <label><span>Booking status</span><select name="status" defaultValue={selected.status} key={`${selected.id}-status`}><option value="PENDING">Pending</option><option value="CONFIRMED">Approved / confirmed</option><option value="DECLINED">Declined</option><option value="IN_PROGRESS">In progress</option><option value="COMPLETED">Completed</option><option value="CANCELLED">Cancelled</option></select></label>
+                <label><span>Payment status</span><select name="paymentStatus" defaultValue={selected.paymentStatus} key={`${selected.id}-payment`}><option value="UNPAID">Unpaid</option><option value="PARTIAL">Partial</option><option value="PAID">Paid</option><option value="REFUNDED">Refunded</option></select></label>
+              </div>
               <label><span>Confirmed total (USD)</span><input name="totalAmountUSD" type="number" min="0" step="1" defaultValue={selected.totalAmountUSD ?? ""} key={`${selected.id}-amount`} placeholder="0" /></label>
-              <label><span>Internal notes</span><textarea name="adminNotes" rows={4} key={`${selected.id}-notes`} placeholder="Driver assignment, payment details, special handling..." /></label>
+              <label><span>Internal notes</span><textarea name="adminNotes" rows={4} defaultValue={selected.adminNotes ?? ""} key={`${selected.id}-notes`} placeholder="Driver assignment, payment details, special handling..." /></label>
               <button className="admin-primary-button" disabled={saving}>{saving ? "Saving..." : "Update booking"}</button>
               {message && <p className="admin-save-message" role="status">{message}</p>}
             </form>

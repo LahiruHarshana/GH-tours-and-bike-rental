@@ -2,6 +2,7 @@ export type BookingType = "TOUR" | "AIRPORT" | "BIKE";
 export type BookingStatus =
   | "PENDING"
   | "CONFIRMED"
+  | "DECLINED"
   | "IN_PROGRESS"
   | "COMPLETED"
   | "CANCELLED";
@@ -70,7 +71,12 @@ export type BookingDTO = {
   pickupLocation?: string;
   dropoffLocation?: string;
   flightNumber?: string;
+  arrivalTime?: string;
   vehicleType?: string;
   notes?: string;
+  adminNotes?: string;
+  notificationStatus?: "PENDING" | "SENT" | "FAILED" | "SKIPPED";
+  notificationError?: string;
+  notifiedAt?: string;
   createdAt: string;
 };

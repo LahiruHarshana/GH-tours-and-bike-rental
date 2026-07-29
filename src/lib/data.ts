@@ -3,6 +3,8 @@ import { demoBikes, demoTours } from "@/lib/demo-data";
 import { Bike } from "@/models/Bike";
 import { Booking } from "@/models/Booking";
 import { TourPackage } from "@/models/TourPackage";
+import { WebsiteContent } from "@/models/WebsiteContent";
+import { defaultSiteContent, mergeSiteContent } from "@/lib/site-content";
 import type { BikeDTO, BookingDTO, TourDTO } from "@/types";
 
 function mapTour(doc: Record<string, unknown>): TourDTO {
@@ -120,10 +122,22 @@ export async function getBookings(): Promise<BookingDTO[]> {
     pickupLocation: doc.pickupLocation ? String(doc.pickupLocation) : undefined,
     dropoffLocation: doc.dropoffLocation ? String(doc.dropoffLocation) : undefined,
     flightNumber: doc.flightNumber ? String(doc.flightNumber) : undefined,
+    arrivalTime: doc.arrivalTime ? String(doc.arrivalTime) : undefined,
     vehicleType: doc.vehicleType ? String(doc.vehicleType) : undefined,
     notes: doc.notes ? String(doc.notes) : undefined,
+    adminNotes: doc.adminNotes ? String(doc.adminNotes) : undefined,
+    notificationStatus: doc.notificationStatus as BookingDTO["notificationStatus"],
+    notificationError: doc.notificationError ? String(doc.notificationError) : undefined,
+    notifiedAt: doc.notifiedAt ? new Date(doc.notifiedAt as Date).toISOString() : undefined,
     createdAt: new Date(doc.createdAt as Date).toISOString(),
   }));
+}
+
+export async function getWebsiteContent() {
+  if (!hasDatabaseConfig()) return defaultSiteContent;
+  await connectDB();
+  const doc = await WebsiteContent.findOne({ key: "primary" }).lean();
+  return mergeSiteContent(doc?.content as Parameters<typeof mergeSiteContent>[0]);
 }
 
 export async function getDashboardStats() {

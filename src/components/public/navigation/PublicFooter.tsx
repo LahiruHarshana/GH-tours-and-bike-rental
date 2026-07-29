@@ -1,15 +1,16 @@
 import Link from "next/link";
-import { navigation, siteConfig } from "@/config/site";
+import { navigation } from "@/config/site";
+import type { SiteContent } from "@/lib/site-content";
 
-export function PublicFooter() {
+export function PublicFooter({ content }: { content: SiteContent["global"] }) {
   return (
     <footer className="site-footer ss-footer">
       <div className="ss-footer__top">
-        <p>Until the next road.</p>
+        <p>{content.footerLead}</p>
         <Link href="/" className="ss-header__brand">
-          <i aria-hidden="true">GH</i><span>GH Tours</span>
+          <i aria-hidden="true">GH</i><span>{content.brandName}</span>
         </Link>
-        <span>Independent journeys across Sri Lanka</span>
+        <span>{content.footerTagline}</span>
       </div>
 
       <div className="ss-footer__links">
@@ -19,9 +20,9 @@ export function PublicFooter() {
         </div>
         <div>
           <small>Find us</small>
-          <span>{siteConfig.address}</span>
-          <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-          <a href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}>{siteConfig.phone}</a>
+          <span>{content.address}</span>
+          <a href={`mailto:${content.email}`}>{content.email}</a>
+          <a href={`tel:${content.phone.replace(/\s/g, "")}`}>{content.phone}</a>
         </div>
       </div>
 
@@ -29,7 +30,7 @@ export function PublicFooter() {
 
       <div className="ss-footer__bottom">
         <Link href="/privacy">Privacy Policy</Link>
-        <p>© {new Date().getFullYear()} {siteConfig.name}. Made locally in Sri Lanka.</p>
+        <p>© {new Date().getFullYear()} {content.brandName}. Made locally in Sri Lanka.</p>
         <div><Link href="/admin/login">Admin</Link><Link href="/contact">Contact</Link></div>
       </div>
     </footer>

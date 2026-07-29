@@ -63,13 +63,13 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     type: "website",
     locale: "en_LK",
-    images: [{ url: "/og-v2.png", width: 1200, height: 630, alt: "GH Tours — Sri Lanka, at your pace." }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "GH Tours — Sri Lanka, at your pace." }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Sri Lanka, at your pace.",
     description: siteConfig.description,
-    images: ["/og-v2.png"],
+    images: ["/og.png"],
   },
 };
 
