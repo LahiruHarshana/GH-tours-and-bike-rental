@@ -1339,6 +1339,313 @@
   background: #dedbd6;
 }
 
+/* Home-page airport booking */
+.ss-airport-booking {
+  scroll-margin-top: 6.5rem;
+  padding: 0 clamp(.65rem, 1.5vw, 1.5rem) clamp(4rem, 7vw, 7rem);
+  background: var(--ss-bg);
+  color: var(--ss-ink);
+  font-family: var(--body);
+}
+
+.ss-airport-booking .airport-quick-book {
+  position: relative;
+  width: min(100%, 116rem);
+  margin-inline: auto;
+  padding: clamp(2rem, 4vw, 4rem);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--ss-radius);
+  background: var(--ss-ink);
+  box-shadow: none;
+}
+
+.ss-airport-booking .airport-quick-book::after {
+  position: absolute;
+  right: -8rem;
+  bottom: -17rem;
+  width: 35rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgb(255 122 0 / .13);
+  content: "";
+  pointer-events: none;
+}
+
+.ss-airport-booking .airport-quick-book__head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: clamp(2rem, 3.5vw, 3.5rem);
+}
+
+.ss-airport-booking .airport-quick-book__head > div:first-child > span {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .8rem;
+  color: var(--ss-orange);
+  font-size: .72rem;
+  font-weight: 750;
+  letter-spacing: .02em;
+  text-transform: none;
+}
+
+.ss-airport-booking .airport-quick-book__head > div:first-child > span > small {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  color: rgb(255 255 255 / .58);
+  font-size: .68rem;
+  font-weight: 600;
+}
+
+.ss-airport-booking .airport-quick-book__head > div:first-child > span i {
+  width: .42rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #60d394;
+  box-shadow: 0 0 0 .22rem rgb(96 211 148 / .14);
+}
+
+.ss-airport-booking .airport-quick-book__head h2 {
+  max-width: 17ch;
+  margin: .8rem 0 0;
+  color: white;
+  font-family: var(--body);
+  font-size: clamp(2.6rem, 5vw, 5.5rem);
+  font-weight: 480;
+  letter-spacing: -.075em;
+  line-height: .88;
+}
+
+.ss-airport-booking .airport-quick-book__toggle {
+  display: flex;
+  flex: 0 0 auto;
+  padding: .35rem;
+  border: 1px solid rgb(255 255 255 / .14);
+  border-radius: 999px;
+  background: rgb(255 255 255 / .06);
+}
+
+.ss-airport-booking .airport-quick-book__toggle button {
+  min-height: 2.75rem;
+  padding: 0 1.1rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgb(255 255 255 / .58);
+  font-family: inherit;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.ss-airport-booking .airport-quick-book__toggle button.is-active {
+  background: white;
+  color: var(--ss-ink);
+}
+
+.ss-airport-booking .airport-quick-book__toggle button:focus-visible,
+.ss-airport-booking .airport-quick-book__submit:focus-visible {
+  outline: 2px solid var(--ss-orange);
+  outline-offset: 3px;
+}
+
+.ss-airport-booking .airport-quick-book__fields {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: .85fr 1.45fr 1fr .9fr;
+  overflow: hidden;
+  border: 0;
+  border-radius: 1.35rem;
+  background: white;
+}
+
+.ss-airport-booking .airport-quick-book__fields > * {
+  min-height: 6.8rem;
+  margin: 0;
+  padding: 1.25rem 1.4rem;
+  border: 0;
+  border-right: 1px solid rgb(8 9 9 / .1);
+}
+
+.ss-airport-booking .airport-quick-book__fields > *:last-child {
+  border-right: 0;
+}
+
+.ss-airport-booking .airport-quick-book__fields label,
+.ss-airport-booking .airport-quick-book__airport {
+  display: grid;
+  align-content: center;
+  gap: .5rem;
+}
+
+.ss-airport-booking .airport-quick-book__fields label > span,
+.ss-airport-booking .airport-quick-book__airport > span {
+  color: var(--ss-muted);
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.ss-airport-booking .airport-quick-book__fields input {
+  width: 100%;
+  min-width: 0;
+  padding: .2rem 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ss-ink);
+  font-family: inherit;
+  font-size: .92rem;
+  font-weight: 650;
+}
+
+.ss-airport-booking .airport-quick-book__fields input::placeholder {
+  color: rgb(8 9 9 / .38);
+  font-weight: 550;
+}
+
+.ss-airport-booking .airport-quick-book__fields label:focus-within {
+  box-shadow: inset 0 -3px var(--ss-orange);
+}
+
+.ss-airport-booking .airport-quick-book__airport strong {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  color: var(--ss-ink);
+  font-size: .92rem;
+}
+
+.ss-airport-booking .airport-quick-book__airport i {
+  color: var(--ss-orange);
+  font-size: 1rem;
+  font-style: normal;
+}
+
+.ss-airport-booking .airport-quick-book__submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  background: var(--ss-orange);
+  color: white;
+  font-family: inherit;
+  font-size: .74rem;
+  font-weight: 750;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.ss-airport-booking .airport-quick-book__submit:hover {
+  background: #e86f00;
+}
+
+.ss-airport-booking .airport-quick-book__submit b {
+  font-size: 1.35rem;
+  font-weight: 450;
+  transition: transform .2s ease;
+}
+
+.ss-airport-booking .airport-quick-book__submit:hover b {
+  transform: translateX(.2rem);
+}
+
+.ss-airport-booking .airport-quick-book > p {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem 1.5rem;
+  margin: 1.15rem 0 0;
+  color: rgb(255 255 255 / .6);
+  font-size: .68rem;
+}
+
+.ss-airport-booking .airport-quick-book > p span::first-letter {
+  color: var(--ss-orange);
+}
+
+@media (max-width: 1050px) {
+  .ss-airport-booking .airport-quick-book__head {
+    align-items: start;
+  }
+
+  .ss-airport-booking .airport-quick-book__fields {
+    grid-template-columns: .85fr 1.35fr 1fr;
+  }
+
+  .ss-airport-booking .airport-quick-book__fields > *:nth-child(3) {
+    border-right: 0;
+  }
+
+  .ss-airport-booking .airport-quick-book__submit {
+    grid-column: 1 / -1;
+    min-height: 4.8rem;
+    border-top: 1px solid rgb(8 9 9 / .1);
+  }
+}
+
+@media (max-width: 700px) {
+  .ss-airport-booking {
+    padding-inline: .45rem;
+  }
+
+  .ss-airport-booking .airport-quick-book {
+    padding: 1.35rem;
+    border-radius: 1.6rem;
+  }
+
+  .ss-airport-booking .airport-quick-book__head {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ss-airport-booking .airport-quick-book__head h2 {
+    font-size: clamp(2.65rem, 13vw, 4rem);
+  }
+
+  .ss-airport-booking .airport-quick-book__toggle {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ss-airport-booking .airport-quick-book__toggle button {
+    padding-inline: .5rem;
+  }
+
+  .ss-airport-booking .airport-quick-book__fields {
+    grid-template-columns: 1fr;
+    border-radius: 1rem;
+  }
+
+  .ss-airport-booking .airport-quick-book__fields > * {
+    min-height: 5.5rem;
+    border-right: 0;
+    border-bottom: 1px solid rgb(8 9 9 / .1);
+  }
+
+  .ss-airport-booking .airport-quick-book__submit {
+    grid-column: auto;
+    min-height: 4.6rem;
+    border-top: 0;
+    border-bottom: 0;
+  }
+}
+
 @media (max-width: 1050px) {
   .ss-journey-chooser {
     grid-template-columns: 1fr;

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AirportQuickBook } from "@/components/booking/AirportQuickBook";
 import { getBikes, getTours } from "@/lib/data";
 import { formatUSD } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
@@ -46,9 +47,9 @@ export default async function HomePage() {
             <small>Journey</small>
             <strong>Private Sri Lanka tours</strong>
           </Link>
-          <Link href="/airport-hire" className="ss-planner__item">
+          <Link href="#quick-airport-booking" className="ss-planner__item">
             <small>Arrival</small>
-            <strong>Airport meet &amp; greet</strong>
+            <strong>Book airport hire</strong>
           </Link>
           <Link href="/bikes" className="ss-planner__item">
             <small>Ride</small>
@@ -65,6 +66,14 @@ export default async function HomePage() {
             <li>Real support, every day</li>
           </ul>
         </div>
+      </section>
+
+      <section
+        id="quick-airport-booking"
+        className="ss-airport-booking"
+        aria-label="Quick airport transfer booking"
+      >
+        <AirportQuickBook />
       </section>
 
       <section className="ss-experiences" aria-labelledby="ss-experiences-title">
