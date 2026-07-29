@@ -83,7 +83,13 @@ export default async function HomePage() {
           {tours.map((tour) => (
             <Link href={`/tours/${tour.slug}`} className="ss-product-card" key={tour.id}>
               <span className="ss-product-card__image">
-                <Image src={tour.image} alt={tour.title} fill sizes="(max-width: 760px) 88vw, 25vw" />
+                <Image
+                  src={tour.image}
+                  alt={tour.title}
+                  fill
+                  sizes="(max-width: 760px) 88vw, 25vw"
+                  unoptimized={tour.image.startsWith("http")}
+                />
               </span>
               <span className="ss-product-card__body">
                 <strong>{tour.title}</strong>
@@ -133,7 +139,13 @@ export default async function HomePage() {
           {bikes.slice(0, 2).map((bike) => (
             <article className="ss-product-card ss-product-card--dark" key={bike.id}>
               <span className="ss-product-card__image">
-                <Image src={bike.image} alt={`${bike.name} motorbike`} fill sizes="(max-width: 760px) 88vw, 25vw" />
+                <Image
+                  src={bike.image}
+                  alt={`${bike.name} motorbike`}
+                  fill
+                  sizes="(max-width: 760px) 88vw, 25vw"
+                  unoptimized={bike.image.startsWith("http")}
+                />
               </span>
               <span className="ss-product-card__body">
                 <strong>{bike.name}</strong>
@@ -149,7 +161,13 @@ export default async function HomePage() {
           {bikes[2] && (
             <article className="ss-product-card ss-product-card--dark">
               <span className="ss-product-card__image">
-                <Image src={bikes[2].image} alt={`${bikes[2].name} motorbike`} fill sizes="(max-width: 760px) 88vw, 25vw" />
+                <Image
+                  src={bikes[2].image}
+                  alt={`${bikes[2].name} motorbike`}
+                  fill
+                  sizes="(max-width: 760px) 88vw, 25vw"
+                  unoptimized={bikes[2].image.startsWith("http")}
+                />
               </span>
               <span className="ss-product-card__body">
                 <strong>{bikes[2].name}</strong>
