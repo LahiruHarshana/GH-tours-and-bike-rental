@@ -111,18 +111,37 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <section className="ss-manifesto" aria-labelledby="ss-manifesto-title">
-          <div className="ss-manifesto__greeting">
-            <span>Island welcome</span>
-            <strong lang="si">ආයුබෝවන්</strong>
-            <small>Ayubowan · May you live long</small>
-          </div>
-          <div className="ss-manifesto__copy">
-            <span>01 / Island rhythms</span>
-            <h3 id="ss-manifesto-title">One island.<br />A thousand stories.</h3>
-            <p>Sri Lanka is small on the map, but every road changes the story—from ancient stone cities and tea-covered mountains to wild parks, fishing villages and warm Indian Ocean shores.</p>
-            <Link href="/about">Meet the people behind your journey <i aria-hidden="true">→</i></Link>
-          </div>
+        <section className="ss-journey-chooser" aria-labelledby="ss-journey-chooser-title">
+          <header className="ss-journey-chooser__intro">
+            <span>Choose your way in</span>
+            <div>
+              <h3 id="ss-journey-chooser-title">How do you want<br />to explore?</h3>
+              <p>Start with the feeling you want. We will help shape the details around your dates, pace and interests.</p>
+            </div>
+          </header>
+
+          <nav className="ss-journey-chooser__grid" aria-label="Choose a Sri Lanka travel style">
+            <Link href="/tours" className="ss-journey-choice ss-journey-choice--orange">
+              <span>01</span>
+              <div><small>Private journeys</small><strong>See the whole island</strong><p>Culture, hills, wildlife and coast—arranged around your pace.</p></div>
+              <i aria-hidden="true">↗</i>
+            </Link>
+            <Link href="/airport-hire" className="ss-journey-choice">
+              <span>02</span>
+              <div><small>Easy arrivals</small><strong>Land without the stress</strong><p>A tracked flight, waiting driver and a clear first road.</p></div>
+              <i aria-hidden="true">↗</i>
+            </Link>
+            <Link href="/bikes" className="ss-journey-choice ss-journey-choice--dark">
+              <span>03</span>
+              <div><small>Two-wheel freedom</small><strong>Ride your own rhythm</strong><p>Reliable bikes, proper handover and local support.</p></div>
+              <i aria-hidden="true">↗</i>
+            </Link>
+            <Link href="/contact" className="ss-journey-choice ss-journey-choice--soft">
+              <span>04</span>
+              <div><small>Made for you</small><strong>Build something different</strong><p>Tell us what matters and start with a blank page.</p></div>
+              <i aria-hidden="true">↗</i>
+            </Link>
+          </nav>
         </section>
       </section>
 
