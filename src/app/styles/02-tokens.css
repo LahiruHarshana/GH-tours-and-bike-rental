@@ -43,9 +43,11 @@
   --track-display: -.045em;
   --track-micro: .21em;
 
-  /* Fonts (Next.js variables injected via layout.tsx + Sinhala fallbacks) */
-  --display: var(--font-display), "Noto Serif Sinhala", "Iskoola Pota", Georgia, serif;
-  --body: var(--font-body), "Noto Sans Sinhala", "Nirmala UI", Arial, sans-serif;
+  /* Fonts (self-hosted by next/font; system faces remain as resilient fallbacks) */
+  --sinhala-display: var(--font-sinhala-display), "Noto Serif Sinhala", "Iskoola Pota", serif;
+  --sinhala-body: var(--font-sinhala-body), "Noto Sans Sinhala", "Nirmala UI", sans-serif;
+  --display: var(--font-display), var(--sinhala-display), Georgia, serif;
+  --body: var(--font-body), var(--sinhala-body), Arial, sans-serif;
 
   /* Rhythm and Spacing */
   --space-xs: .5rem;

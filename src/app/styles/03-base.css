@@ -12,6 +12,24 @@ body {
   line-height: var(--lh-body);
 }
 
+::selection {
+  background: var(--sun-300);
+  color: var(--ink-900);
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--sun-500);
+  outline-offset: 4px;
+}
+
+:lang(si) {
+  font-family: var(--sinhala-body);
+  font-optical-sizing: auto;
+  font-variation-settings: normal;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
 body::before {
   content: "";
   position: fixed;

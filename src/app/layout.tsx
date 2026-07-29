@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, Instrument_Serif } from "next/font/google";
+import {
+  Instrument_Sans,
+  Instrument_Serif,
+  Noto_Sans_Sinhala,
+  Noto_Serif_Sinhala,
+} from "next/font/google";
 import "./styles/01-reset.css";
 import "./styles/02-tokens.css";
 import "./styles/03-base.css";
@@ -27,6 +32,20 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+const notoSansSinhala = Noto_Sans_Sinhala({
+  subsets: ["sinhala"],
+  variable: "--font-sinhala-body",
+  weight: "variable",
+  display: "swap",
+});
+
+const notoSerifSinhala = Noto_Serif_Sinhala({
+  subsets: ["sinhala"],
+  variable: "--font-sinhala-display",
+  weight: "variable",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
@@ -40,7 +59,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     type: "website",
     locale: "en_LK",
-    images: [{ url: "/og.png", width: 1672, height: 941, alt: "GH Tours — Sri Lanka, at your pace." }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "GH Tours — Sri Lanka, at your pace." }],
   },
   twitter: {
     card: "summary_large_image",
@@ -52,7 +71,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={`${instrumentSans.variable} ${instrumentSerif.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      data-scroll-behavior="smooth"
+      className={`${instrumentSans.variable} ${instrumentSerif.variable} ${notoSansSinhala.variable} ${notoSerifSinhala.variable}`}
+    >
       <body>{children}</body>
     </html>
   );

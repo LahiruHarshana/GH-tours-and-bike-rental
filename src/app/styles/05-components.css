@@ -2296,11 +2296,35 @@ h1, h2, h3, blockquote, .brand-mark__text strong {
 .journey-planner {
   position: relative;
   z-index: 5;
-  margin-top: -6rem;
+  width: min(var(--page-max), calc(100% - (var(--page-gutter) * 2)));
+  margin: -6rem auto 0;
   background: var(--color-paper-100, var(--color-paper));
+  border: 1px solid rgb(16 32 27 / .08);
   border-radius: 1.5rem;
-  box-shadow: var(--shadow-lift, 0 35px 100px -20px rgba(0,0,0,0.15));
+  box-shadow:
+    0 2.5rem 7rem -3rem rgb(5 20 15 / .42),
+    0 .3rem 1rem rgb(5 20 15 / .06);
   overflow: hidden;
+}
+
+.journey-planner::before {
+  content: "Begin here";
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 1.5rem;
+  display: grid;
+  height: 1.55rem;
+  padding-inline: .8rem;
+  place-items: center;
+  border-radius: 0 0 .45rem .45rem;
+  background: var(--sun-300);
+  color: var(--ink-900);
+  font-size: .48rem;
+  font-weight: 750;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  pointer-events: none;
 }
 
 /* Tabs */
@@ -2622,10 +2646,12 @@ h1, h2, h3, blockquote, .brand-mark__text strong {
 
 @media (max-width: 768px) {
   .journey-planner {
+    width: calc(100% - 2rem);
     margin-inline: 1rem;
     border-radius: 1rem;
     margin-top: -4rem;
   }
+  .journey-planner::before { right: 1rem; }
   .journey-planner__tab {
     width: 75vw;
   }
@@ -2657,7 +2683,7 @@ h1, h2, h3, blockquote, .brand-mark__text strong {
 }
 
 .manifesto__greeting-word {
-  font-family: var(--display);
+  font-family: var(--sinhala-display);
   font-size: clamp(4.5rem, 13vw, 15rem);
   line-height: 1;
   color: var(--color-clay);
@@ -2870,7 +2896,7 @@ h1, h2, h3, blockquote, .brand-mark__text strong {
 }
 
 .story-reel__place-si {
-  font-family: var(--display);
+  font-family: var(--sinhala-display);
   font-size: 1.2rem;
   text-transform: none;
   letter-spacing: 0;
@@ -4260,7 +4286,10 @@ h1, h2, h3, blockquote, .brand-mark__text strong {
   color: var(--cinnamon);
 }
 
-.island-marquee__item span[lang="si"] { font-weight: 600; }
+.island-marquee__item span[lang="si"] {
+  font-family: var(--sinhala-display);
+  font-weight: 600;
+}
 
 .island-marquee__item i {
   font-style: normal;
@@ -4292,7 +4321,7 @@ h1, h2, h3, blockquote, .brand-mark__text strong {
 }
 
 .footer-farewell span[lang="si"] {
-  font-family: var(--display);
+  font-family: var(--sinhala-display);
   font-size: 1.4rem;
   color: var(--paper-100);
 }

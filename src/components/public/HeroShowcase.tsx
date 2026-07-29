@@ -77,9 +77,17 @@ export function HeroShowcase() {
         />
 
         <div className="island-hero-modern__lower">
-          <p>Private journeys, shaped around your pace.</p>
+          <div className="island-hero-modern__promise">
+            <p>From the first airport hello to the last ocean sunset, every private journey is shaped around how you want the island to feel.</p>
+            <ul aria-label="Journey assurances">
+              <li><i aria-hidden="true" />Locally planned</li>
+              <li><i aria-hidden="true" />Flexible by design</li>
+              <li><i aria-hidden="true" />Real support, every day</li>
+            </ul>
+          </div>
           <div className="island-hero-modern__actions">
-            <MagneticLink className="button button--gold" href="/contact">Plan a journey <span className="island-hero-modern__arrow" aria-hidden="true">↗</span></MagneticLink>
+            <MagneticLink className="button button--gold" href="/contact">Design my journey <span className="island-hero-modern__arrow" aria-hidden="true">↗</span></MagneticLink>
+            <MagneticLink className="text-link text-link--light" href="/tours">Explore journeys <span aria-hidden="true">↗</span></MagneticLink>
           </div>
         </div>
       </div>
