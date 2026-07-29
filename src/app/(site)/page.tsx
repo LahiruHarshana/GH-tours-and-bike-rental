@@ -111,13 +111,19 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <div className="ss-manifesto">
-          <span lang="si">ආයුබෝවන්</span>
-          <div>
-            <small>May you live long</small>
-            <p>Sri Lanka is small on the map, but every road changes the story. Ancient stone cities become tea-covered mountains, then wild parks, fishing villages and warm Indian Ocean shores.</p>
+        <section className="ss-manifesto" aria-labelledby="ss-manifesto-title">
+          <div className="ss-manifesto__greeting">
+            <span>Island welcome</span>
+            <strong lang="si">ආයුබෝවන්</strong>
+            <small>Ayubowan · May you live long</small>
           </div>
-        </div>
+          <div className="ss-manifesto__copy">
+            <span>01 / Island rhythms</span>
+            <h3 id="ss-manifesto-title">One island.<br />A thousand stories.</h3>
+            <p>Sri Lanka is small on the map, but every road changes the story—from ancient stone cities and tea-covered mountains to wild parks, fishing villages and warm Indian Ocean shores.</p>
+            <Link href="/about">Meet the people behind your journey <i aria-hidden="true">→</i></Link>
+          </div>
+        </section>
       </section>
 
       <section className="ss-dark" aria-labelledby="ss-dark-title">

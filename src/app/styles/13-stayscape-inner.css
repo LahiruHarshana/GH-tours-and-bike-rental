@@ -1166,6 +1166,194 @@
   min-height: 48rem;
 }
 
+/* Home manifesto: a contained editorial card that never allows the
+   Sinhala display word to collide with the supporting copy. */
+.ss-manifesto {
+  position: relative;
+  display: grid;
+  max-width: 116rem;
+  min-height: 35rem;
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+  align-items: stretch;
+  gap: .75rem;
+  margin: 7rem auto 0;
+  padding: .75rem;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--ss-radius);
+  background: var(--ss-ink);
+  color: white;
+  text-align: left;
+}
+
+.ss-manifesto__greeting,
+.ss-manifesto__copy {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: calc(var(--ss-radius) - .75rem);
+}
+
+.ss-manifesto__greeting {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(2rem, 4vw, 4.5rem);
+  background: var(--ss-orange);
+  color: white;
+  isolation: isolate;
+}
+
+.ss-manifesto__greeting::after {
+  position: absolute;
+  z-index: -1;
+  right: -16%;
+  bottom: -28%;
+  width: 74%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgb(255 255 255 / .07);
+  content: "";
+}
+
+.ss-manifesto__greeting > span,
+.ss-manifesto__copy > span {
+  font-size: .68rem;
+  font-weight: 750;
+  letter-spacing: .04em;
+}
+
+.ss-manifesto__greeting > strong {
+  display: block;
+  max-width: 100%;
+  color: white;
+  font-family: var(--sinhala-display);
+  font-size: clamp(3.2rem, 5vw, 6.2rem);
+  font-weight: 540;
+  letter-spacing: -.06em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.ss-manifesto > .ss-manifesto__greeting > small {
+  color: rgb(255 255 255 / .74);
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.ss-manifesto__copy {
+  display: grid;
+  align-content: center;
+  padding: clamp(2rem, 5vw, 5.5rem);
+  background: #151616;
+}
+
+.ss-manifesto__copy > span {
+  color: var(--ss-orange);
+}
+
+.ss-manifesto__copy h3 {
+  max-width: 10ch;
+  margin: 1rem 0 1.5rem;
+  color: white;
+  font-family: var(--body);
+  font-size: clamp(3.2rem, 5.7vw, 6.7rem);
+  font-weight: 510;
+  letter-spacing: -.085em;
+  line-height: .82;
+}
+
+.ss-manifesto .ss-manifesto__copy p {
+  max-width: 42rem;
+  margin: 0;
+  color: rgb(255 255 255 / .64);
+  font-size: clamp(.92rem, 1.2vw, 1.1rem);
+  letter-spacing: -.015em;
+  line-height: 1.6;
+}
+
+.ss-manifesto__copy a {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 3.15rem;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 2rem;
+  border-radius: 999px;
+  padding-inline: 1.25rem;
+  background: white;
+  color: var(--ss-ink);
+  font-size: .72rem;
+  font-weight: 700;
+  transition: background .2s ease, color .2s ease;
+}
+
+.ss-manifesto__copy a i {
+  color: var(--ss-orange);
+  font-size: 1rem;
+  font-style: normal;
+  transition: transform .2s ease;
+}
+
+.ss-manifesto__copy a:hover {
+  background: var(--ss-orange);
+  color: white;
+}
+
+.ss-manifesto__copy a:hover i {
+  color: white;
+  transform: translateX(.25rem);
+}
+
+@media (max-width: 900px) {
+  .ss-manifesto {
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .ss-manifesto__greeting {
+    min-height: 25rem;
+  }
+
+  .ss-manifesto__copy {
+    min-height: 31rem;
+  }
+
+  .ss-manifesto__greeting > strong {
+    font-size: clamp(3.2rem, 10vw, 6rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .ss-manifesto {
+    gap: .45rem;
+    margin-top: 4rem;
+    padding: .45rem;
+    border-radius: 1.75rem;
+  }
+
+  .ss-manifesto__greeting,
+  .ss-manifesto__copy {
+    border-radius: 1.35rem;
+  }
+
+  .ss-manifesto__greeting {
+    min-height: 20rem;
+    padding: 1.5rem;
+  }
+
+  .ss-manifesto__copy {
+    min-height: 27rem;
+    padding: 1.5rem;
+  }
+
+  .ss-manifesto__copy h3 {
+    font-size: clamp(3.2rem, 16vw, 5rem);
+  }
+}
+
 @media (max-width: 1020px) {
   .inner-hero__grid,
   .airport-page__grid,
@@ -1353,7 +1541,9 @@
 @media (prefers-reduced-motion: reduce) {
   .tour-card,
   .bike-card,
-  .page-loader__sun {
+  .page-loader__sun,
+  .ss-manifesto__copy a,
+  .ss-manifesto__copy a i {
     transition: none;
     animation: none;
   }
