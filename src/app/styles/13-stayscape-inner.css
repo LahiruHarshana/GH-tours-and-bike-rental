@@ -1,0 +1,1136 @@
+/* Shared Stayscape system for every public inner page.
+   The home page establishes the visual language; this layer brings all
+   public routes into the same type, colour, spacing, image and card system. */
+
+.modern-section,
+.simple-hero,
+.tour-detail-hero {
+  --inner-line: rgb(8 9 9 / .12);
+  color: var(--ss-ink);
+  font-family: var(--body);
+}
+
+.modern-section p,
+.simple-hero p {
+  color: var(--ss-muted);
+}
+
+.modern-section .eyebrow,
+.simple-hero .eyebrow {
+  gap: .7rem;
+  color: var(--ss-orange);
+  font-size: .68rem;
+  font-weight: 750;
+  letter-spacing: .04em;
+  text-transform: none;
+}
+
+.modern-section .eyebrow i,
+.simple-hero .eyebrow i {
+  width: 1.8rem;
+  background: currentColor;
+}
+
+.section,
+.modern-section.section {
+  padding-block: clamp(5rem, 9vw, 9rem);
+}
+
+/* Inner editorial heroes */
+.inner-hero {
+  position: relative;
+  min-height: auto;
+  padding: 9rem clamp(.65rem, 1.5vw, 1.5rem) 1.25rem;
+  overflow: hidden;
+  background: var(--ss-bg);
+  color: var(--ss-ink);
+}
+
+.inner-hero::before,
+.inner-hero::after {
+  display: none;
+}
+
+.inner-hero__grid {
+  width: min(100%, 116rem);
+  min-height: 43rem;
+  grid-template-columns: minmax(20rem, .82fr) minmax(28rem, 1.18fr);
+  gap: clamp(2rem, 6vw, 7rem);
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 5.5rem);
+  border-radius: var(--ss-radius);
+  background: var(--ss-paper);
+}
+
+.inner-hero h1,
+.simple-hero h1 {
+  max-width: 10ch;
+  margin: 1.25rem 0 1.8rem;
+  color: var(--ss-ink);
+  font-family: var(--body);
+  font-size: clamp(4.5rem, 8.6vw, 10rem);
+  font-weight: 470;
+  letter-spacing: -.09em;
+  line-height: .76;
+}
+
+.inner-hero h1 em,
+.simple-hero h1 em {
+  color: var(--ss-orange);
+  font-style: normal;
+  font-weight: inherit;
+}
+
+.inner-hero p,
+.simple-hero p {
+  max-width: 34rem;
+  color: var(--ss-muted);
+  font-size: clamp(.95rem, 1.3vw, 1.15rem);
+  line-height: 1.55;
+}
+
+.inner-hero__art {
+  align-self: stretch;
+}
+
+.inner-hero__art figure {
+  height: 100%;
+  min-height: 35rem;
+  overflow: hidden;
+  border-radius: calc(var(--ss-radius) * .8);
+  transform: none;
+}
+
+.inner-hero__art figure::after {
+  background: linear-gradient(180deg, transparent 56%, rgb(0 0 0 / .46));
+}
+
+.inner-hero__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: none;
+}
+
+.inner-hero__art figcaption {
+  right: 1.5rem;
+  bottom: 1.35rem;
+  left: 1.5rem;
+  color: white;
+}
+
+.inner-hero__art figcaption strong {
+  font-family: var(--body);
+  font-weight: 650;
+}
+
+/* About and contact heroes use the same split-card geometry. */
+.simple-hero {
+  position: relative;
+  display: grid;
+  min-height: 46rem;
+  align-items: center;
+  padding: 10rem max(1rem, 4vw) 5rem;
+  overflow: hidden;
+  background: var(--ss-bg);
+  color: var(--ss-ink);
+}
+
+.simple-hero::after,
+.simple-hero--contact::before {
+  display: none;
+}
+
+.simple-hero > .container {
+  z-index: 2;
+  width: min(100%, 100rem);
+}
+
+.simple-hero .reveal {
+  max-width: 52rem;
+}
+
+.simple-hero--story {
+  padding-right: 52vw;
+}
+
+.simple-hero--story .simple-hero__media {
+  inset: 8rem 1rem 1rem 50%;
+  overflow: hidden;
+  border-radius: var(--ss-radius);
+}
+
+.simple-hero__media::after {
+  background: linear-gradient(180deg, transparent 48%, rgb(0 0 0 / .25));
+}
+
+.simple-hero__media img {
+  filter: none;
+}
+
+.simple-hero--contact {
+  min-height: 51rem;
+  text-align: center;
+}
+
+.simple-hero--contact > .container {
+  display: grid;
+  justify-items: center;
+}
+
+.simple-hero--contact .reveal {
+  max-width: 82rem;
+}
+
+.simple-hero--contact h1 {
+  max-width: 11ch;
+  margin-inline: auto;
+  font-size: clamp(4.7rem, 10vw, 11.5rem);
+}
+
+.simple-hero--contact p {
+  margin-inline: auto;
+}
+
+/* Catalog framing */
+.section--sand,
+.airport-page,
+.about-page,
+.contact-page,
+.rental-guide,
+.legal-page,
+.tour-detail {
+  background: var(--ss-bg);
+}
+
+.filter-intro {
+  margin-bottom: 3rem;
+  padding: 1.25rem 0;
+  border-color: var(--inner-line);
+}
+
+.filter-intro p {
+  color: var(--ss-ink);
+}
+
+.filter-intro span {
+  color: var(--ss-muted);
+  font-size: .72rem;
+}
+
+.catalog-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .8rem;
+}
+
+.catalog-card-stage__motion {
+  height: 100%;
+}
+
+.tour-card,
+.bike-card {
+  height: 100%;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--ss-radius);
+  background: var(--ss-paper);
+  box-shadow: none;
+  transform: none;
+  transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+}
+
+.tour-card:hover,
+.bike-card:hover {
+  z-index: auto;
+  box-shadow: none;
+  transform: translateY(-.5rem);
+}
+
+.tour-card__link {
+  height: 100%;
+  gap: 0;
+  padding: 0;
+}
+
+.tour-card__media {
+  height: clamp(25rem, 37vw, 37rem);
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: #c8bfb2;
+  transform: none;
+}
+
+.tour-card__image {
+  border-radius: 0;
+}
+
+.tour-card__image::before,
+.tour-card__image::after,
+.bike-card__visual::before,
+.bike-card__visual::after,
+.tour-card__glare,
+.tour-card__veil {
+  display: none;
+}
+
+.tour-card__image img,
+.bike-card__visual img {
+  filter: none;
+}
+
+.tour-card:hover .tour-card__image img,
+.bike-card:hover .bike-card__visual img {
+  filter: none;
+  transform: scale(1.04);
+}
+
+.tour-card__index,
+.tour-card__badge,
+.availability,
+.bike-card__cc {
+  z-index: 3;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(244 243 241 / .88);
+  color: var(--ss-ink);
+  backdrop-filter: blur(12px);
+}
+
+.tour-card__index {
+  top: 1rem;
+  left: 1rem;
+}
+
+.tour-card__badge {
+  top: 1rem;
+  right: 1rem;
+  padding: .55rem .75rem;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: none;
+}
+
+.tour-card__body,
+.bike-card__body {
+  min-height: 14rem;
+  padding: clamp(1.3rem, 2.3vw, 2rem);
+  background: var(--ss-paper);
+}
+
+.tour-card__meta,
+.bike-card__body > p {
+  margin: 0;
+  color: var(--ss-orange);
+  font-size: .66rem;
+  font-weight: 750;
+  letter-spacing: .03em;
+}
+
+.tour-card__title,
+.bike-card h3 {
+  margin: .7rem 0 .8rem;
+  color: var(--ss-ink);
+  font-family: var(--body);
+  font-size: clamp(1.4rem, 2vw, 2.05rem);
+  font-weight: 620;
+  letter-spacing: -.05em;
+  line-height: 1;
+}
+
+.tour-card__route,
+.bike-card ul {
+  color: var(--ss-muted);
+  font-size: .78rem;
+}
+
+.tour-card__footer,
+.bike-card__footer {
+  margin-top: auto;
+  border-color: var(--inner-line);
+}
+
+.tour-card__price strong,
+.bike-card__footer strong {
+  color: var(--ss-ink);
+  font-family: var(--body);
+  font-size: clamp(1.75rem, 3vw, 2.8rem);
+  font-weight: 520;
+  letter-spacing: -.07em;
+}
+
+.tour-card__affordance {
+  color: var(--ss-orange);
+  font-size: .7rem;
+  font-weight: 700;
+}
+
+.bike-card__visual {
+  height: clamp(22rem, 34vw, 34rem);
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: #c8bfb2;
+}
+
+.availability {
+  top: 1rem;
+  left: 1rem;
+  padding: .55rem .75rem;
+  color: var(--ss-ink);
+  font-size: .62rem;
+}
+
+.availability.is-available {
+  background: var(--ss-orange);
+  color: white;
+}
+
+.bike-card__cc {
+  right: 1rem;
+  bottom: 1rem;
+  padding: .5rem .7rem;
+}
+
+.bike-card li::before {
+  color: var(--ss-orange);
+}
+
+/* Shared buttons */
+.modern-section .button,
+.booking-modal .button {
+  min-height: 3.25rem;
+  border-radius: 999px;
+  font-size: .66rem;
+  letter-spacing: .05em;
+}
+
+.modern-section .button--gold,
+.booking-modal .button--gold {
+  border-color: var(--ss-orange);
+  background: var(--ss-orange);
+  color: white;
+}
+
+.modern-section .button--gold:hover,
+.booking-modal .button--gold:hover {
+  border-color: var(--ss-ink);
+  background: var(--ss-ink);
+  color: white;
+}
+
+.modern-section .button--dark {
+  border-color: var(--ss-ink);
+  background: var(--ss-ink);
+  color: white;
+}
+
+.modern-section .button--dark:hover {
+  border-color: var(--ss-orange);
+  background: var(--ss-orange);
+  color: white;
+}
+
+.custom-route-band {
+  padding: clamp(5rem, 8vw, 8rem) 0;
+  background: var(--ss-ink);
+  color: white;
+}
+
+.custom-route-band span {
+  color: var(--ss-orange);
+  text-transform: none;
+}
+
+.custom-route-band h2 {
+  max-width: 15ch;
+  color: white;
+  font-family: var(--body);
+  font-size: clamp(3rem, 6vw, 6.5rem);
+  font-weight: 470;
+  letter-spacing: -.075em;
+  line-height: .88;
+}
+
+/* Tour detail */
+.tour-detail-hero {
+  min-height: 94svh;
+  margin: .6rem;
+  border-radius: var(--ss-radius);
+  background: var(--ss-ink);
+}
+
+.tour-detail-hero__image,
+.tour-detail-hero__image img,
+.tour-detail-hero__overlay {
+  border-radius: inherit;
+}
+
+.tour-detail-hero__image img {
+  filter: none;
+}
+
+.tour-detail-hero__overlay {
+  background: linear-gradient(180deg, rgb(0 0 0 / .22), transparent 35%, rgb(0 0 0 / .74));
+}
+
+.tour-detail-hero__content {
+  width: min(100% - 3rem, 92rem);
+  padding-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.tour-detail-hero .back-link {
+  min-height: 2.8rem;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: clamp(2rem, 5vw, 5rem);
+  border-radius: 999px;
+  padding-inline: 1rem;
+  background: rgb(255 255 255 / .16);
+  color: white;
+  font-size: .68rem;
+  letter-spacing: .03em;
+  text-transform: none;
+  backdrop-filter: blur(12px);
+}
+
+.tour-detail-hero__content > .reveal > p {
+  color: var(--ss-orange);
+  font-size: .7rem;
+  letter-spacing: .06em;
+}
+
+.tour-detail-hero h1 {
+  max-width: 11ch;
+  color: white;
+  font-family: var(--body);
+  font-size: clamp(4.4rem, 10vw, 11rem);
+  font-weight: 500;
+  letter-spacing: -.09em;
+  line-height: .74;
+}
+
+.tour-detail-hero__facts span {
+  border-color: rgb(255 255 255 / .35);
+  color: white;
+  font-size: .6rem;
+  letter-spacing: .04em;
+  text-transform: none;
+}
+
+.tour-detail__grid {
+  grid-template-columns: minmax(0, 1.5fr) minmax(18rem, .5fr);
+  gap: clamp(4rem, 9vw, 9rem);
+}
+
+.tour-detail .lead-copy {
+  color: var(--ss-ink);
+  font-family: var(--body);
+  font-size: clamp(2rem, 4vw, 4.25rem);
+  font-weight: 470;
+  letter-spacing: -.06em;
+  line-height: 1.06;
+}
+
+.detail-block > h2,
+.include-grid h3 {
+  color: var(--ss-ink);
+  font-family: var(--body);
+  font-weight: 550;
+  letter-spacing: -.06em;
+}
+
+.highlight-grid {
+  gap: .75rem;
+  border: 0;
+  background: transparent;
+}
+
+.highlight-grid > div {
+  border-radius: 1.25rem;
+  background: var(--ss-paper);
+}
+
+.highlight-grid span,
+.itinerary article > span {
+  color: var(--ss-orange);
+  font-family: var(--body);
+}
+
+.highlight-grid p,
+.itinerary h3 {
+  font-family: var(--body);
+}
+
+.itinerary article,
+.include-grid {
+  border-color: var(--inner-line);
+}
+
+.tour-booking-card {
+  top: 7rem;
+  padding: 2rem;
+  overflow: hidden;
+  border: 0;
+  border-radius: 1.75rem;
+  background: var(--ss-orange);
+  color: white;
+}
+
+.tour-booking-card > span,
+.tour-booking-card > small {
+  color: rgb(255 255 255 / .72);
+}
+
+.tour-booking-card > strong {
+  color: white;
+  font-family: var(--body);
+  font-size: 3.6rem;
+  font-weight: 520;
+  letter-spacing: -.08em;
+}
+
+.tour-booking-card .button--gold {
+  border-color: white;
+  background: white;
+  color: var(--ss-orange);
+}
+
+.tour-booking-card .button--gold:hover {
+  border-color: var(--ss-ink);
+  background: var(--ss-ink);
+  color: white;
+}
+
+.booking-card-list {
+  border-color: rgb(255 255 255 / .28);
+  color: white;
+}
+
+/* Airport */
+.airport-page__grid {
+  grid-template-columns: minmax(0, 1.05fr) minmax(25rem, .95fr);
+}
+
+.airport-page__copy h2,
+.fleet-intro h2,
+.contact-page h2,
+.about-page h2,
+.rental-guide__head h2,
+.about-notes__head h2,
+.route-prices h2 {
+  color: var(--ss-ink);
+  font-family: var(--body);
+  font-size: clamp(3rem, 5.7vw, 6.5rem);
+  font-weight: 480;
+  letter-spacing: -.075em;
+  line-height: .88;
+}
+
+.process-list article {
+  border-color: var(--inner-line);
+}
+
+.process-list article > span {
+  color: var(--ss-orange);
+  font-family: var(--body);
+}
+
+.process-list h3 {
+  font-family: var(--body);
+  font-weight: 650;
+}
+
+.vehicle-pills span {
+  border-color: var(--inner-line);
+  background: var(--ss-paper);
+  color: var(--ss-ink);
+}
+
+.route-prices {
+  background: var(--ss-ink);
+  color: white;
+}
+
+.route-prices .eyebrow,
+.route-prices h2 {
+  color: white;
+}
+
+.route-prices .eyebrow {
+  color: var(--ss-orange);
+}
+
+.route-grid {
+  gap: .7rem;
+  border: 0;
+}
+
+.route-grid article {
+  min-height: 10rem;
+  border: 0;
+  border-radius: 1.4rem;
+  background: rgb(255 255 255 / .08);
+  color: white;
+}
+
+.route-grid article:hover {
+  padding-left: 1.75rem;
+  background: var(--ss-orange);
+}
+
+.route-grid article > span {
+  color: var(--ss-orange);
+}
+
+.route-grid article:hover > span {
+  color: white;
+}
+
+.route-grid small {
+  color: rgb(255 255 255 / .6);
+}
+
+/* Booking and contact surfaces */
+.booking-panel,
+.booking-modal {
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--ss-radius);
+  background: var(--ss-paper);
+  box-shadow: none;
+}
+
+.booking-panel {
+  padding: 0 0 2rem;
+}
+
+.booking-panel__head {
+  margin: 0 0 1.5rem;
+  padding-block: 2rem 1.25rem;
+  border-bottom: 1px solid var(--inner-line);
+}
+
+.booking-panel__head span,
+.booking-form__heading h3 {
+  color: var(--ss-ink);
+  font-family: var(--body);
+  font-weight: 600;
+  letter-spacing: -.04em;
+}
+
+.booking-form input,
+.booking-form textarea,
+.booking-form select {
+  min-height: 3.2rem;
+  border: 1px solid rgb(8 9 9 / .11);
+  border-radius: .9rem;
+  padding-inline: .9rem;
+  background: white;
+  color: var(--ss-ink);
+}
+
+.booking-form textarea {
+  padding-block: .8rem;
+}
+
+.booking-form input:focus,
+.booking-form textarea:focus,
+.booking-form select:focus {
+  border-color: var(--ss-orange);
+  box-shadow: 0 0 0 4px rgb(255 129 8 / .12);
+}
+
+.booking-form label > span {
+  color: var(--ss-muted);
+  letter-spacing: .04em;
+}
+
+.booking-progress span.is-active i {
+  background: var(--ss-orange);
+}
+
+.booking-modal__summary {
+  background: var(--ss-orange);
+}
+
+.booking-modal__type {
+  color: white;
+}
+
+.booking-modal__description,
+.booking-modal__help p {
+  color: rgb(255 255 255 / .76);
+}
+
+.booking-modal__form-panel {
+  background: var(--ss-paper);
+}
+
+.modal-backdrop {
+  background: rgb(8 9 9 / .62);
+}
+
+.contact-page__grid {
+  grid-template-columns: minmax(0, .82fr) minmax(28rem, 1.18fr);
+}
+
+.contact-cards a {
+  border: 0;
+  border-radius: 1.25rem;
+  background: var(--ss-paper);
+}
+
+.contact-cards a:hover {
+  border-color: transparent;
+  background: var(--ss-orange);
+  color: white;
+}
+
+.contact-cards a:hover span,
+.contact-cards a:hover small {
+  color: white;
+}
+
+.contact-cards span,
+.contact-note span {
+  color: var(--ss-orange);
+}
+
+.contact-note {
+  border-color: var(--ss-orange);
+}
+
+/* About */
+.about-page__grid {
+  grid-template-columns: minmax(22rem, .82fr) minmax(28rem, 1.18fr);
+}
+
+.about-page figure {
+  min-height: 46rem;
+  border-radius: var(--ss-radius);
+  transform: none;
+}
+
+.about-page figure img {
+  filter: none;
+}
+
+.about-values {
+  gap: .75rem;
+  border: 0;
+}
+
+.about-values span {
+  min-height: 9rem;
+  padding: 1.25rem;
+  border: 0;
+  border-radius: 1.25rem;
+  background: var(--ss-paper);
+}
+
+.about-values strong {
+  color: var(--ss-orange);
+  font-family: var(--body);
+}
+
+.about-notes {
+  background: var(--ss-ink);
+  color: white;
+}
+
+.about-notes__head h2 {
+  color: white;
+}
+
+.about-notes__grid {
+  gap: .75rem;
+  border: 0;
+}
+
+.about-notes article {
+  min-height: 23rem;
+  border: 0;
+  border-radius: var(--ss-radius);
+  background: rgb(255 255 255 / .08);
+}
+
+.about-notes article > span {
+  color: var(--ss-orange);
+  font-family: var(--body);
+}
+
+.about-notes h3 {
+  color: white;
+  font-family: var(--body);
+  font-weight: 600;
+}
+
+.about-notes p {
+  color: rgb(255 255 255 / .62);
+}
+
+/* Rental guide */
+.fleet-intro,
+.rental-guide__head {
+  border-color: var(--inner-line);
+}
+
+.rental-guide__grid {
+  gap: .75rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.rental-guide__grid article {
+  min-height: 20rem;
+  border-radius: var(--ss-radius);
+  background: var(--ss-paper);
+}
+
+.rental-guide__grid article:hover {
+  background: var(--ss-orange);
+  color: white;
+}
+
+.rental-guide__grid span {
+  color: var(--ss-orange);
+  font-family: var(--body);
+}
+
+.rental-guide__grid article:hover span,
+.rental-guide__grid article:hover p {
+  color: white;
+}
+
+.rental-guide__grid h3 {
+  font-family: var(--body);
+  font-weight: 650;
+}
+
+/* Privacy */
+.legal-page {
+  min-height: 80svh;
+  padding-top: 11rem;
+}
+
+.legal-page .narrow {
+  width: min(58rem, 100%);
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 5rem);
+  border-radius: var(--ss-radius);
+  background: var(--ss-paper);
+}
+
+.legal-page h1 {
+  margin: 1rem 0 3rem;
+  color: var(--ss-ink);
+  font-family: var(--body);
+  font-size: clamp(4.5rem, 9vw, 9rem);
+  font-weight: 480;
+  letter-spacing: -.09em;
+  line-height: .78;
+}
+
+.legal-page h2 {
+  margin-top: 3rem;
+  color: var(--ss-ink);
+  font-family: var(--body);
+  font-size: 1.4rem;
+  font-weight: 650;
+}
+
+.legal-page p {
+  line-height: 1.7;
+}
+
+@media (max-width: 1020px) {
+  .inner-hero__grid,
+  .airport-page__grid,
+  .about-page__grid,
+  .contact-page__grid,
+  .tour-detail__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inner-hero__grid {
+    padding: 2rem;
+  }
+
+  .inner-hero__art figure {
+    height: 34rem;
+    min-height: 0;
+  }
+
+  .catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tour-booking-card {
+    position: relative;
+    top: auto;
+  }
+
+  .simple-hero--story {
+    min-height: 57rem;
+    align-items: start;
+    padding: 9rem 1rem 1rem;
+  }
+
+  .simple-hero--story .simple-hero__media {
+    inset: 28rem 1rem 1rem;
+  }
+
+  .about-page__grid,
+  .contact-page__grid {
+    gap: 4rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .inner-hero {
+    padding: 6rem .45rem .45rem;
+  }
+
+  .inner-hero__grid {
+    min-height: 0;
+    gap: 2.5rem;
+    padding: 1.25rem;
+    border-radius: 1.6rem;
+  }
+
+  .inner-hero h1,
+  .simple-hero h1 {
+    font-size: clamp(4rem, 20vw, 6.5rem);
+  }
+
+  .inner-hero__art figure {
+    height: 27rem;
+    border-radius: 1.4rem;
+  }
+
+  .inner-hero__art figcaption {
+    display: grid;
+  }
+
+  .simple-hero {
+    min-height: 42rem;
+    padding: 7rem 1rem 3rem;
+  }
+
+  .simple-hero--story {
+    min-height: 50rem;
+  }
+
+  .simple-hero--story .simple-hero__media {
+    inset: 25rem .5rem .5rem;
+    border-radius: 1.6rem;
+  }
+
+  .simple-hero--contact {
+    min-height: 44rem;
+  }
+
+  .simple-hero--contact h1 {
+    font-size: clamp(4rem, 20vw, 6.5rem);
+  }
+
+  .catalog-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .tour-card__media,
+  .bike-card__visual {
+    height: 27rem;
+  }
+
+  .tour-card__body,
+  .bike-card__body {
+    min-height: 12.5rem;
+  }
+
+  .custom-route-band .container,
+  .filter-intro,
+  .fleet-intro,
+  .rental-guide__head {
+    align-items: start;
+    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+
+  .custom-route-band h2,
+  .airport-page__copy h2,
+  .fleet-intro h2,
+  .contact-page h2,
+  .about-page h2,
+  .rental-guide__head h2,
+  .about-notes__head h2,
+  .route-prices h2 {
+    font-size: clamp(3rem, 14vw, 4.8rem);
+  }
+
+  .tour-detail-hero {
+    min-height: 50rem;
+    margin: .3rem;
+    border-radius: 1.6rem;
+  }
+
+  .tour-detail-hero__content {
+    width: calc(100% - 2rem);
+  }
+
+  .tour-detail-hero h1 {
+    font-size: clamp(4rem, 19vw, 6.5rem);
+  }
+
+  .route-grid,
+  .rental-guide__grid,
+  .about-notes__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .route-grid article {
+    min-height: 8rem;
+  }
+
+  .about-page figure {
+    min-height: 32rem;
+    border-radius: 1.6rem;
+  }
+
+  .about-values {
+    grid-template-columns: 1fr;
+  }
+
+  .about-values span {
+    min-height: 7rem;
+  }
+
+  .booking-panel,
+  .booking-modal,
+  .legal-page .narrow,
+  .rental-guide__grid article,
+  .about-notes article {
+    border-radius: 1.5rem;
+  }
+
+  .legal-page {
+    padding-top: 7rem;
+  }
+
+  .legal-page .narrow {
+    padding: 1.5rem;
+  }
+
+  .legal-page h1 {
+    font-size: clamp(4rem, 20vw, 6rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-card,
+  .bike-card {
+    transition: none;
+  }
+}
