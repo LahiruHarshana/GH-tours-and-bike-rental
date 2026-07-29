@@ -1,8 +1,9 @@
 export default function Loading() {
   return (
-    <div className="page-loader" role="status" aria-label="Loading">
-      <div className="page-loader__sun"><span /></div>
-      <p>Opening the island...</p>
+    <div className="page-loader" role="status" aria-live="polite">
+      <div className="page-loader__sun" aria-hidden="true"><span>GH</span></div>
+      <p>Opening the island</p>
+      <small>Please wait a moment</small>
     </div>
   );
 }

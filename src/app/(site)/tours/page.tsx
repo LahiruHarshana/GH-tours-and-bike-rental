@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { TourCard } from "@/components/public/cards/TourCard";
 import { Reveal } from "@/components/public/motion/Reveal";
 import { AnimatedCatalogGrid } from "@/components/public/collections/AnimatedCatalogGrid";
@@ -24,9 +25,18 @@ export default async function ToursPage() {
           <span>All prices are starting estimates in USD for private arrangements.</span>
         </div>
         <div className="container">
-          <AnimatedCatalogGrid variant="tours">
-            {tours.map((tour, index) => <TourCard key={tour.id} tour={tour} index={index} />)}
-          </AnimatedCatalogGrid>
+          {tours.length > 0 ? (
+            <AnimatedCatalogGrid variant="tours">
+              {tours.map((tour, index) => <TourCard key={tour.id} tour={tour} index={index} />)}
+            </AnimatedCatalogGrid>
+          ) : (
+            <div className="catalog-empty">
+              <span aria-hidden="true">GH</span>
+              <p>New journeys are being prepared.</p>
+              <h2>Let us shape one around you.</h2>
+              <Link className="button button--gold" href="/contact">Plan a custom journey</Link>
+            </div>
+          )}
         </div>
       </section>
       <section className="custom-route-band modern-section"><div className="container"><div><span>Nothing here fits perfectly?</span><h2>Good. Let us build it around you.</h2></div><a className="button button--gold" href="/contact">Create a custom route</a></div></section>
