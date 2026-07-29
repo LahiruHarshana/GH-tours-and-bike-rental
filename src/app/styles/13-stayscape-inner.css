@@ -54,7 +54,7 @@
 .inner-hero {
   position: relative;
   min-height: auto;
-  padding: 9rem clamp(.65rem, 1.5vw, 1.5rem) 1.25rem;
+  padding: 9rem clamp(.65rem, 1.5vw, 1.5rem) 0;
   overflow: hidden;
   background: var(--ss-bg);
   color: var(--ss-ink);
@@ -66,26 +66,40 @@
 }
 
 .inner-hero__grid {
+  display: grid;
   width: min(100%, 116rem);
-  min-height: 43rem;
-  grid-template-columns: minmax(20rem, .82fr) minmax(28rem, 1.18fr);
-  gap: clamp(2rem, 6vw, 7rem);
+  min-height: 0;
+  grid-template-columns: 1fr;
+  gap: 0;
   margin-inline: auto;
-  padding: clamp(2rem, 5vw, 5.5rem);
-  border-radius: var(--ss-radius);
-  background: var(--ss-paper);
+  padding: 0;
+  background: transparent;
+}
+
+.inner-hero__grid > .reveal:first-child {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 100rem);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 4rem);
+  text-align: center;
+}
+
+.inner-hero__grid > .reveal:first-child > div {
+  display: grid;
+  justify-items: center;
 }
 
 .inner-hero h1,
 .simple-hero h1 {
-  max-width: 10ch;
+  max-width: 12ch;
   margin: 1.25rem 0 1.8rem;
   color: var(--ss-ink);
   font-family: var(--body);
-  font-size: clamp(4.5rem, 8.6vw, 10rem);
+  font-size: clamp(4.5rem, 10vw, 11rem);
   font-weight: 470;
   letter-spacing: -.09em;
-  line-height: .76;
+  line-height: .78;
 }
 
 .inner-hero h1 em,
@@ -98,6 +112,7 @@
 .inner-hero p,
 .simple-hero p {
   max-width: 34rem;
+  margin-inline: auto;
   color: var(--ss-muted);
   font-size: clamp(.95rem, 1.3vw, 1.15rem);
   line-height: 1.55;
@@ -105,13 +120,14 @@
 
 .inner-hero__art {
   align-self: stretch;
+  margin-top: -1.4rem;
 }
 
 .inner-hero__art figure {
-  height: 100%;
-  min-height: 35rem;
+  height: clamp(31rem, 51vw, 49rem);
+  min-height: 0;
   overflow: hidden;
-  border-radius: calc(var(--ss-radius) * .8);
+  border-radius: var(--ss-radius);
   transform: none;
 }
 
@@ -138,16 +154,17 @@
   font-weight: 650;
 }
 
-/* About and contact heroes use the same split-card geometry. */
+/* About and contact heroes follow the same oversized editorial rhythm. */
 .simple-hero {
   position: relative;
   display: grid;
-  min-height: 46rem;
-  align-items: center;
-  padding: 10rem max(1rem, 4vw) 5rem;
+  min-height: 72rem;
+  align-items: start;
+  padding: 9rem max(1rem, 4vw) 1rem;
   overflow: hidden;
   background: var(--ss-bg);
   color: var(--ss-ink);
+  text-align: center;
 }
 
 .simple-hero::after,
@@ -161,15 +178,16 @@
 }
 
 .simple-hero .reveal {
-  max-width: 52rem;
+  max-width: 82rem;
+  margin-inline: auto;
 }
 
 .simple-hero--story {
-  padding-right: 52vw;
+  padding-right: max(1rem, 4vw);
 }
 
 .simple-hero--story .simple-hero__media {
-  inset: 8rem 1rem 1rem 50%;
+  inset: 27rem 1rem 1rem;
   overflow: hidden;
   border-radius: var(--ss-radius);
 }
@@ -183,7 +201,12 @@
 }
 
 .simple-hero--contact {
-  min-height: 51rem;
+  min-height: 52rem;
+  margin: .6rem;
+  padding: 10rem max(1rem, 4vw) 5rem;
+  border-radius: var(--ss-radius);
+  background: var(--ss-ink);
+  color: white;
   text-align: center;
 }
 
@@ -199,11 +222,45 @@
 .simple-hero--contact h1 {
   max-width: 11ch;
   margin-inline: auto;
+  color: white;
   font-size: clamp(4.7rem, 10vw, 11.5rem);
 }
 
 .simple-hero--contact p {
   margin-inline: auto;
+  color: rgb(255 255 255 / .64);
+}
+
+/* The same floating journey selector used on the home page now connects
+   every public section. */
+.ss-inner-services {
+  position: relative;
+  z-index: 6;
+  padding: 0 .65rem clamp(2rem, 4vw, 4rem);
+  background: var(--ss-bg);
+}
+
+.ss-inner-services .ss-planner {
+  margin-top: -3.8rem;
+}
+
+.ss-inner-services .ss-planner__item {
+  position: relative;
+}
+
+.ss-inner-services .ss-planner__item.is-active::after {
+  position: absolute;
+  right: 1.4rem;
+  bottom: .65rem;
+  left: 1.4rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ss-orange);
+  content: "";
+}
+
+.ss-inner-services .ss-round-arrow.is-active {
+  background: var(--ss-ink);
 }
 
 /* Catalog framing */
@@ -1699,11 +1756,11 @@
   }
 
   .inner-hero__grid {
-    padding: 2rem;
+    padding: 0;
   }
 
   .inner-hero__art figure {
-    height: 34rem;
+    height: clamp(32rem, 58vw, 41rem);
     min-height: 0;
   }
 
@@ -1717,13 +1774,13 @@
   }
 
   .simple-hero--story {
-    min-height: 57rem;
+    min-height: 64rem;
     align-items: start;
     padding: 9rem 1rem 1rem;
   }
 
   .simple-hero--story .simple-hero__media {
-    inset: 28rem 1rem 1rem;
+    inset: 27rem 1rem 1rem;
   }
 
   .about-page__grid,
@@ -1734,14 +1791,21 @@
 
 @media (max-width: 700px) {
   .inner-hero {
-    padding: 6rem .45rem .45rem;
+    padding: 7rem .45rem 0;
   }
 
   .inner-hero__grid {
     min-height: 0;
-    gap: 2.5rem;
-    padding: 1.25rem;
-    border-radius: 1.6rem;
+    gap: 0;
+    padding: 0;
+  }
+
+  .inner-hero__grid > .reveal:first-child {
+    padding-inline: .75rem;
+  }
+
+  .inner-hero__art {
+    margin-top: -.35rem;
   }
 
   .inner-hero h1,
@@ -1759,12 +1823,12 @@
   }
 
   .simple-hero {
-    min-height: 42rem;
-    padding: 7rem 1rem 3rem;
+    min-height: 52rem;
+    padding: 7rem 1rem .5rem;
   }
 
   .simple-hero--story {
-    min-height: 50rem;
+    min-height: 54rem;
   }
 
   .simple-hero--story .simple-hero__media {
@@ -1774,10 +1838,26 @@
 
   .simple-hero--contact {
     min-height: 44rem;
+    margin: .3rem;
+    padding: 7rem 1rem 3rem;
+    border-radius: 1.6rem;
   }
 
   .simple-hero--contact h1 {
     font-size: clamp(4rem, 20vw, 6.5rem);
+  }
+
+  .ss-inner-services {
+    padding-right: .45rem;
+    padding-left: .45rem;
+  }
+
+  .ss-inner-services .ss-planner__item {
+    display: none;
+  }
+
+  .ss-inner-services .ss-planner__item.is-mobile-primary {
+    display: grid;
   }
 
   .catalog-grid {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { BookingForm } from "@/components/booking/BookingForm";
 import { Reveal } from "@/components/public/motion/Reveal";
+import { ServiceBar } from "@/components/public/navigation/ServiceBar";
 import Image from "next/image";
 
 export const metadata: Metadata = { title: "Sri Lanka Airport Hire", description: "Book a reliable private transfer from Colombo Bandaranaike International Airport." };
@@ -14,6 +15,7 @@ export default function AirportHirePage() {
           <Reveal delay={100} className="inner-hero__art" direction="right"><figure data-scroll-motion><Image src="/images/south-coast.webp" alt="The Sri Lankan coast waiting beyond the airport"  width={1920} height={1280} sizes="(max-width: 1024px) 100vw, 50vw"/><figcaption><span>CMB</span><strong>Flight tracked · Driver waiting</strong></figcaption></figure></Reveal>
         </div>
       </section>
+      <ServiceBar active="airport" />
       <section className="section airport-page modern-section">
         <div className="container airport-page__grid">
           <Reveal className="airport-page__copy">

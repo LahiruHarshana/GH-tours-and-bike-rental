@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TourBookingButton } from "@/components/booking/TourBookingButton";
 import { Reveal } from "@/components/public/motion/Reveal";
+import { ServiceBar } from "@/components/public/navigation/ServiceBar";
 import { getTourBySlug } from "@/lib/data";
 import { formatUSD } from "@/lib/utils";
 import Image from "next/image";
@@ -34,6 +35,8 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
           </Reveal>
         </div>
       </section>
+
+      <ServiceBar active="tours" />
 
       <section className="section tour-detail modern-section">
         <div className="container tour-detail__grid">

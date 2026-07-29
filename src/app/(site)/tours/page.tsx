@@ -3,6 +3,7 @@ import Link from "next/link";
 import { TourCard } from "@/components/public/cards/TourCard";
 import { Reveal } from "@/components/public/motion/Reveal";
 import { AnimatedCatalogGrid } from "@/components/public/collections/AnimatedCatalogGrid";
+import { ServiceBar } from "@/components/public/navigation/ServiceBar";
 import { getTours } from "@/lib/data";
 import Image from "next/image";
 
@@ -19,6 +20,7 @@ export default async function ToursPage() {
           <Reveal delay={100} className="inner-hero__art" direction="right"><figure data-scroll-motion><Image src="/images/sigiriya.webp" alt="Sigiriya rock fortress surrounded by Sri Lanka's forest"  width={1920} height={1280} sizes="(max-width: 1024px) 100vw, 50vw"/><figcaption><span>Cultural Triangle</span><strong>Ancient stone · Early light</strong></figcaption></figure></Reveal>
         </div>
       </section>
+      <ServiceBar active="tours" />
       <section className="section section--sand modern-section">
         <div className="container filter-intro">
           <p><strong>{tours.length} journeys</strong> ready to customise</p>

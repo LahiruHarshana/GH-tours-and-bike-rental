@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/public/motion/Reveal";
+import { ServiceBar } from "@/components/public/navigation/ServiceBar";
 import Image from "next/image";
 
 export const metadata: Metadata = { title: "Our Story" };
@@ -11,6 +12,7 @@ export default function AboutPage() {
         <div className="simple-hero__media" aria-hidden="true"><Image src="/images/train-hills.webp" alt=""  width={1920} height={1280} sizes="(max-width: 1024px) 100vw, 50vw"/></div>
         <div className="container"><Reveal><span className="eyebrow eyebrow--light"><i />Born from the road</span><h1>Local knowledge.<br /><em>Genuine welcome.</em></h1><p>The island is our home. The journey should feel like yours.</p></Reveal></div>
       </section>
+      <ServiceBar />
       <section className="section about-page modern-section">
         <div className="container about-page__grid">
           <Reveal direction="left"><figure data-scroll-motion><Image src="/images/hero-coast.webp" alt="Palm trees and the Indian Ocean along Sri Lanka's southern coast"  width={1920} height={1280} sizes="(max-width: 1024px) 100vw, 50vw"/><figcaption>Southern Province · Sri Lanka</figcaption></figure></Reveal>
