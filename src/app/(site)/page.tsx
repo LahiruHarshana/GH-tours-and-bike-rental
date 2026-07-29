@@ -8,7 +8,6 @@ import { IslandMarquee } from "@/components/public/navigation/IslandMarquee";
 import { CinematicHeading } from "@/components/public/typography/CinematicHeading";
 import { Section } from "@/components/public/layout/Section";
 import { SectionHeading } from "@/components/public/typography/SectionHeading";
-import { Eyebrow } from "@/components/public/typography/Eyebrow";
 import { TextLink } from "@/components/public/actions/TextLink";
 
 import { MagneticLink } from "@/components/public/actions/MagneticLink";
@@ -300,44 +299,48 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      <Section id="guest-stories" data-chapter="08 / GUEST STORIES" className="guest-stories">
-        <div className="container guest-stories__inner">
-          <Eyebrow>Notes from the road</Eyebrow>
-          <article className="guest-stories__card" data-scroll-3d="tilt-reveal" data-range="enter">
-            <span className="guest-stories__mark" aria-hidden="true">&ldquo;</span>
-            <blockquote>It felt less like following a tour and more like travelling with someone who genuinely wanted us to love the island.</blockquote>
-            <div className="guest-stories__author">
-              <strong>Maya &amp; Daniel</strong>
-              <span>United Kingdom</span>
-              <TextLink variant="dark" href="/tours"><span>The journey they took</span> ↗</TextLink>
-            </div>
-          </article>
-        </div>
-      </Section>
+      <Section id="guest-stories" data-chapter="08 / MADE PERSONAL" className="trust-editorial">
+        <div className="container trust-editorial__shell">
+          <div className="trust-editorial__topline" aria-hidden="true">
+            <span><i />Notes from the road</span>
+            <span>Private · Flexible · Local</span>
+          </div>
 
-      <Section id="values" data-chapter="09 / OUR VALUES" spacing="compact" className="values-section">
-        <div className="container values-inner">
-          <p className="values-quote" data-scroll-motion>
-            <span className="values-quote__mark" aria-hidden="true">&ldquo;</span>
-            {"The best journeys leave room for the unexpected.".split(" ").map((word, index) => (
-              <span className="values-word" style={{ "--i": index } as React.CSSProperties} key={`${word}-${index}`}>
-                {word}{" "}
-              </span>
-            ))}
-          </p>
+          <div className="trust-editorial__grid">
+            <article className="trust-editorial__quote" data-scroll-3d="tilt-reveal" data-range="enter">
+              <span className="trust-editorial__mark" aria-hidden="true">&ldquo;</span>
+              <blockquote>It felt less like following a tour and more like travelling with someone who genuinely wanted us to love the island.</blockquote>
+              <footer>
+                <span className="trust-editorial__avatar" aria-hidden="true">M+D</span>
+                <span>
+                  <strong>Maya &amp; Daniel</strong>
+                  <small>United Kingdom · Cultural Triangle</small>
+                </span>
+              </footer>
+            </article>
 
-          <div className="values-row">
-            {[
-              { title: "Local, not scripted", copy: "Meet a team that knows the roads, seasons and small details that maps cannot tell you." },
-              { title: "Clear, honest pricing", copy: "Receive a confirmed quotation before you travel. No surprise stops or hidden commissions." },
-              { title: "Support that answers", copy: "WhatsApp assistance from a real person before, during and after your booking." },
-            ].map((value, index) => (
-              <article className="values-item" data-scroll-3d="tilt-reveal" data-range="enter" style={{ "--i": index } as React.CSSProperties} key={value.title}>
-                <span className="values-item__number">{String(index + 1).padStart(2, "0")}</span>
-                <h3>{value.title}</h3>
-                <p>{value.copy}</p>
-              </article>
-            ))}
+            <aside className="trust-editorial__principles" aria-label="How we travel">
+              <div className="trust-editorial__principles-head">
+                <span>How we travel</span>
+                <p>The best journeys leave room for the unexpected.</p>
+              </div>
+              <ol>
+                {[
+                  { title: "Local, not scripted", copy: "A team that knows the roads, seasons and small details no map can tell you." },
+                  { title: "Clear from the start", copy: "A confirmed quotation before you travel, without hidden stops or commissions." },
+                  { title: "Here when it matters", copy: "Real WhatsApp support before, during and after your journey." },
+                ].map((value, index) => (
+                  <li data-scroll-motion data-range="enter" style={{ "--i": index } as React.CSSProperties} key={value.title}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <div>
+                      <h3>{value.title}</h3>
+                      <p>{value.copy}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <TextLink variant="dark" href="/about"><span>Meet your local team</span> ↗</TextLink>
+            </aside>
           </div>
         </div>
       </Section>
@@ -346,7 +349,7 @@ export default async function HomePage() {
 
       <Section id="cta" data-chapter="10 / THE INVITATION" width="full" spacing="airy" tone="ink" className="cta-section">
         <div className="cta-section__stage" data-scroll-motion data-range="enter">
-          <div className="cta-photo">
+          <div className="cta-photo" style={{ position: "absolute" }}>
             <Image
               src="/images/hero-coast.webp"
               alt="Sri Lanka's coastline at dusk"

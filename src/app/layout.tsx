@@ -14,6 +14,7 @@ import "./styles/06-hero-modern.css";
 import "./styles/07-story-modern.css";
 import "./styles/08-journeys-modern.css";
 import "./styles/09-route-modern.css";
+import "./styles/10-editorial-polish.css";
 import { siteConfig } from "@/config/site";
 
 const instrumentSans = Instrument_Sans({
@@ -59,13 +60,13 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     type: "website",
     locale: "en_LK",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "GH Tours — Sri Lanka, at your pace." }],
+    images: [{ url: "/og-v2.png", width: 1200, height: 630, alt: "GH Tours — Sri Lanka, at your pace." }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Sri Lanka, at your pace.",
     description: siteConfig.description,
-    images: ["/og.png"],
+    images: ["/og-v2.png"],
   },
 };
 
