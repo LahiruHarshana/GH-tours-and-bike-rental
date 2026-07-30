@@ -51,23 +51,49 @@ const notoSerifSinhala = Noto_Serif_Sinhala({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(siteConfig.url),
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "travel",
+  referrer: "origin-when-cross-origin",
   title: {
-    default: `${siteConfig.name} | Sri Lanka Tours, Airport Hire & Bikes`,
+    default: "GH Tours Weligama | Sri Lanka Airport Transfers & Bike Rental",
     template: `%s | ${siteConfig.shortName}`,
   },
   description: siteConfig.description,
-  keywords: ["Sri Lanka tours", "Sri Lanka airport taxi", "Sri Lanka bike rental", "private driver Sri Lanka"],
+  keywords: [
+    "Weligama tours",
+    "Sri Lanka airport transfer",
+    "Colombo airport to Weligama taxi",
+    "Weligama bike rental",
+    "private tours Sri Lanka",
+  ],
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
-    title: "Sri Lanka, at your pace.",
+    title: "GH Tours Weligama | Sri Lanka Airport Transfers & Bike Rental",
     description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
     type: "website",
     locale: "en_LK",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "GH Tours — Sri Lanka, at your pace." }],
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "GH Tours & Bike Rental in Weligama, Sri Lanka",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sri Lanka, at your pace.",
+    title: "GH Tours Weligama | Sri Lanka Airport Transfers & Bike Rental",
     description: siteConfig.description,
     images: ["/og.png"],
   },

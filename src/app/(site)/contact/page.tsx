@@ -3,8 +3,14 @@ import { BookingForm } from "@/components/booking/BookingForm";
 import { Reveal } from "@/components/public/motion/Reveal";
 import { ServiceBar } from "@/components/public/navigation/ServiceBar";
 import { getWebsiteContent } from "@/lib/data";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Plan Your Journey" };
+export const metadata: Metadata = createPageMetadata({
+  title: "Contact GH Tours & Bike Rental Weligama",
+  description:
+    "Contact GH Tours in Weligama for Sri Lanka airport transfers, private tours and scooter or motorbike rental. Send your dates for a direct quotation.",
+  path: "/contact",
+});
 
 export default async function ContactPage() {
   const content = await getWebsiteContent();

@@ -1,10 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AirportQuickBook } from "@/components/booking/AirportQuickBook";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getBikes, getTours, getWebsiteContent } from "@/lib/data";
+import {
+  absoluteUrl,
+  createPageMetadata,
+  localBusinessSchema,
+} from "@/lib/seo";
 import { formatUSD } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
+export const metadata = createPageMetadata({
+  title: "Weligama Tours, Airport Transfers & Bike Rental",
+  description:
+    "Local travel services in Weligama, Matara: private Sri Lanka tours, CMB airport transfers to the south coast, and reliable scooter and motorbike rental.",
+  path: "/",
+  keywords: [
+    "GH Tours Weligama",
+    "Weligama tours",
+    "Sri Lanka airport transfer",
+    "Weligama bike rental",
+    "tour operator Matara",
+  ],
+});
 
 function Multiline({ text }: { text: string }) {
   return text.split("\n").map((line, index) => (
@@ -22,6 +41,22 @@ export default async function HomePage() {
 
   return (
     <div className="stayscape-home">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": absoluteUrl("/#website"),
+              url: absoluteUrl("/"),
+              name: "GH Tours & Bike Rental",
+              alternateName: "GH Tours Weligama",
+              inLanguage: "en-LK",
+            },
+            localBusinessSchema(),
+          ],
+        }}
+      />
       <div id="hero-sentinel" className="stayscape-sentinel" />
 
       <section className="ss-hero" aria-labelledby="ss-hero-title">
@@ -237,6 +272,27 @@ export default async function HomePage() {
           “{home.testimonial}”
           <footer>{home.testimonialByline}</footer>
         </blockquote>
+      </section>
+
+      <section className="ss-local-intro" aria-labelledby="ss-local-title">
+        <div>
+          <p className="ss-section-kicker">Based in Weligama, Matara</p>
+          <h2 id="ss-local-title">One local team.<br />Your whole Sri Lanka journey.</h2>
+        </div>
+        <div className="ss-local-intro__copy">
+          <p>
+            GH Tours &amp; Bike Rental helps travellers begin on Sri Lanka&apos;s
+            south coast and explore further. Arrange a private transfer from
+            Bandaranaike International Airport to Weligama, collect a reliable
+            bike for local rides, or build a private island tour with one team
+            from arrival to departure.
+          </p>
+          <nav aria-label="Weligama travel services">
+            <Link href="/weligama">Explore Weligama services</Link>
+            <Link href="/airport-hire">Book an airport transfer</Link>
+            <Link href="/bikes">See Weligama bike rentals</Link>
+          </nav>
+        </div>
       </section>
 
       <section className="ss-story" aria-labelledby="ss-story-title">

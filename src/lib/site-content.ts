@@ -47,19 +47,19 @@ export const defaultSiteContent: SiteContent = {
   global: {
     brandName: "GH Tours",
     footerLead: "Until the next road.",
-    footerTagline: "Independent journeys across Sri Lanka",
-    address: "Southern Province, Sri Lanka",
+    footerTagline: "Weligama-based journeys across Sri Lanka",
+    address: "Weligama, Matara, Southern Province, Sri Lanka",
     phone: "+94 77 000 0000",
     whatsapp: "94770000000",
-    email: "hello@ghtours.lk",
+    email: "hello@ghtoursandrentals.com",
   },
   home: {
-    heroEyebrow: "Private Sri Lanka journeys",
+    heroEyebrow: "Weligama-based Sri Lanka journeys",
     heroTitle: "Sri Lanka,\nat your pace.",
     heroImage: "/images/hero-sigiriya-cinematic.webp",
     heroImageAlt: "Sigiriya rock fortress rising above Sri Lanka's green central plains",
     heroCaption: "Ancient wonder",
-    heroPromise: "From the first airport hello to the last ocean sunset, every private journey is shaped around how you want the island to feel.",
+    heroPromise: "From our home in Weligama, we arrange private island tours, Colombo airport transfers and reliable bike rentals around the way you want Sri Lanka to feel.",
     assurances: ["Locally planned", "Flexible by design", "Real support, every day"],
     experiencesEyebrow: "Signature journeys",
     experiencesTitle: "Sri Lanka,\nthoughtfully arranged.",
@@ -98,4 +98,3 @@ export function mergeSiteContent(content?: Partial<SiteContent> | null): SiteCon
     home: { ...defaultSiteContent.home, ...(content?.home ?? {}) },
   };
 }
-

@@ -21,6 +21,7 @@ export function PublicFooter({ content }: { content: SiteContent["global"] }) {
         <div>
           <small>Find us</small>
           <span>{content.address}</span>
+          <span>Serving Weligama, Matara and travellers across Sri Lanka</span>
           <a href={`mailto:${content.email}`}>{content.email}</a>
           <a href={`tel:${content.phone.replace(/\s/g, "")}`}>{content.phone}</a>
         </div>

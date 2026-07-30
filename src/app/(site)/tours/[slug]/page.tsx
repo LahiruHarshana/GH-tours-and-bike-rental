@@ -4,7 +4,14 @@ import { notFound } from "next/navigation";
 import { TourBookingButton } from "@/components/booking/TourBookingButton";
 import { Reveal } from "@/components/public/motion/Reveal";
 import { ServiceBar } from "@/components/public/navigation/ServiceBar";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getTourBySlug } from "@/lib/data";
+import {
+  absoluteUrl,
+  breadcrumbSchema,
+  businessId,
+  createPageMetadata,
+} from "@/lib/seo";
 import { formatUSD } from "@/lib/utils";
 import Image from "next/image";
 
@@ -13,7 +20,25 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const tour = await getTourBySlug(slug);
-  return tour ? { title: tour.title, description: tour.shortDescription } : { title: "Tour not found" };
+  return tour
+    ? createPageMetadata({
+        title: `${tour.title} | Private Sri Lanka Tour`,
+        description: tour.shortDescription,
+        path: `/tours/${tour.slug}`,
+        image: tour.image,
+        keywords: [
+          tour.title,
+          "private Sri Lanka tour",
+          `${tour.location} tour`,
+          "Sri Lanka tour from Weligama",
+        ],
+      })
+    : createPageMetadata({
+        title: "Tour not found",
+        description: "This tour page is no longer available.",
+        path: `/tours/${slug}`,
+        noIndex: true,
+      });
 }
 
 export default async function TourDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -23,6 +48,44 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            breadcrumbSchema([
+              { name: "Home", path: "/" },
+              { name: "Private Sri Lanka Tours", path: "/tours" },
+              { name: tour.title, path: `/tours/${tour.slug}` },
+            ]),
+            {
+              "@type": "TouristTrip",
+              "@id": absoluteUrl(`/tours/${tour.slug}#trip`),
+              name: tour.title,
+              description: tour.description,
+              image: tour.image,
+              url: absoluteUrl(`/tours/${tour.slug}`),
+              touristType: "Private leisure travellers",
+              itinerary: {
+                "@type": "ItemList",
+                itemListElement: tour.itinerary.map((day) => ({
+                  "@type": "ListItem",
+                  position: day.day,
+                  name: day.title,
+                  description: day.description,
+                })),
+              },
+              provider: { "@id": businessId },
+              offers: {
+                "@type": "Offer",
+                price: tour.priceFrom,
+                priceCurrency: "USD",
+                url: absoluteUrl(`/tours/${tour.slug}`),
+                availability: "https://schema.org/InStock",
+              },
+            },
+          ],
+        }}
+      />
       <section className="tour-detail-hero modern-section">
         <div className="tour-detail-hero__image"><Image src={tour.image} alt={tour.title}  width={1920} height={1280} sizes="(max-width: 1024px) 100vw, 50vw"/></div>
         <div className="tour-detail-hero__overlay" />

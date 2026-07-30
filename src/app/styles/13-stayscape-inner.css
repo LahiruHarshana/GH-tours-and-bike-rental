@@ -1964,3 +1964,246 @@
     animation: none;
   }
 }
+
+/* Useful, indexable destination and service guidance. */
+.seo-guide,
+.weligama-services,
+.weligama-guide {
+  background: var(--ss-bg);
+}
+
+.seo-guide__grid,
+.weligama-guide__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(22rem, .72fr);
+  gap: clamp(3rem, 9vw, 9rem);
+  align-items: start;
+}
+
+.seo-guide h2,
+.weligama-services h2,
+.weligama-guide h2,
+.seo-faq > h2 {
+  max-width: 12ch;
+  margin: 1rem 0 0;
+  color: var(--ss-ink);
+  font-family: var(--body);
+  font-size: clamp(3rem, 5.7vw, 6.5rem);
+  font-weight: 480;
+  letter-spacing: -.075em;
+  line-height: .88;
+}
+
+.seo-guide__copy p,
+.weligama-guide__grid p {
+  max-width: 42rem;
+  font-size: clamp(.96rem, 1.25vw, 1.1rem);
+  line-height: 1.7;
+}
+
+.seo-guide__copy p + p {
+  margin-top: 1.25rem;
+}
+
+.seo-guide__copy .button {
+  margin-top: 2rem;
+}
+
+.seo-faq {
+  display: grid;
+  grid-template-columns: minmax(15rem, .6fr) minmax(0, 1.4fr);
+  gap: clamp(2.5rem, 8vw, 8rem);
+  margin-top: clamp(5rem, 10vw, 10rem);
+  padding-top: clamp(3rem, 6vw, 6rem);
+  border-top: 1px solid var(--inner-line);
+}
+
+.seo-faq > h2 {
+  font-size: clamp(2.6rem, 4vw, 4.5rem);
+}
+
+.seo-faq details {
+  border-bottom: 1px solid var(--inner-line);
+}
+
+.seo-faq summary {
+  position: relative;
+  padding: 1.4rem 3rem 1.4rem 0;
+  color: var(--ss-ink);
+  cursor: pointer;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  font-weight: 650;
+  list-style: none;
+}
+
+.seo-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.seo-faq summary::after {
+  position: absolute;
+  top: 1.35rem;
+  right: .25rem;
+  color: var(--ss-orange);
+  content: "+";
+  font-size: 1.4rem;
+}
+
+.seo-faq details[open] summary::after {
+  content: "−";
+}
+
+.seo-faq details p {
+  max-width: 48rem;
+  padding: 0 3rem 1.5rem 0;
+  line-height: 1.7;
+}
+
+.weligama-services__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, .55fr);
+  gap: 3rem;
+  align-items: end;
+  margin-bottom: 3rem;
+}
+
+.weligama-services__intro > p {
+  justify-self: end;
+  line-height: 1.65;
+}
+
+.weligama-services__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem;
+}
+
+.weligama-services__grid article {
+  display: flex;
+  min-height: 25rem;
+  flex-direction: column;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-radius: var(--ss-radius);
+  background: var(--ss-paper);
+}
+
+.weligama-services__grid article > span {
+  color: var(--ss-orange);
+  font-size: .72rem;
+  font-weight: 750;
+}
+
+.weligama-services__grid h3 {
+  max-width: 12ch;
+  margin: auto 0 1rem;
+  color: var(--ss-ink);
+  font-family: var(--body);
+  font-size: clamp(1.8rem, 3vw, 3.1rem);
+  font-weight: 550;
+  letter-spacing: -.06em;
+  line-height: .95;
+}
+
+.weligama-services__grid p {
+  min-height: 6.5rem;
+  line-height: 1.6;
+}
+
+.weligama-services__grid a {
+  display: flex;
+  align-items: center;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--inner-line);
+  color: var(--ss-ink);
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.weligama-services__grid a b {
+  margin-left: auto;
+  color: var(--ss-orange);
+}
+
+.weligama-guide {
+  background: var(--ss-ink);
+}
+
+.weligama-guide .eyebrow {
+  color: var(--ss-orange);
+}
+
+.weligama-guide h2 {
+  color: white;
+}
+
+.weligama-guide p {
+  color: rgb(255 255 255 / .65);
+}
+
+.weligama-route-list {
+  display: grid;
+  border-top: 1px solid rgb(255 255 255 / .18);
+}
+
+.weligama-route-list > div {
+  display: grid;
+  grid-template-columns: minmax(8rem, .7fr) 1fr;
+  gap: 2rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid rgb(255 255 255 / .18);
+}
+
+.weligama-route-list strong {
+  color: white;
+}
+
+.weligama-route-list span {
+  color: rgb(255 255 255 / .58);
+  font-size: .8rem;
+}
+
+.weligama-services + .weligama-guide {
+  padding-block: clamp(6rem, 10vw, 10rem);
+}
+
+@media (max-width: 1020px) {
+  .seo-guide__grid,
+  .weligama-guide__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .weligama-services__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .weligama-services__grid article {
+    min-height: 20rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .seo-guide h2,
+  .weligama-services h2,
+  .weligama-guide h2 {
+    font-size: clamp(3rem, 14vw, 4.8rem);
+  }
+
+  .seo-faq,
+  .weligama-services__intro {
+    grid-template-columns: 1fr;
+  }
+
+  .seo-faq > h2 {
+    font-size: 3rem;
+  }
+
+  .weligama-services__grid article {
+    min-height: 18rem;
+    border-radius: 1.5rem;
+  }
+
+  .weligama-route-list > div {
+    grid-template-columns: 1fr;
+    gap: .45rem;
+  }
+}
