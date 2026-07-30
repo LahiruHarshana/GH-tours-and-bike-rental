@@ -1772,7 +1772,8 @@ h1, h2, h3, blockquote, .brand-mark__text strong {
   flex: 0 0 auto;
   line-height: 0;
 }
-.brand-mark__seal svg { display: block; width: 100%; height: 100%; }
+.brand-mark__seal svg,
+.brand-mark__seal img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .brand-mark__text { display: grid; align-content: center; line-height: 1; }
 .brand-mark__text strong,
 .brand-mark__text small { display: block; white-space: nowrap; }

@@ -118,18 +118,12 @@ body {
   line-height: 1;
 }
 
-.ss-header__brand i {
-  display: grid;
-  width: 1.45rem;
-  aspect-ratio: 1;
-  place-items: center;
-  border-radius: .45rem;
-  background: var(--ss-orange);
-  color: white;
-  font-size: .5rem;
-  font-style: normal;
-  font-weight: 800;
-  transform: rotate(-5deg);
+.ss-header__brand-logo {
+  display: block;
+  width: 3.6rem;
+  height: auto;
+  flex: 0 0 auto;
+  mix-blend-mode: multiply;
 }
 
 .ss-header__brand span {
@@ -1067,8 +1061,8 @@ a.ss-product-card:hover {
     display: none;
   }
 
-  .ss-header__brand i {
-    width: 1.6rem;
+  .ss-header__brand-logo {
+    width: 3.25rem;
   }
 
   .ss-menu-dialog__panel {

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -32,7 +33,14 @@ export function PublicHeader({ content }: { content: SiteContent["global"] }) {
         </button>
 
         <Link href="/" className="ss-header__brand" aria-label={content.brandName}>
-          <i aria-hidden="true">GH</i>
+          <Image
+            className="ss-header__brand-logo"
+            src="/images/gh-tours-logo.png"
+            alt=""
+            width={1001}
+            height={728}
+            sizes="64px"
+          />
           <span>{content.brandName}</span>
         </Link>
 
@@ -62,7 +70,15 @@ export function PublicHeader({ content }: { content: SiteContent["global"] }) {
         <div className="ss-menu-dialog__panel">
           <div className="ss-menu-dialog__top">
             <Link href="/" className="ss-header__brand" onClick={() => setOpen(false)} aria-label={content.brandName}>
-              <i aria-hidden="true">GH</i><span>{content.brandName}</span>
+              <Image
+                className="ss-header__brand-logo"
+                src="/images/gh-tours-logo.png"
+                alt=""
+                width={1001}
+                height={728}
+                sizes="64px"
+              />
+              <span>{content.brandName}</span>
             </Link>
             <button type="button" onClick={() => setOpen(false)} aria-label="Close navigation menu">Close</button>
           </div>

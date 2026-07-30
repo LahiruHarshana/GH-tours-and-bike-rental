@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { navigation } from "@/config/site";
 import type { SiteContent } from "@/lib/site-content";
@@ -7,8 +8,16 @@ export function PublicFooter({ content }: { content: SiteContent["global"] }) {
     <footer className="site-footer ss-footer">
       <div className="ss-footer__top">
         <p>{content.footerLead}</p>
-        <Link href="/" className="ss-header__brand">
-          <i aria-hidden="true">GH</i><span>{content.brandName}</span>
+        <Link href="/" className="ss-header__brand" aria-label={content.brandName}>
+          <Image
+            className="ss-header__brand-logo"
+            src="/images/gh-tours-logo.png"
+            alt=""
+            width={1001}
+            height={728}
+            sizes="64px"
+          />
+          <span>{content.brandName}</span>
         </Link>
         <span>{content.footerTagline}</span>
       </div>
