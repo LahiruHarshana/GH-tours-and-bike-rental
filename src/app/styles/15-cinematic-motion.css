@@ -1,0 +1,393 @@
+/* A single cinematic motion language for every public route. */
+
+.cinema-atmosphere,
+.cinema-curtain {
+  pointer-events: none;
+}
+
+.cinema-atmosphere {
+  position: fixed;
+  z-index: 65;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.cinema-enabled .cinema-atmosphere {
+  opacity: 1;
+}
+
+.cinema-atmosphere__glow {
+  position: absolute;
+  width: min(34rem, 52vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(247 223 157 / .17) 0,
+    rgb(240 201 107 / .07) 34%,
+    transparent 70%
+  );
+  mix-blend-mode: soft-light;
+  transform: translate3d(
+    calc(var(--pointer-x, 50vw) - 50%),
+    calc(var(--pointer-y, 50vh) - 50%),
+    0
+  );
+  transition: transform .14s linear;
+  will-change: transform;
+}
+
+.cinema-atmosphere__orb {
+  position: absolute;
+  width: clamp(18rem, 36vw, 42rem);
+  aspect-ratio: 1;
+  border: 1px solid rgb(184 111 75 / .11);
+  border-radius: 50%;
+  opacity: .62;
+}
+
+.cinema-atmosphere__orb::before,
+.cinema-atmosphere__orb::after {
+  content: "";
+  position: absolute;
+  inset: 13%;
+  border: 1px solid rgb(240 201 107 / .08);
+  border-radius: inherit;
+}
+
+.cinema-atmosphere__orb::after {
+  inset: 31%;
+}
+
+.cinema-atmosphere__orb--one {
+  top: -22rem;
+  right: -18rem;
+  animation: cinema-orbit-one 28s ease-in-out infinite alternate;
+}
+
+.cinema-atmosphere__orb--two {
+  bottom: -28rem;
+  left: -24rem;
+  animation: cinema-orbit-two 34s ease-in-out infinite alternate;
+}
+
+.cinema-atmosphere__grain {
+  position: absolute;
+  inset: -30%;
+  opacity: .018;
+  background-image:
+    radial-gradient(circle at 20% 30%, currentColor 0 .6px, transparent .7px),
+    radial-gradient(circle at 70% 65%, currentColor 0 .55px, transparent .65px);
+  background-size: 5px 5px, 7px 7px;
+  color: var(--ink-900);
+  mix-blend-mode: multiply;
+  animation: cinema-grain .3s steps(2) infinite;
+}
+
+@keyframes cinema-orbit-one {
+  to { transform: translate3d(-8vw, 12vh, 0) rotate(36deg) scale(1.08); }
+}
+
+@keyframes cinema-orbit-two {
+  to { transform: translate3d(11vw, -10vh, 0) rotate(-28deg) scale(.92); }
+}
+
+@keyframes cinema-grain {
+  0% { transform: translate3d(-1%, 0, 0); }
+  50% { transform: translate3d(1%, -1%, 0); }
+  100% { transform: translate3d(0, 1%, 0); }
+}
+
+/* Page changes play like a film splice instead of flashing between routes. */
+.cinema-curtain {
+  position: fixed;
+  z-index: 400;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 72% 28%, rgb(240 201 107 / .13), transparent 24%),
+    var(--ink-900);
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+  transition: transform .72s var(--ease-island);
+}
+
+.cinema-curtain::before,
+.cinema-curtain::after {
+  content: "";
+  position: absolute;
+  inset: 1rem;
+  border: 1px solid rgb(247 244 236 / .14);
+  transform: scaleX(.25);
+  transition: transform .75s var(--ease-island);
+}
+
+.cinema-curtain::after {
+  inset: 2rem;
+  border-color: rgb(240 201 107 / .14);
+  transform: scaleY(.3);
+}
+
+.cinema-curtain > span {
+  color: var(--sun-300);
+  font-family: var(--display);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-style: italic;
+  letter-spacing: .2em;
+  opacity: 0;
+  text-transform: uppercase;
+  transform: translateY(1rem);
+  transition: opacity .3s ease, transform .65s var(--ease-island);
+}
+
+.cinema-leaving .cinema-curtain {
+  pointer-events: auto;
+  transform: scaleY(1);
+  transform-origin: 50% 100%;
+}
+
+.cinema-leaving .cinema-curtain::before,
+.cinema-leaving .cinema-curtain::after {
+  transform: none;
+}
+
+.cinema-leaving .cinema-curtain > span {
+  opacity: 1;
+  transform: none;
+  transition-delay: .22s;
+}
+
+.cinema-entering main {
+  animation: cinema-page-arrive 1.05s var(--ease-island) both;
+}
+
+@keyframes cinema-page-arrive {
+  from {
+    opacity: .15;
+    filter: blur(8px);
+    transform: translate3d(0, 1.8rem, 0) scale(.992);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
+
+/* Automatic scroll choreography. JS adds these attributes by semantic structure. */
+.cinema-enabled [data-cinema] {
+  --cinema-x: 0;
+  --cinema-y: 2.8rem;
+  opacity: 0;
+  filter: blur(7px);
+  transform: translate3d(var(--cinema-x), var(--cinema-y), 0);
+  transition:
+    opacity .85s ease var(--cinema-delay, 0ms),
+    filter 1.05s ease var(--cinema-delay, 0ms),
+    transform 1.15s var(--ease-island) var(--cinema-delay, 0ms),
+    clip-path 1.2s var(--ease-island) var(--cinema-delay, 0ms);
+  will-change: opacity, transform, clip-path;
+}
+
+.cinema-enabled [data-cinema="wipe"] {
+  --cinema-y: 1.2rem;
+  clip-path: inset(0 0 105% 0);
+  transform-origin: 0 100%;
+}
+
+.cinema-enabled [data-cinema="drift"] {
+  --cinema-x: -1.8rem;
+  --cinema-y: .75rem;
+}
+
+.cinema-enabled [data-cinema="rise"]:nth-child(even) {
+  --cinema-y: 3.8rem;
+}
+
+.cinema-enabled [data-cinema].is-cinema-visible {
+  opacity: 1;
+  filter: none;
+  clip-path: inset(-8% -8% -8% -8%);
+  transform: none;
+}
+
+.cinema-enabled [data-cinema-section]::after {
+  opacity: calc(.18 + var(--section-progress, 0) * .32);
+  transform:
+    translate3d(
+      calc((var(--section-progress, .5) - .5) * -6rem),
+      calc((var(--section-progress, .5) - .5) * 8rem),
+      0
+    )
+    rotate(calc(var(--section-progress, 0) * 28deg));
+  will-change: transform;
+}
+
+/* Images move on a slower plane than their copy for subtle depth. */
+[data-cinema-parallax] {
+  overflow: hidden;
+}
+
+[data-cinema-parallax] img {
+  transform:
+    translate3d(0, calc((var(--cinema-p, .5) - .5) * -4rem), 0)
+    scale(1.075);
+  transition: filter .8s ease;
+  will-change: transform;
+}
+
+[data-cinema-parallax]:hover img {
+  filter: saturate(1) contrast(1.03);
+}
+
+/* Tactile details: light travels across actions, cards lift into focus. */
+.cinema-enabled main .button,
+.cinema-enabled main button[type="submit"] {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.cinema-enabled main .button::after,
+.cinema-enabled main button[type="submit"]::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -40%;
+  bottom: -40%;
+  left: -45%;
+  width: 28%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / .38), transparent);
+  opacity: 0;
+  pointer-events: none;
+  transform: skewX(-18deg);
+  transition: left .85s var(--ease-island), opacity .25s ease;
+}
+
+.cinema-enabled main .button:hover::after,
+.cinema-enabled main button[type="submit"]:hover::after {
+  left: 118%;
+  opacity: 1;
+}
+
+.cinema-enabled [data-cinema="rise"]:is(article, details, a) {
+  transform-origin: 50% 100%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cinema-enabled [data-cinema="rise"]:is(article, details, a):hover {
+    box-shadow: 0 1.8rem 4.5rem -3.2rem rgb(16 32 27 / .42);
+  }
+
+  .cinema-enabled [data-cinema="rise"]:is(article, details, a):hover h3 {
+    color: var(--color-clay);
+  }
+}
+
+/* The floating header gently clears the view while travelling down the page. */
+.cinema-enabled .site-header {
+  transition:
+    transform .65s var(--ease-island),
+    opacity .4s ease,
+    color .4s ease;
+}
+
+.cinema-enabled[data-scrolled="true"][data-scroll-dir="down"] .site-header {
+  opacity: 0;
+  transform: translate3d(0, -135%, 0);
+}
+
+.cinema-enabled[data-scroll-dir="up"] .site-header,
+.cinema-enabled[data-scrolled="false"] .site-header,
+.cinema-enabled .site-header:focus-within,
+.cinema-enabled .site-header:hover {
+  opacity: 1;
+  transform: none;
+}
+
+/* Turn the quiet progress rule into a small illuminated journey marker. */
+.cinema-enabled .scroll-progress {
+  z-index: 68;
+  height: 8.5rem;
+  background: rgb(38 51 47 / .14);
+  box-shadow: 0 0 0 1px rgb(247 244 236 / .08);
+}
+
+.cinema-enabled .scroll-progress span {
+  box-shadow: 0 0 .9rem rgb(240 201 107 / .55);
+  transform: scaleY(var(--scroll-progress-smooth, 0));
+}
+
+.cinema-enabled .scroll-progress i {
+  box-shadow:
+    0 0 0 .24rem rgb(240 201 107 / .12),
+    0 0 1rem rgb(240 201 107 / .55);
+  transition: top .12s linear;
+}
+
+.cinema-enabled .scroll-progress b {
+  letter-spacing: .22em;
+}
+
+@media (max-width: 767px) {
+  .cinema-atmosphere__glow {
+    display: none;
+  }
+
+  .cinema-atmosphere__orb {
+    opacity: .32;
+  }
+
+  .cinema-enabled [data-cinema] {
+    --cinema-y: 1.8rem;
+    filter: blur(4px);
+  }
+
+  [data-cinema-parallax] img {
+    transform:
+      translate3d(0, calc((var(--cinema-p, .5) - .5) * -1.8rem), 0)
+      scale(1.04);
+  }
+
+  .cinema-curtain::before {
+    inset: .65rem;
+  }
+
+  .cinema-curtain::after {
+    inset: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinema-atmosphere {
+    display: none;
+  }
+
+  .cinema-curtain {
+    display: none;
+  }
+
+  .cinema-entering main {
+    animation: none !important;
+  }
+
+  .cinema-enabled [data-cinema] {
+    opacity: 1 !important;
+    filter: none !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
+
+  [data-cinema-parallax] img {
+    transform: none !important;
+  }
+
+  .cinema-enabled .site-header {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
