@@ -106,7 +106,7 @@ export function BookingForm({
       </label>
       <label>
         <span>Phone / WhatsApp *</span>
-        <input name="phone" type="tel" required minLength={7} autoComplete="tel" inputMode="tel" placeholder="+94 77 000 0000" />
+        <input name="phone" type="tel" required minLength={7} autoComplete="tel" inputMode="tel" placeholder="+94 77 131 3178" />
       </label>
       <label>
         <span>Country</span>

@@ -49,9 +49,9 @@ export const defaultSiteContent: SiteContent = {
     footerLead: "Until the next road.",
     footerTagline: "Weligama-based journeys across Sri Lanka",
     address: "Weligama, Matara, Southern Province, Sri Lanka",
-    phone: "+94 77 000 0000",
-    whatsapp: "94770000000",
-    email: "hello@ghtoursandrentals.com",
+    phone: "+94 77 131 3178",
+    whatsapp: "94771313178",
+    email: "ghtoursandbikerental@gmail.com",
   },
   home: {
     heroEyebrow: "Weligama-based Sri Lanka journeys",

@@ -13,7 +13,7 @@ async function seed() {
   const uri = process.env.MONGODB_URI;
   if (!uri) throw new Error("MONGODB_URI is missing. Create .env.local from .env.example.");
 
-  const email = (process.env.ADMIN_SEED_EMAIL ?? "admin@ghtours.lk").toLowerCase();
+  const email = (process.env.ADMIN_SEED_EMAIL ?? "ghtoursandbikerental@gmail.com").toLowerCase();
   const password = process.env.ADMIN_SEED_PASSWORD ?? "ChangeMe123!";
   const name = process.env.ADMIN_SEED_NAME ?? "GH Administrator";
 

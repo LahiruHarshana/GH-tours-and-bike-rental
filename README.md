@@ -57,7 +57,7 @@ Set strong values for these entries in `.env.local`:
 ```env
 AUTH_SECRET=at-least-32-random-characters
 ADMIN_SEED_NAME=GH Administrator
-ADMIN_SEED_EMAIL=admin@ghtours.lk
+ADMIN_SEED_EMAIL=ghtoursandbikerental@gmail.com
 ADMIN_SEED_PASSWORD=Use-A-Strong-Password
 ```
 
