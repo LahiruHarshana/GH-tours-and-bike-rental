@@ -727,6 +727,7 @@
 }
 
 .ss-odyssey__scene--one {
+  z-index: 1;
   opacity: clamp(.06, calc(1.35 - var(--motion-progress, 0) * 1.35), 1);
   transform:
     translate3d(
@@ -739,24 +740,29 @@
 }
 
 .ss-odyssey__scene--two {
-  opacity: clamp(.05, calc(var(--motion-progress, 0) * 3.8), 1);
+  z-index: 2;
+  opacity: min(
+    clamp(.05, calc(var(--motion-progress, 0) * 3.8), 1),
+    clamp(.05, calc(4 - var(--motion-progress, 0) * 4), 1)
+  );
   transform:
     translate3d(
-      calc(-50% + 126vw - var(--motion-progress, 0) * 168vw),
+      calc(-50% + 118vw - var(--motion-progress, 0) * 176vw),
       -50%,
-      calc(-720px + var(--motion-progress, 0) * 1120px)
+      calc(-720px + var(--motion-progress, 0) * 1080px)
     )
     rotateY(calc(18deg - var(--motion-progress, 0) * 28deg))
     rotateZ(1.5deg);
 }
 
 .ss-odyssey__scene--three {
+  z-index: 3;
   opacity: clamp(.04, calc(var(--motion-progress, 0) * 2.8 - .75), 1);
   transform:
     translate3d(
-      calc(-50% + 196vw - var(--motion-progress, 0) * 204vw),
+      calc(-50% + clamp(-2vw, calc(172vw - var(--motion-progress, 0) * 202vw), 172vw)),
       -50%,
-      calc(-960px + var(--motion-progress, 0) * 1060px)
+      clamp(-900px, calc(-900px + var(--motion-progress, 0) * 1200px), 140px)
     )
     rotateY(calc(21deg - var(--motion-progress, 0) * 23deg))
     rotateZ(-1deg);
@@ -911,9 +917,9 @@
   .ss-odyssey__scene--two {
     transform:
       translate3d(
-        calc(-50% + 178vw - var(--motion-progress, 0) * 226vw),
+        calc(-50% + 150vw - var(--motion-progress, 0) * 225vw),
         -50%,
-        calc(-520px + var(--motion-progress, 0) * 760px)
+        calc(-520px + var(--motion-progress, 0) * 780px)
       )
       rotateY(calc(14deg - var(--motion-progress, 0) * 21deg))
       rotateZ(1.5deg);
@@ -922,9 +928,9 @@
   .ss-odyssey__scene--three {
     transform:
       translate3d(
-        calc(-50% + 274vw - var(--motion-progress, 0) * 282vw),
+        calc(-50% + clamp(-2vw, calc(210vw - var(--motion-progress, 0) * 245vw), 210vw)),
         -50%,
-        calc(-720px + var(--motion-progress, 0) * 800px)
+        clamp(-680px, calc(-680px + var(--motion-progress, 0) * 940px), 120px)
       )
       rotateY(calc(16deg - var(--motion-progress, 0) * 18deg))
       rotateZ(-1deg);
