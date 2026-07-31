@@ -33,7 +33,7 @@ function Multiline({ text }: { text: string }) {
 
 export default async function HomePage() {
   const [tours, bikes, content] = await Promise.all([
-    getTours({ featured: true, limit: 2 }),
+    getTours({ featured: true, limit: 3 }),
     getBikes({ limit: 3 }),
     getWebsiteContent(),
   ]);
