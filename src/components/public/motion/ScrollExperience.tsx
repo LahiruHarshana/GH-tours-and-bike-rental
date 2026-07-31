@@ -139,7 +139,9 @@ export function ScrollExperience() {
     );
 
     const prepareCinematicElements = () => {
-      const sections = Array.from(document.querySelectorAll<HTMLElement>("main .modern-section"));
+      const sections = Array.from(
+        document.querySelectorAll<HTMLElement>("main .modern-section, main .stayscape-home section"),
+      );
 
       sections.forEach((section, sectionIndex) => {
         if (section.dataset.cinemaSection !== "true") {
@@ -171,10 +173,29 @@ export function ScrollExperience() {
           else autoRevealObserver.observe(candidate);
         });
 
+        let parallaxIndex = 0;
         section
-          .querySelectorAll<HTMLElement>("figure, [class*='__image'], [class*='__visual']")
+          .querySelectorAll<HTMLElement>(
+            "figure, [class*='__image'], [class*='__visual'], [class*='__portrait']",
+          )
           .forEach((media) => {
-            if (media.querySelector("img")) media.dataset.cinemaParallax = "true";
+            if (media.closest(".tour-card, .bike-card, .story-reel__frame, .ss-product-card")) return;
+            if (!media.querySelector("img")) return;
+            media.dataset.cinemaParallax = "true";
+            const depth = 0.7 + (parallaxIndex % 3) * 0.45;
+            media.style.setProperty("--cinema-depth", depth.toFixed(2));
+            parallaxIndex += 1;
+          });
+
+        // Card grids get their own gentle, staggered lift on the body block
+        // (not the <img>) so it composes with the cards' existing hover-zoom
+        // and hover-lift transforms instead of overwriting them.
+        section
+          .querySelectorAll<HTMLElement>(".tour-card__media, .bike-card__body, .ss-product-card__body")
+          .forEach((media, cardMediaIndex) => {
+            media.dataset.cinemaLift = "true";
+            const depth = cardMediaIndex % 2 === 0 ? 0.65 : 1;
+            media.style.setProperty("--cinema-depth", depth.toString());
           });
       });
     };
@@ -204,7 +225,7 @@ export function ScrollExperience() {
               isLegacyReel: el.hasAttribute("data-scroll-reel"),
               isLegacySection: el.classList.contains("modern-section"),
               isLegacyMotion: el.hasAttribute("data-scroll-motion"),
-              isCinemaParallax: el.hasAttribute("data-cinema-parallax"),
+              isCinemaParallax: el.hasAttribute("data-cinema-parallax") || el.hasAttribute("data-cinema-lift"),
             });
 
             const chapter = el.getAttribute("data-chapter");
@@ -223,7 +244,7 @@ export function ScrollExperience() {
       prepareCinematicElements();
       document
         .querySelectorAll<HTMLElement>(
-          "[data-scroll-3d], [data-scroll-motion], .modern-section, [data-scroll-reel], [data-cinema-parallax]",
+          "[data-scroll-3d], [data-scroll-motion], .modern-section, [data-scroll-reel], [data-cinema-parallax], [data-cinema-lift]",
         )
         .forEach((el) => observer.observe(el));
     };

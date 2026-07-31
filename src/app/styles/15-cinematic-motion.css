@@ -11,7 +11,9 @@
   inset: 0;
   overflow: hidden;
   opacity: 0;
+  transform: translate3d(0, calc(var(--scroll-progress-smooth, 0) * -7vh), 0);
   transition: opacity 1.2s ease;
+  will-change: transform;
 }
 
 .cinema-enabled .cinema-atmosphere {
@@ -227,21 +229,35 @@
   will-change: transform;
 }
 
-/* Images move on a slower plane than their copy for subtle depth. */
+/* Images move on their own plane, at their own depth, for a layered multi-plane feel. */
 [data-cinema-parallax] {
   overflow: hidden;
 }
 
 [data-cinema-parallax] img {
   transform:
-    translate3d(0, calc((var(--cinema-p, .5) - .5) * -4rem), 0)
-    scale(1.075);
+    translate3d(0, calc((var(--cinema-p, .5) - .5) * -4rem * var(--cinema-depth, 1)), 0)
+    scale(calc(1.075 + var(--cinema-depth, 1) * .02))
+    rotate(calc((var(--cinema-p, .5) - .5) * var(--cinema-depth, 1) * -1deg));
   transition: filter .8s ease;
   will-change: transform;
 }
 
 [data-cinema-parallax]:hover img {
   filter: saturate(1) contrast(1.03);
+}
+
+/* Overlay captions drift the opposite way, reading like a nearer focal plane. */
+[data-cinema-parallax] figcaption {
+  transform: translate3d(0, calc((var(--cinema-p, .5) - .5) * 1.6rem), 0);
+  will-change: transform;
+}
+
+/* Card-grid media blocks drift independently of the card frame, staggered so
+   neighbouring cards float slightly out of phase as the grid scrolls past. */
+[data-cinema-lift] {
+  transform: translate3d(0, calc((var(--cinema-p, .5) - .5) * -1.1rem * var(--cinema-depth, 1)), 0);
+  will-change: transform;
 }
 
 /* Tactile details: light travels across actions, cards lift into focus. */
@@ -349,8 +365,20 @@
 
   [data-cinema-parallax] img {
     transform:
-      translate3d(0, calc((var(--cinema-p, .5) - .5) * -1.8rem), 0)
+      translate3d(0, calc((var(--cinema-p, .5) - .5) * -1.8rem * var(--cinema-depth, 1)), 0)
       scale(1.04);
+  }
+
+  [data-cinema-parallax] figcaption {
+    transform: translate3d(0, calc((var(--cinema-p, .5) - .5) * .7rem), 0);
+  }
+
+  [data-cinema-lift] {
+    transform: translate3d(0, calc((var(--cinema-p, .5) - .5) * -.5rem * var(--cinema-depth, 1)), 0);
+  }
+
+  .cinema-atmosphere {
+    transform: translate3d(0, calc(var(--scroll-progress-smooth, 0) * -3vh), 0);
   }
 
   .cinema-curtain::before {
@@ -383,6 +411,18 @@
   }
 
   [data-cinema-parallax] img {
+    transform: none !important;
+  }
+
+  [data-cinema-parallax] figcaption {
+    transform: none !important;
+  }
+
+  [data-cinema-lift] {
+    transform: none !important;
+  }
+
+  .cinema-atmosphere {
     transform: none !important;
   }
 

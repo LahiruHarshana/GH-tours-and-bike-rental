@@ -1824,11 +1824,11 @@
   }
 
   .simple-hero--story {
-    min-height: 54rem;
+    min-height: 68rem;
   }
 
   .simple-hero--story .simple-hero__media {
-    inset: 25rem .5rem .5rem;
+    inset: 37rem .5rem .5rem;
     border-radius: 1.6rem;
   }
 

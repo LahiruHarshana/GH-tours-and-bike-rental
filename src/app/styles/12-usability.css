@@ -460,3 +460,14 @@
     transition: none;
   }
 }
+
+/* Safety net: several editorial headlines use large clamp() font-sizes whose
+   minimum can still be wider than a single long word on narrow screens.
+   This never changes rendering unless a word would otherwise overflow, so it
+   only ever affects viewports at or below tablet width. */
+@media (max-width: 1024px) {
+  * {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+}
