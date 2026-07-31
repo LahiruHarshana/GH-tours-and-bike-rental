@@ -1,0 +1,23 @@
+.custom-tour-form .destinations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.custom-tour-form .destination-input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.custom-tour-form .destination-input-group input {
+  flex: 1;
+}
+
+.custom-tour-form .destination-input-group button {
+  padding: 0 15px;
+  height: 44px; /* Match standard input height if needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

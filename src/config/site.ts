@@ -24,6 +24,7 @@ export const navigation = [
   { href: "/airport-hire", label: "Airport Hire" },
   { href: "/bikes", label: "Bike Rental" },
   { href: "/weligama", label: "Weligama" },
+  { href: "/custom-tour", label: "Custom Tour" },
   { href: "/about", label: "Our Story" },
   { href: "/contact", label: "Contact" },
 ];

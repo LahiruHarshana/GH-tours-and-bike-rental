@@ -99,6 +99,36 @@ export const bookingStatusSchema = z.object({
 const contentText = z.string().trim().min(1).max(2000);
 const contentImage = z.string().trim().min(1).max(500);
 
+export const customTourRequestSchema = z
+  .object({
+    customerName: z.string().trim().min(2).max(120),
+    email: z.string().trim().email().toLowerCase(),
+    phone: z.string().trim().min(7).max(30),
+    whatsapp: optionalText,
+    country: optionalText,
+    destinations: z.array(z.string().trim().min(2)).min(1).max(20),
+    startDate: z.coerce.date(),
+    endDate: z.coerce.date(),
+    guests: z.object({
+      adults: z.coerce.number().int().min(1).max(30),
+      children: z.coerce.number().int().min(0).max(30).default(0),
+    }),
+    accommodationPreference: optionalText,
+    vehiclePreference: optionalText,
+    additionalNotes: optionalText,
+  })
+  .superRefine((data, ctx) => {
+    if (data.endDate < data.startDate) {
+      ctx.addIssue({ code: "custom", path: ["endDate"], message: "End date must be after start date." });
+    }
+  });
+
+export const customTourStatusSchema = z.object({
+  status: z.enum(["PENDING", "REVIEWED", "QUOTED", "ACCEPTED", "REJECTED"]),
+  quotedPrice: z.coerce.number().min(0).optional(),
+  adminNotes: optionalText,
+});
+
 export const websiteContentSchema = z.object({
   global: z.object({
     brandName: contentText.max(80),

@@ -45,7 +45,7 @@ export function PublicHeader({ content }: { content: SiteContent["global"] }) {
         </Link>
 
         <nav className="ss-header__desktop-nav" aria-label="Main navigation">
-          {navigation.slice(1, 5).map((item) => (
+          {navigation.slice(1, 6).map((item) => (
             <Link key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined}>
               {item.label}
             </Link>

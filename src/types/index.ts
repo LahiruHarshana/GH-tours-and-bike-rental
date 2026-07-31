@@ -77,3 +77,23 @@ export type BookingDTO = {
   adminNotes?: string;
   createdAt: string;
 };
+
+export type CustomTourDTO = {
+  id: string;
+  customerName: string;
+  email: string;
+  phone: string;
+  whatsapp?: string;
+  country?: string;
+  destinations: string[];
+  startDate: string;
+  endDate: string;
+  guests: { adults: number; children: number };
+  accommodationPreference?: string;
+  vehiclePreference?: string;
+  additionalNotes?: string;
+  status: string;
+  quotedPrice?: number;
+  adminNotes?: string;
+  createdAt: string;
+};

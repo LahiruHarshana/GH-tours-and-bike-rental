@@ -3,6 +3,7 @@ import { demoBikes, demoTours } from "@/lib/demo-data";
 import { Bike } from "@/models/Bike";
 import { Booking } from "@/models/Booking";
 import { TourPackage } from "@/models/TourPackage";
+import { CustomTourRequest } from "@/models/CustomTourRequest";
 import { WebsiteContent } from "@/models/WebsiteContent";
 import { defaultSiteContent, mergeSiteContent } from "@/lib/site-content";
 import type { BikeDTO, BookingDTO, TourDTO } from "@/types";
@@ -139,15 +140,16 @@ export async function getWebsiteContent() {
 
 export async function getDashboardStats() {
   if (!hasDatabaseConfig()) {
-    return { totalBookings: 0, pendingBookings: 0, publishedTours: demoTours.length, availableBikes: demoBikes.length, revenue: 0 };
+    return { totalBookings: 0, pendingBookings: 0, publishedTours: demoTours.length, availableBikes: demoBikes.length, revenue: 0, pendingCustomTours: 0 };
   }
   await connectDB();
-  const [totalBookings, pendingBookings, publishedTours, availableBikes, paid] = await Promise.all([
+  const [totalBookings, pendingBookings, publishedTours, availableBikes, paid, pendingCustomTours] = await Promise.all([
     Booking.countDocuments(),
     Booking.countDocuments({ status: "PENDING" }),
     TourPackage.countDocuments({ status: "PUBLISHED" }),
     Bike.countDocuments({ status: "PUBLISHED", available: true }),
     Booking.aggregate([{ $match: { paymentStatus: "PAID" } }, { $group: { _id: null, total: { $sum: "$totalAmountUSD" } } }]),
+    CustomTourRequest.countDocuments({ status: "PENDING" }),
   ]);
   return {
     totalBookings,
@@ -155,5 +157,32 @@ export async function getDashboardStats() {
     publishedTours,
     availableBikes,
     revenue: Number(paid[0]?.total ?? 0),
+    pendingCustomTours,
   };
 }
+
+export async function getCustomTours() {
+  if (!hasDatabaseConfig()) return [];
+  await connectDB();
+  const docs = await CustomTourRequest.find().sort({ createdAt: -1 }).lean();
+  return docs.map((doc) => ({
+    id: String(doc._id),
+    customerName: String(doc.customerName),
+    email: String(doc.email),
+    phone: String(doc.phone),
+    whatsapp: doc.whatsapp ? String(doc.whatsapp) : undefined,
+    country: doc.country ? String(doc.country) : undefined,
+    destinations: doc.destinations as string[],
+    startDate: new Date(doc.startDate as Date).toISOString(),
+    endDate: new Date(doc.endDate as Date).toISOString(),
+    guests: doc.guests as { adults: number; children: number },
+    accommodationPreference: doc.accommodationPreference ? String(doc.accommodationPreference) : undefined,
+    vehiclePreference: doc.vehiclePreference ? String(doc.vehiclePreference) : undefined,
+    additionalNotes: doc.additionalNotes ? String(doc.additionalNotes) : undefined,
+    status: doc.status as string,
+    quotedPrice: doc.quotedPrice ? Number(doc.quotedPrice) : undefined,
+    adminNotes: doc.adminNotes ? String(doc.adminNotes) : undefined,
+    createdAt: new Date(doc.createdAt as Date).toISOString(),
+  }));
+}
+
