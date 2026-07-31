@@ -253,13 +253,6 @@
   will-change: transform;
 }
 
-/* Card-grid media blocks drift independently of the card frame, staggered so
-   neighbouring cards float slightly out of phase as the grid scrolls past. */
-[data-cinema-lift] {
-  transform: translate3d(0, calc((var(--cinema-p, .5) - .5) * -1.1rem * var(--cinema-depth, 1)), 0);
-  will-change: transform;
-}
-
 /* Tactile details: light travels across actions, cards lift into focus. */
 .cinema-enabled main .button,
 .cinema-enabled main button[type="submit"] {
@@ -373,9 +366,6 @@
     transform: translate3d(0, calc((var(--cinema-p, .5) - .5) * .7rem), 0);
   }
 
-  [data-cinema-lift] {
-    transform: translate3d(0, calc((var(--cinema-p, .5) - .5) * -.5rem * var(--cinema-depth, 1)), 0);
-  }
 
   .cinema-atmosphere {
     transform: translate3d(0, calc(var(--scroll-progress-smooth, 0) * -3vh), 0);

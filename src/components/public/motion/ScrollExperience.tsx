@@ -187,16 +187,6 @@ export function ScrollExperience() {
             parallaxIndex += 1;
           });
 
-        // Card grids get their own gentle, staggered lift on the body block
-        // (not the <img>) so it composes with the cards' existing hover-zoom
-        // and hover-lift transforms instead of overwriting them.
-        section
-          .querySelectorAll<HTMLElement>(".tour-card__media, .bike-card__body, .ss-product-card__body")
-          .forEach((media, cardMediaIndex) => {
-            media.dataset.cinemaLift = "true";
-            const depth = cardMediaIndex % 2 === 0 ? 0.65 : 1;
-            media.style.setProperty("--cinema-depth", depth.toString());
-          });
       });
     };
 
