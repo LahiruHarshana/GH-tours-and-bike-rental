@@ -17,6 +17,7 @@ interface ElementState {
   isLegacySection: boolean;
   isLegacyMotion: boolean;
   isCinemaParallax: boolean;
+  isCinemaScene: boolean;
 }
 
 const REVEAL_SELECTOR = [
@@ -187,6 +188,22 @@ export function ScrollExperience() {
             parallaxIndex += 1;
           });
 
+        const setScene = (
+          selector: string,
+          scene: "portal" | "rail" | "fan" | "mosaic",
+          depth: number,
+        ) => {
+          section.querySelectorAll<HTMLElement>(selector).forEach((element) => {
+            element.dataset.cinemaScene = scene;
+            element.dataset.depth = depth.toString();
+          });
+        };
+
+        setScene(".ss-hero__visual, .inner-hero__art figure", "portal", 1.15);
+        setScene(".ss-card-grid", "rail", 1);
+        setScene(".ss-journey-chooser__grid", "fan", 0.85);
+        setScene(".ss-mosaic", "mosaic", 0.9);
+
       });
     };
 
@@ -216,6 +233,7 @@ export function ScrollExperience() {
               isLegacySection: el.classList.contains("modern-section"),
               isLegacyMotion: el.hasAttribute("data-scroll-motion"),
               isCinemaParallax: el.hasAttribute("data-cinema-parallax") || el.hasAttribute("data-cinema-lift"),
+              isCinemaScene: el.hasAttribute("data-cinema-scene"),
             });
 
             const chapter = el.getAttribute("data-chapter");
@@ -234,7 +252,7 @@ export function ScrollExperience() {
       prepareCinematicElements();
       document
         .querySelectorAll<HTMLElement>(
-          "[data-scroll-3d], [data-scroll-motion], .modern-section, [data-scroll-reel], [data-cinema-parallax], [data-cinema-lift]",
+          "[data-scroll-3d], [data-scroll-motion], .modern-section, [data-scroll-reel], [data-cinema-parallax], [data-cinema-lift], [data-cinema-scene]",
         )
         .forEach((el) => observer.observe(el));
     };
@@ -386,6 +404,13 @@ export function ScrollExperience() {
         if (state.isLegacyMotion) el.style.setProperty("--motion-progress", state.current.toFixed(4));
         if (state.isLegacySection) el.style.setProperty("--section-progress", state.current.toFixed(4));
         if (state.isCinemaParallax) el.style.setProperty("--cinema-p", state.current.toFixed(4));
+        if (state.isCinemaScene) {
+          const sceneProgress = clamp((state.current + 1) / 2);
+          const sceneCenter = 1 - Math.abs(state.current);
+          el.style.setProperty("--scene-p", state.current.toFixed(4));
+          el.style.setProperty("--scene-progress", sceneProgress.toFixed(4));
+          el.style.setProperty("--scene-center", sceneCenter.toFixed(4));
+        }
         if (state.isLegacyReel) {
           el.style.setProperty("--reel-progress", state.current.toFixed(4));
           writeReelFrames(el, state.current);
@@ -478,6 +503,9 @@ export function ScrollExperience() {
         el.style.removeProperty("--section-progress");
         el.style.removeProperty("--reel-progress");
         el.style.removeProperty("--cinema-p");
+        el.style.removeProperty("--scene-p");
+        el.style.removeProperty("--scene-progress");
+        el.style.removeProperty("--scene-center");
       });
     };
   }, [pathname]);
