@@ -554,3 +554,18 @@
     transform: none !important;
   }
 }
+
+/*
+ * Desktop content must never depend on IntersectionObserver to be readable.
+ * Large editorial headings reserve substantial layout space, so a missed
+ * reveal otherwise looks like an empty section. Keep the layered scene and
+ * image motion, but make text and cards visible by default on wide screens.
+ */
+@media (min-width: 768px) {
+  .cinema-enabled [data-cinema] {
+    opacity: 1;
+    filter: none;
+    clip-path: inset(-8% -8% -8% -8%);
+    transform: none;
+  }
+}
