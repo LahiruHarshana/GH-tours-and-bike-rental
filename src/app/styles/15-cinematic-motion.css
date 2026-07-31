@@ -551,8 +551,8 @@
   height: 330svh;
   min-height: 150rem;
   overflow: clip;
-  background: #080b0a;
-  color: #f5f4f2;
+  background: var(--ss-ink);
+  color: var(--ss-paper);
 }
 
 .ss-odyssey__sticky {
@@ -563,15 +563,16 @@
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(circle at 72% 42%, rgb(255 129 8 / .14), transparent 25%),
-    linear-gradient(125deg, #080b0a, #101814 58%, #080909);
+    radial-gradient(circle at 71% 43%, rgb(255 129 8 / .16), transparent 27%),
+    radial-gradient(circle at 24% 88%, rgb(255 255 255 / .055), transparent 22%),
+    linear-gradient(125deg, #080909, #15110e 58%, #050505);
 }
 
 .ss-odyssey__sticky::before,
 .ss-odyssey__sticky::after {
   position: absolute;
   z-index: 0;
-  border: 1px solid rgb(255 255 255 / .1);
+  border: 1px solid rgb(255 129 8 / .13);
   border-radius: 50%;
   content: "";
   pointer-events: none;
@@ -596,7 +597,7 @@
   left: -22vw;
   width: 54vw;
   aspect-ratio: 1;
-  border-color: rgb(255 129 8 / .16);
+  border-color: rgb(255 255 255 / .085);
   transform:
     translate3d(
       calc(var(--motion-progress, 0) * 9vw),
@@ -633,7 +634,7 @@
 
 .ss-odyssey__intro h2 {
   margin: 1.3rem 0 2rem;
-  color: #f5f4f2;
+  color: var(--ss-paper);
   font-size: clamp(4.2rem, 8.5vw, 9.5rem);
   font-weight: 510;
   letter-spacing: -.085em;
@@ -647,7 +648,7 @@
 }
 
 .ss-odyssey__intro > span {
-  color: rgb(255 255 255 / .45);
+  color: rgb(244 243 241 / .46);
 }
 
 .ss-odyssey__stage {
@@ -666,10 +667,10 @@
   width: min(54vw, 58rem);
   aspect-ratio: 1.42;
   overflow: hidden;
-  border: 1px solid rgb(255 255 255 / .28);
+  border: 1px solid rgb(244 243 241 / .26);
   border-radius: clamp(1.5rem, 2.5vw, 3rem);
-  background: #253129;
-  box-shadow: 0 3rem 8rem rgb(0 0 0 / .48);
+  background: #171411;
+  box-shadow: 0 3rem 8rem rgb(0 0 0 / .58);
   transform-style: preserve-3d;
   will-change: transform, opacity;
 }
@@ -686,7 +687,7 @@
 
 .ss-odyssey__scene img {
   object-fit: cover;
-  filter: saturate(.86) contrast(1.05);
+  filter: saturate(.94) contrast(1.04) sepia(.035);
   transform: scale(1.08);
 }
 
@@ -709,7 +710,7 @@
 }
 
 .ss-odyssey__scene span {
-  color: #ffb065;
+  color: var(--ss-orange);
 }
 
 .ss-odyssey__scene h3 {
@@ -776,7 +777,7 @@
   height: 1px;
   flex: 1;
   overflow: hidden;
-  background: rgb(255 255 255 / .2);
+  background: rgb(244 243 241 / .18);
 }
 
 .ss-odyssey__meter i {
@@ -788,7 +789,7 @@
 }
 
 .ss-odyssey__meter small {
-  color: rgb(255 255 255 / .58);
+  color: rgb(244 243 241 / .58);
   font-size: .55rem;
   font-weight: 750;
   letter-spacing: .18em;
