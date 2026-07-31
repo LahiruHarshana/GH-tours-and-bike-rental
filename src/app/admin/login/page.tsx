@@ -18,7 +18,14 @@ export default async function AdminLoginPage() {
           <h1>Run every journey<br />from one calm place.</h1>
           <p>Manage airport transfers, private tours, the bike fleet and guest communication.</p>
         </div>
-                <Image src="/images/train-hills.webp" alt="A train crossing Sri Lanka's green hill country"  width={1920} height={1280} sizes="(max-width: 1024px) 100vw, 50vw"/>
+        <Image
+          src="/images/train-hills.webp"
+          alt="A train crossing Sri Lanka's green hill country"
+          width={1920}
+          height={1280}
+          sizes="(max-width: 820px) 100vw, 58vw"
+          loading="eager"
+        />
       </div>
       <section className="admin-login-panel">
         <div className="admin-login-panel__inner">

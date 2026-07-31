@@ -20,6 +20,7 @@ import "./styles/12-usability.css";
 import "./styles/13-stayscape-inner.css";
 import "./styles/14-inner-page-redesign.css";
 import "./styles/15-cinematic-motion.css";
+import "./styles/16-admin-editorial.css";
 import { siteConfig } from "@/config/site";
 
 const instrumentSans = Instrument_Sans({

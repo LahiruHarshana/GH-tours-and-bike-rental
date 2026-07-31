@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 import { BrandMark } from "@/components/public/media/BrandMark";
 
 const links = [
-  { href: "/admin", label: "Overview", icon: "⌘" },
-  { href: "/admin/bookings", label: "Bookings", icon: "▦" },
-  { href: "/admin/content", label: "Website content", icon: "✎" },
-  { href: "/admin/tours", label: "Tour packages", icon: "◆" },
-  { href: "/admin/bikes", label: "Bike fleet", icon: "◉" },
+  { href: "/admin", label: "Overview", icon: "01" },
+  { href: "/admin/bookings", label: "Bookings", icon: "02" },
+  { href: "/admin/content", label: "Website content", icon: "03" },
+  { href: "/admin/tours", label: "Tour packages", icon: "04" },
+  { href: "/admin/bikes", label: "Bike fleet", icon: "05" },
 ];
 
 export function AdminShell({ children, user }: { children: React.ReactNode; user: { name: string; email: string; role: string } }) {
@@ -74,7 +74,7 @@ export function AdminShell({ children, user }: { children: React.ReactNode; user
           >
             <span aria-hidden="true">{menuOpen ? "×" : "☰"}</span>
           </button>
-          <div><span>GH Command Center</span><small>Bookings, fleet and island operations</small></div>
+          <div><span>GH Operations</span><small>Journeys, bookings and fleet</small></div>
           <div className="admin-user"><span>{user.name.charAt(0).toUpperCase()}</span><div><strong>{user.name}</strong><small>{user.role}</small></div></div>
         </header>
         <div className="admin-content">{children}</div>
