@@ -253,105 +253,6 @@
   will-change: transform;
 }
 
-/*
- * Scroll-directed 3D shots.
- * Individual transform properties let these movements compose with existing
- * hover and reveal transforms instead of replacing them.
- */
-[data-cinema-scene] {
-  --scene-p: 0;
-  --scene-center: 1;
-  perspective: clamp(850px, 95vw, 1600px);
-  perspective-origin:
-    calc(50% + var(--scene-p) * 12%)
-    calc(48% - var(--scene-p) * 4%);
-  transform-style: preserve-3d;
-}
-
-[data-cinema-scene] > * {
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
-  will-change: translate, rotate, scale;
-}
-
-/* A wide image banks sideways, zooming out at the focal point and back in as it leaves. */
-[data-cinema-scene="portal"] {
-  overflow: visible;
-  transform-origin: 50% 50%;
-  translate:
-    calc(var(--scene-p) * -4.5vw)
-    calc(var(--scene-p) * 1.8rem)
-    calc(var(--scene-center) * 95px);
-  rotate: y calc(var(--scene-p) * -8deg);
-  scale: calc(1.07 - var(--scene-center) * .07);
-  will-change: translate, rotate, scale;
-}
-
-[data-cinema-scene="portal"]::before {
-  content: "";
-  position: absolute;
-  z-index: 3;
-  inset: -1px;
-  border: 1px solid rgb(240 201 107 / calc(.08 + var(--scene-center) * .2));
-  box-shadow:
-    calc(var(--scene-p) * 2rem) 2.5rem 5rem -3rem rgb(16 32 27 / .6),
-    inset calc(var(--scene-p) * -2rem) 0 4rem -3rem rgb(247 223 157 / .4);
-  opacity: calc(.35 + var(--scene-center) * .65);
-  pointer-events: none;
-}
-
-[data-cinema-scene="portal"] img {
-  translate: calc(var(--scene-p) * -5%) 0 35px;
-  scale: calc(1.13 - var(--scene-center) * .035);
-}
-
-/* Collections cross the viewport like a tracking shot, each card on its own Z plane. */
-[data-cinema-scene="rail"] > * {
-  translate:
-    calc(var(--scene-p) * (9vw + var(--scene-slot, 0) * 1vw))
-    calc(var(--scene-slot, 0) * .55rem)
-    calc(var(--scene-center) * (30px + var(--scene-slot, 0) * 18px));
-  rotate: y calc(var(--scene-p) * (-8deg + var(--scene-slot, 0) * 1.2deg));
-  scale: calc(.93 + var(--scene-center) * .07);
-}
-
-[data-cinema-scene="rail"] > :nth-child(1) { --scene-slot: -1.5; }
-[data-cinema-scene="rail"] > :nth-child(2) { --scene-slot: -.5; }
-[data-cinema-scene="rail"] > :nth-child(3) { --scene-slot: .5; }
-[data-cinema-scene="rail"] > :nth-child(4) { --scene-slot: 1.5; }
-
-/* The four journey choices open like a hand of cards, then settle flat in the reading zone. */
-[data-cinema-scene="fan"] > * {
-  --fan-side: -1;
-  transform-origin: 50% 110%;
-  translate:
-    calc(var(--scene-p) * var(--fan-side) * 7vw)
-    calc((1 - var(--scene-center)) * 2.2rem)
-    calc(var(--scene-center) * 70px);
-  rotate:
-    y calc(var(--scene-p) * var(--fan-side) * -11deg);
-  scale: calc(.9 + var(--scene-center) * .1);
-}
-
-[data-cinema-scene="fan"] > :nth-child(even) { --fan-side: 1; }
-[data-cinema-scene="fan"] > :nth-child(3),
-[data-cinema-scene="fan"] > :nth-child(4) {
-  transition-delay: 45ms;
-}
-
-/* Dark-section tiles travel in opposing lanes to make the page feel deep, not merely long. */
-[data-cinema-scene="mosaic"] > * {
-  --mosaic-side: -1;
-  translate:
-    calc(var(--scene-p) * var(--mosaic-side) * 6vw)
-    calc(var(--scene-p) * var(--mosaic-side) * -1.25rem)
-    calc(var(--scene-center) * 55px);
-  rotate: y calc(var(--scene-p) * var(--mosaic-side) * -7deg);
-  scale: calc(.94 + var(--scene-center) * .06);
-}
-
-[data-cinema-scene="mosaic"] > :nth-child(even) { --mosaic-side: 1; }
-
 /* Tactile details: light travels across actions, cards lift into focus. */
 .cinema-enabled main .button,
 .cinema-enabled main button[type="submit"] {
@@ -465,28 +366,6 @@
     transform: translate3d(0, calc((var(--cinema-p, .5) - .5) * .7rem), 0);
   }
 
-  [data-cinema-scene="portal"] {
-    translate: calc(var(--scene-p) * -2vw) 0 calc(var(--scene-center) * 32px);
-    rotate: y calc(var(--scene-p) * -3deg);
-    scale: calc(1.035 - var(--scene-center) * .035);
-  }
-
-  [data-cinema-scene="portal"] img {
-    translate: calc(var(--scene-p) * -2%) 0 12px;
-    scale: 1.065;
-  }
-
-  [data-cinema-scene="rail"] > *,
-  [data-cinema-scene="fan"] > *,
-  [data-cinema-scene="mosaic"] > * {
-    translate:
-      calc(var(--scene-p) * var(--fan-side, var(--mosaic-side, 1)) * 2.5vw)
-      0
-      calc(var(--scene-center) * 18px);
-    rotate: y calc(var(--scene-p) * var(--fan-side, var(--mosaic-side, 1)) * -3deg);
-    scale: calc(.97 + var(--scene-center) * .03);
-  }
-
 
   .cinema-atmosphere {
     transform: translate3d(0, calc(var(--scroll-progress-smooth, 0) * -3vh), 0);
@@ -531,18 +410,6 @@
 
   [data-cinema-lift] {
     transform: none !important;
-  }
-
-  [data-cinema-scene],
-  [data-cinema-scene] > *,
-  [data-cinema-scene] img {
-    translate: none !important;
-    rotate: none !important;
-    scale: none !important;
-  }
-
-  [data-cinema-scene="portal"]::before {
-    display: none;
   }
 
   .cinema-atmosphere {
