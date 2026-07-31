@@ -7,22 +7,35 @@ export const metadata = createPageMetadata({
   path: "/custom-tour",
 });
 
+import { Reveal } from "@/components/public/motion/Reveal";
+
 export default function CustomTourPage() {
   return (
-    <div className="stayscape-page ss-contact-page">
-      <header className="ss-page-header">
-        <div className="ss-page-header__inner">
-          <p className="ss-page-header__kicker">Custom Journey</p>
-          <h1 className="ss-page-header__title">Design your perfect tour</h1>
-          <p className="ss-page-header__lead">
-            Tell us where you want to go and what you need. We'll craft a tailor-made itinerary and get back to you with the details.
-          </p>
+    <>
+      <section className="simple-hero modern-section">
+        <div className="container">
+          <Reveal>
+            <span className="eyebrow eyebrow--light"><i />Custom Journey</span>
+            <h1>Design your perfect tour</h1>
+            <p>Tell us where you want to go and what you need. We'll craft a tailor-made itinerary and get back to you with the details.</p>
+          </Reveal>
         </div>
-      </header>
-
-      <section className="ss-page-content" style={{ paddingBottom: "100px", maxWidth: "800px", margin: "0 auto" }}>
-        <CustomTourForm />
       </section>
-    </div>
+
+      <section className="section modern-section" style={{ paddingBottom: "100px" }}>
+        <div className="container" style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <Reveal delay={100} direction="up">
+            <div className="booking-panel">
+              <div className="booking-panel__head">
+                <span>Custom tour request</span>
+                <small>Select your destinations and preferences.</small>
+              </div>
+              <CustomTourForm />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </>
   );
 }
+

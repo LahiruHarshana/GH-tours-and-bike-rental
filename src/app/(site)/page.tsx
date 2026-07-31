@@ -33,7 +33,7 @@ function Multiline({ text }: { text: string }) {
 
 export default async function HomePage() {
   const [tours, bikes, content] = await Promise.all([
-    getTours({ featured: true, limit: 3 }),
+    getTours({ featured: true, limit: 2 }),
     getBikes({ limit: 3 }),
     getWebsiteContent(),
   ]);
@@ -127,7 +127,7 @@ export default async function HomePage() {
           <Link href="/tours" className="is-active">Tours</Link>
           <Link href="/airport-hire">Airport hire</Link>
           <Link href="/bikes">Bike rental</Link>
-          <Link href="/contact">Custom journey</Link>
+          <Link href="/custom-tour">Custom journey</Link>
         </nav>
 
         <div className="ss-card-grid" data-scroll-motion>
@@ -152,6 +152,14 @@ export default async function HomePage() {
               </span>
             </Link>
           ))}
+
+          <Link href="/custom-tour" className="ss-orange-card" style={{ background: 'var(--ss-ink)' }} data-cursor-depth>
+            <span>
+              <strong>Custom<br />journey</strong>
+              <small>Build your own route</small>
+            </span>
+            <i className="ss-round-arrow" style={{ color: 'var(--ss-ink)' }}>↗</i>
+          </Link>
 
           <Link href="/tours" className="ss-orange-card" data-cursor-depth>
             <span>
@@ -187,7 +195,7 @@ export default async function HomePage() {
               <div><small>Two-wheel freedom</small><strong>Ride your own rhythm</strong><p>Reliable bikes, proper handover and local support.</p></div>
               <i aria-hidden="true">↗</i>
             </Link>
-            <Link href="/contact" className="ss-journey-choice ss-journey-choice--soft">
+            <Link href="/custom-tour" className="ss-journey-choice ss-journey-choice--soft">
               <span>04</span>
               <div><small>Made for you</small><strong>Build something different</strong><p>Tell us what matters and start with a blank page.</p></div>
               <i aria-hidden="true">↗</i>
