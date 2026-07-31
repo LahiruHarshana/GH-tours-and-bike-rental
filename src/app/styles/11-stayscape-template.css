@@ -458,6 +458,30 @@ body {
   color: var(--ss-ink);
 }
 
+.ss-catalogue-count {
+  margin: -2.5rem auto 2.5rem;
+  max-width: 30rem;
+  color: #877c6f;
+  font-size: .8rem;
+  text-align: center;
+}
+
+.ss-catalogue-count a {
+  color: var(--ss-orange);
+  font-weight: 650;
+}
+
+.ss-dark__intro .ss-catalogue-count--dark {
+  margin: 1.1rem auto 0;
+  color: rgb(245 244 242 / .65);
+}
+
+.ss-dark__intro .ss-catalogue-count--dark a {
+  color: #f5f4f2;
+  text-decoration: underline;
+  text-underline-offset: .2rem;
+}
+
 .ss-card-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -693,7 +717,7 @@ a.ss-product-card:hover {
 
 .ss-proof-card {
   display: grid;
-  grid-column: span 3;
+  grid-column: span 2;
   min-height: 30rem;
   grid-template-columns: .85fr 1.15fr;
   gap: 3rem;

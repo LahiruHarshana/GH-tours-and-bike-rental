@@ -32,12 +32,16 @@ function Multiline({ text }: { text: string }) {
 }
 
 export default async function HomePage() {
-  const [tours, bikes, content] = await Promise.all([
-    getTours({ featured: true, limit: 3 }),
-    getBikes({ limit: 3 }),
+  const [allTours, allBikes, content] = await Promise.all([
+    getTours({}),
+    getBikes({}),
     getWebsiteContent(),
   ]);
   const home = content.home;
+  // Show the full catalogue on the homepage instead of a fixed 3-item preview,
+  // featured tours first so the strongest journeys lead.
+  const tours = [...allTours].sort((a, b) => Number(b.featured) - Number(a.featured));
+  const bikes = allBikes;
 
   return (
     <div className="stayscape-home">
@@ -130,6 +134,11 @@ export default async function HomePage() {
           <Link href="/custom-tour">Custom journey</Link>
         </nav>
 
+        <p className="ss-catalogue-count">
+          All {tours.length} private journeys, shown below —{" "}
+          <Link href="/tours">browse the full list ↗</Link>
+        </p>
+
         <div className="ss-card-grid" data-scroll-motion>
           {tours.map((tour) => (
             <Link href={`/tours/${tour.slug}`} className="ss-product-card" key={tour.id} data-cursor-depth>
@@ -208,6 +217,10 @@ export default async function HomePage() {
         <div className="ss-dark__intro">
           <p>{home.bikeEyebrow}</p>
           <h2 id="ss-dark-title"><Multiline text={home.bikeTitle} /></h2>
+          <p className="ss-catalogue-count ss-catalogue-count--dark">
+            All {bikes.length} bikes in the fleet, shown below —{" "}
+            <Link href="/bikes">browse the full list ↗</Link>
+          </p>
         </div>
 
         <div className="ss-mosaic" data-scroll-motion>
@@ -220,7 +233,7 @@ export default async function HomePage() {
             <span className="ss-service-tags">Flight tracked · Fixed fare · Meet &amp; greet</span>
           </Link>
 
-          {bikes.slice(0, 2).map((bike) => (
+          {bikes.map((bike) => (
             <Link href="/bikes" className="ss-product-card ss-product-card--dark ss-product-card--link" key={bike.id} aria-label={`View ${bike.name} rental details`} data-cursor-depth>
               <span className="ss-product-card__image">
                 <Image
@@ -242,29 +255,6 @@ export default async function HomePage() {
               </span>
             </Link>
           ))}
-
-          {bikes[2] && (
-            <Link href="/bikes" className="ss-product-card ss-product-card--dark ss-product-card--link" aria-label={`View ${bikes[2].name} rental details`} data-cursor-depth>
-              <span className="ss-product-card__image">
-                <Image
-                  src={bikes[2].image}
-                  alt={`${bikes[2].name} motorbike`}
-                  fill
-                  sizes="(max-width: 760px) 88vw, 25vw"
-                  unoptimized={bikes[2].image.startsWith("http")}
-                />
-              </span>
-              <span className="ss-product-card__body">
-                <strong>{bikes[2].name}</strong>
-                <small>{bikes[2].engineCC}cc · {bikes[2].transmission === "AUTOMATIC" ? "Automatic" : "Manual"}</small>
-                <span className="ss-product-card__meta">
-                  <em>{bikes[2].available ? "Available" : "Unavailable"}</em>
-                  <b>{formatUSD(bikes[2].dailyRateUSD)}<small>/day</small></b>
-                </span>
-                <span className="ss-product-card__action">View rental details <b aria-hidden="true">→</b></span>
-              </span>
-            </Link>
-          )}
 
           <div className="ss-proof-card" data-cursor-depth>
             <div className="ss-proof-card__intro">
