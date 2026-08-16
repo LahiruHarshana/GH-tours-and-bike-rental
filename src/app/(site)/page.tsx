@@ -12,12 +12,13 @@ import { formatUSD } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 export const metadata = createPageMetadata({
-  title: "Weligama Tours, Airport Transfers & Bike Rental",
+  title: "Sri Lanka Tours, Airport Transfers & Bike Rental",
   description:
     "Local travel services in Weligama, Matara: private Sri Lanka tours, CMB airport transfers to the south coast, and reliable scooter and motorbike rental.",
   path: "/",
   keywords: [
     "GH Tours Weligama",
+    "Sri Lanka tours",
     "Weligama tours",
     "Sri Lanka airport transfer",
     "Weligama bike rental",
