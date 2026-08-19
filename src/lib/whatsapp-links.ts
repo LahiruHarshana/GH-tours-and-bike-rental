@@ -33,6 +33,7 @@ export function buildAdminRequestMessage(
     | "flightNumber"
     | "arrivalTime"
     | "vehicleType"
+    | "estimatedAmountUSD"
     | "notes"
   >,
 ) {
@@ -53,6 +54,7 @@ export function buildAdminRequestMessage(
     booking.flightNumber ? `Flight: ${booking.flightNumber}` : "",
     booking.arrivalTime ? `Time: ${booking.arrivalTime}` : "",
     booking.vehicleType ? `Vehicle: ${booking.vehicleType}` : "",
+    booking.estimatedAmountUSD !== undefined ? `Quoted fare: USD ${booking.estimatedAmountUSD}` : "",
     booking.notes ? `Notes: ${booking.notes}` : "",
     "",
     "Please confirm availability and the next steps. Thank you.",

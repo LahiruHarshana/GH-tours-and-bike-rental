@@ -12,6 +12,7 @@ const links = [
   { href: "/admin/tours", label: "Tour packages", icon: "04" },
   { href: "/admin/custom-tours", label: "Custom tours", icon: "05" },
   { href: "/admin/bikes", label: "Bike fleet", icon: "06" },
+  { href: "/admin/vehicles", label: "Transfer vehicles", icon: "07" },
 ];
 
 export function AdminShell({ children, user }: { children: React.ReactNode; user: { name: string; email: string; role: string } }) {

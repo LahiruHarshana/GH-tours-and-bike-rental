@@ -1,12 +1,13 @@
 import { connectDB, hasDatabaseConfig } from "@/lib/db";
-import { demoBikes, demoTours } from "@/lib/demo-data";
+import { demoAirportVehicles, demoBikes, demoTours } from "@/lib/demo-data";
+import { AirportVehicle } from "@/models/AirportVehicle";
 import { Bike } from "@/models/Bike";
 import { Booking } from "@/models/Booking";
 import { TourPackage } from "@/models/TourPackage";
 import { CustomTourRequest } from "@/models/CustomTourRequest";
 import { WebsiteContent } from "@/models/WebsiteContent";
 import { defaultSiteContent, mergeSiteContent } from "@/lib/site-content";
-import type { BikeDTO, BookingDTO, TourDTO } from "@/types";
+import type { AirportVehicleDTO, BikeDTO, BookingDTO, TourDTO } from "@/types";
 
 function mapTour(doc: Record<string, unknown>): TourDTO {
   return {
@@ -100,6 +101,56 @@ export async function getBikeById(id: string) {
   return doc ? mapBike(doc as unknown as Record<string, unknown>) : null;
 }
 
+function mapAirportVehicle(doc: Record<string, unknown>): AirportVehicleDTO {
+  return {
+    id: String(doc._id ?? doc.id),
+    name: String(doc.name),
+    slug: String(doc.slug),
+    vehicleClass: doc.vehicleClass as AirportVehicleDTO["vehicleClass"],
+    tier: doc.tier as AirportVehicleDTO["tier"],
+    minPassengers: Number(doc.minPassengers),
+    maxPassengers: Number(doc.maxPassengers),
+    luggagePieces: Number(doc.luggagePieces),
+    priceFromUSD: Number(doc.priceFromUSD),
+    routePrices: ((doc.routePrices as AirportVehicleDTO["routePrices"]) ?? []).map((route) => ({
+      destination: String(route.destination),
+      duration: route.duration ? String(route.duration) : undefined,
+      priceUSD: Number(route.priceUSD),
+    })),
+    image: String(doc.image),
+    shortDescription: String(doc.shortDescription),
+    features: (doc.features as string[]) ?? [],
+    recommended: Boolean(doc.recommended),
+    available: Boolean(doc.available),
+    status: doc.status as AirportVehicleDTO["status"],
+    sortOrder: Number(doc.sortOrder ?? 0),
+  };
+}
+
+export async function getAirportVehicles(options?: { includeDrafts?: boolean }) {
+  if (!hasDatabaseConfig()) {
+    return options?.includeDrafts ? demoAirportVehicles : demoAirportVehicles.filter((vehicle) => vehicle.status === "PUBLISHED" && vehicle.available);
+  }
+  await connectDB();
+  const filter: Record<string, unknown> = {};
+  if (!options?.includeDrafts) {
+    filter.status = "PUBLISHED";
+    filter.available = true;
+  }
+  const docs = await AirportVehicle.find(filter).sort({ sortOrder: 1, priceFromUSD: 1 }).lean();
+  if (docs.length === 0 && !options?.includeDrafts) {
+    return demoAirportVehicles.filter((vehicle) => vehicle.status === "PUBLISHED" && vehicle.available);
+  }
+  return docs.map((doc) => mapAirportVehicle(doc as unknown as Record<string, unknown>));
+}
+
+export async function getAirportVehicleById(id: string) {
+  if (!hasDatabaseConfig()) return demoAirportVehicles.find((vehicle) => vehicle.id === id) ?? null;
+  await connectDB();
+  const doc = await AirportVehicle.findById(id).lean();
+  return doc ? mapAirportVehicle(doc as unknown as Record<string, unknown>) : null;
+}
+
 export async function getBookings(): Promise<BookingDTO[]> {
   if (!hasDatabaseConfig()) return [];
   await connectDB();
@@ -125,6 +176,8 @@ export async function getBookings(): Promise<BookingDTO[]> {
     flightNumber: doc.flightNumber ? String(doc.flightNumber) : undefined,
     arrivalTime: doc.arrivalTime ? String(doc.arrivalTime) : undefined,
     vehicleType: doc.vehicleType ? String(doc.vehicleType) : undefined,
+    vehicleId: doc.vehicleId ? String(doc.vehicleId) : undefined,
+    estimatedAmountUSD: doc.estimatedAmountUSD ? Number(doc.estimatedAmountUSD) : undefined,
     notes: doc.notes ? String(doc.notes) : undefined,
     adminNotes: doc.adminNotes ? String(doc.adminNotes) : undefined,
     createdAt: new Date(doc.createdAt as Date).toISOString(),

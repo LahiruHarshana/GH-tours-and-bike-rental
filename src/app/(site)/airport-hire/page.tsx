@@ -3,7 +3,9 @@ import Link from "next/link";
 import { BookingForm } from "@/components/booking/BookingForm";
 import { Reveal } from "@/components/public/motion/Reveal";
 import { ServiceBar } from "@/components/public/navigation/ServiceBar";
+import { AirportVehicleGallery } from "@/components/public/collections/AirportVehicleGallery";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { getAirportVehicles } from "@/lib/data";
 import {
   absoluteUrl,
   breadcrumbSchema,
@@ -26,7 +28,10 @@ export const metadata: Metadata = createPageMetadata({
   ],
 });
 
-export default function AirportHirePage() {
+export const dynamic = "force-dynamic";
+
+export default async function AirportHirePage() {
+  const vehicles = await getAirportVehicles();
   return (
     <>
       <JsonLd
@@ -68,18 +73,24 @@ export default function AirportHirePage() {
           <Reveal className="airport-page__copy">
             <span className="eyebrow"><i />Simple from the start</span>
             <h2>Private airport pickup, planned before you land.</h2>
-            <p>Send your flight and destination details. We confirm the suitable vehicle, driver contact, meeting point and full quotation before your travel date.</p>
+            <p>Send your flight, passenger count and destination. Choose a budget, standard or luxury vehicle that fits your group, then we confirm the driver, meeting point and fare before you travel.</p>
             <div className="process-list">
               <article><span>01</span><div><h3>Send your arrival</h3><p>Flight number, date, passengers and destination.</p></div></article>
-              <article><span>02</span><div><h3>Receive confirmation</h3><p>A clear quotation and your pickup instructions by WhatsApp.</p></div></article>
+              <article><span>02</span><div><h3>Choose your vehicle</h3><p>Budget, standard or luxury — sized to your group.</p></div></article>
               <article><span>03</span><div><h3>Meet your driver</h3><p>Your name board is waiting in the arrivals hall—even when the flight is delayed.</p></div></article>
             </div>
-            <div className="vehicle-pills"><span>Comfort car · 1–3</span><span>Private van · 1–7</span><span>Minibus · 8–18</span></div>
           </Reveal>
           <Reveal delay={100} className="booking-panel">
             <div className="booking-panel__head"><span>Airport transfer request</span><small>We normally reply within 15–30 minutes.</small></div>
-            <BookingForm type="AIRPORT" />
+            <BookingForm type="AIRPORT" vehicles={vehicles} />
           </Reveal>
+        </div>
+      </section>
+      <section className="route-prices modern-section">
+        <div className="container">
+          <span className="eyebrow"><i />Sized to your group</span>
+          <h2>Budget, standard and luxury for every vehicle.</h2>
+          <AirportVehicleGallery vehicles={vehicles} />
         </div>
       </section>
       <section className="route-prices modern-section"><div className="container"><span className="eyebrow"><i />From arrivals to island life</span><h2>Popular airport transfer routes</h2><div className="route-grid"><article><span>CMB</span><b>→</b><div><strong>Weligama</strong><small>Approx. 2.5–3 hrs</small></div></article><article><span>CMB</span><b>→</b><div><strong>Galle</strong><small>Approx. 2–2.5 hrs</small></div></article><article><span>CMB</span><b>→</b><div><strong>Kandy</strong><small>Approx. 3–4 hrs</small></div></article><article><span>CMB</span><b>→</b><div><strong>Ella</strong><small>Approx. 5–6 hrs</small></div></article></div></div></section>
@@ -124,7 +135,7 @@ export default function AirportHirePage() {
             </details>
             <details>
               <summary>How is the airport transfer price confirmed?</summary>
-              <p>Your quotation is prepared from the route, passenger number, luggage and vehicle type. The full details are confirmed before your travel date.</p>
+              <p>Your quotation is prepared from the route, passenger number, luggage and the vehicle you choose — budget taxi, standard or luxury. The full details are confirmed before your travel date.</p>
             </details>
           </div>
         </div>

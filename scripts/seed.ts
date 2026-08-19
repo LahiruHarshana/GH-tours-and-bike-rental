@@ -4,7 +4,8 @@ import mongoose from "mongoose";
 import { AdminUser } from "../src/models/AdminUser";
 import { TourPackage } from "../src/models/TourPackage";
 import { Bike } from "../src/models/Bike";
-import { demoTours, demoBikes } from "../src/lib/demo-data";
+import { AirportVehicle } from "../src/models/AirportVehicle";
+import { demoTours, demoBikes, demoAirportVehicles } from "../src/lib/demo-data";
 
 dotenv.config({ path: ".env.local" });
 dotenv.config();
@@ -49,7 +50,17 @@ async function seed() {
     );
   }
 
-  console.log(`Seed complete: ${demoTours.length} tours, ${demoBikes.length} bikes, admin ${email}`);
+  for (const vehicle of demoAirportVehicles) {
+    const { id: _id, ...payload } = vehicle;
+    void _id;
+    await AirportVehicle.findOneAndUpdate(
+      { slug: payload.slug },
+      payload,
+      { upsert: true, new: true, setDefaultsOnInsert: true },
+    );
+  }
+
+  console.log(`Seed complete: ${demoTours.length} tours, ${demoBikes.length} bikes, ${demoAirportVehicles.length} airport vehicles, admin ${email}`);
   await mongoose.disconnect();
 }
 

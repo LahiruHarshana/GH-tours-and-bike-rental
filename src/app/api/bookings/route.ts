@@ -38,6 +38,7 @@ export async function POST(request: Request) {
       flightNumber: booking.flightNumber,
       arrivalTime: booking.arrivalTime,
       vehicleType: booking.vehicleType,
+      estimatedAmountUSD: booking.estimatedAmountUSD,
       notes: booking.notes,
     });
     return apiSuccess(

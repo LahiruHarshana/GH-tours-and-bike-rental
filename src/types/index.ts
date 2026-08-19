@@ -1,4 +1,33 @@
 export type BookingType = "TOUR" | "AIRPORT" | "BIKE";
+export type VehicleClass = "CAR" | "VAN" | "MINIBUS";
+export type VehicleTier = "BUDGET" | "STANDARD" | "LUXURY";
+
+export type VehicleRoutePrice = {
+  destination: string;
+  duration?: string;
+  priceUSD: number;
+};
+
+export type AirportVehicleDTO = {
+  id: string;
+  name: string;
+  slug: string;
+  vehicleClass: VehicleClass;
+  tier: VehicleTier;
+  minPassengers: number;
+  maxPassengers: number;
+  luggagePieces: number;
+  priceFromUSD: number;
+  routePrices: VehicleRoutePrice[];
+  image: string;
+  shortDescription: string;
+  features: string[];
+  recommended: boolean;
+  available: boolean;
+  status: "DRAFT" | "PUBLISHED";
+  sortOrder: number;
+};
+
 export type BookingStatus =
   | "PENDING"
   | "CONFIRMED"
@@ -73,6 +102,8 @@ export type BookingDTO = {
   flightNumber?: string;
   arrivalTime?: string;
   vehicleType?: string;
+  vehicleId?: string;
+  estimatedAmountUSD?: number;
   notes?: string;
   adminNotes?: string;
   createdAt: string;

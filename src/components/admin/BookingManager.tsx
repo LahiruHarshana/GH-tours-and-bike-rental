@@ -155,6 +155,7 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
               {selected.flightNumber && <p><span>Flight</span>{selected.flightNumber}</p>}
               {selected.arrivalTime && <p><span>Time</span>{selected.arrivalTime}</p>}
               {selected.vehicleType && <p><span>Vehicle</span>{selected.vehicleType}</p>}
+              {selected.estimatedAmountUSD !== undefined && <p><span>Quoted fare</span>{formatUSD(selected.estimatedAmountUSD)}</p>}
               {selected.notes && <blockquote>{selected.notes}</blockquote>}
             </div>
 
@@ -163,7 +164,7 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
                 <label><span>Booking status</span><select name="status" defaultValue={selected.status} key={`${selected.id}-status`}><option value="PENDING">Pending</option><option value="CONFIRMED">Approved / confirmed</option><option value="DECLINED">Declined</option><option value="IN_PROGRESS">In progress</option><option value="COMPLETED">Completed</option><option value="CANCELLED">Cancelled</option></select></label>
                 <label><span>Payment status</span><select name="paymentStatus" defaultValue={selected.paymentStatus} key={`${selected.id}-payment`}><option value="UNPAID">Unpaid</option><option value="PARTIAL">Partial</option><option value="PAID">Paid</option><option value="REFUNDED">Refunded</option></select></label>
               </div>
-              <label><span>Confirmed total (USD)</span><input name="totalAmountUSD" type="number" min="0" step="1" defaultValue={selected.totalAmountUSD ?? ""} key={`${selected.id}-amount`} placeholder="0" /></label>
+              <label><span>Confirmed total (USD)</span><input name="totalAmountUSD" type="number" min="0" step="1" defaultValue={selected.totalAmountUSD ?? ""} key={`${selected.id}-amount`} placeholder={selected.estimatedAmountUSD ? String(selected.estimatedAmountUSD) : "0"} /></label>
               <label><span>Internal notes</span><textarea name="adminNotes" rows={4} defaultValue={selected.adminNotes ?? ""} key={`${selected.id}-notes`} placeholder="Driver assignment, payment details, special handling..." /></label>
               <button className="admin-primary-button" disabled={saving}>{saving ? "Saving..." : "Update booking"}</button>
               {message && <p className="admin-save-message" role="status">{message}</p>}

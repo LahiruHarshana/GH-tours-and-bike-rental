@@ -1,7 +1,8 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import type { BookingType } from "@/types";
+import type { AirportVehicleDTO, BookingType } from "@/types";
+import { AirportVehiclePicker } from "@/components/booking/AirportVehiclePicker";
 
 export type BookingInitialValues = Partial<{
   travelDate: string;
@@ -11,7 +12,8 @@ export type BookingInitialValues = Partial<{
   pickupLocation: string;
   dropoffLocation: string;
   flightNumber: string;
-  vehicleType: "CAR" | "VAN" | "MINIBUS";
+  vehicleType: "CAR" | "VAN" | "MINIBUS" | string;
+  vehicleId: string;
 }>;
 
 function localToday() {
@@ -26,6 +28,7 @@ export function BookingForm({
   sourceTitle,
   compact = false,
   initialValues = {},
+  vehicles,
   onSuccess,
 }: {
   type: BookingType;
@@ -33,6 +36,7 @@ export function BookingForm({
   sourceTitle?: string;
   compact?: boolean;
   initialValues?: BookingInitialValues;
+  vehicles?: AirportVehicleDTO[];
   onSuccess?: (bookingCode: string) => void;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
@@ -40,6 +44,8 @@ export function BookingForm({
   const [step, setStep] = useState<1 | 2>(1);
   const [submitting, setSubmitting] = useState(false);
   const [pickupDate, setPickupDate] = useState(initialValues.travelDate ?? "");
+  const [guests, setGuests] = useState(initialValues.guests ?? 2);
+  const [dropoffLocation, setDropoffLocation] = useState(initialValues.dropoffLocation ?? "");
   const [success, setSuccess] = useState<{ bookingCode: string; whatsappUrl: string } | null>(null);
   const [message, setMessage] = useState<{ type: "error"; text: string } | null>(null);
   const today = localToday();
@@ -79,6 +85,8 @@ export function BookingForm({
       const bookingCode = result.data.bookingCode as string;
       formElement.reset();
       setPickupDate("");
+      setGuests(initialValues.guests ?? 2);
+      setDropoffLocation(initialValues.dropoffLocation ?? "");
       setSuccess({ bookingCode, whatsappUrl: String(result.data.whatsappUrl ?? "") });
       onSuccess?.(bookingCode);
     } catch (error) {
@@ -150,7 +158,7 @@ export function BookingForm({
           </label>
           <label>
             <span>Drop-off location *</span>
-            <input name="dropoffLocation" required defaultValue={initialValues.dropoffLocation} placeholder="Galle, Ella, Kandy..." />
+            <input name="dropoffLocation" required value={dropoffLocation} onChange={(event) => setDropoffLocation(event.target.value)} placeholder="Galle, Ella, Kandy..." />
           </label>
           <label>
             <span>Flight number</span>
@@ -158,16 +166,18 @@ export function BookingForm({
           </label>
           <label>
             <span>Passengers *</span>
-            <input name="guests" type="number" min="1" max="30" defaultValue={initialValues.guests ?? 2} required />
+            <input name="guests" type="number" min="1" max="30" value={guests} onChange={(event) => setGuests(Number(event.target.value) || 1)} required />
           </label>
-          <label className="form-span-2">
-            <span>Preferred vehicle</span>
-            <select name="vehicleType" defaultValue={initialValues.vehicleType ?? "CAR"}>
-              <option value="CAR">Comfort car · 1–3 passengers</option>
-              <option value="VAN">Private van · 1–7 passengers</option>
-              <option value="MINIBUS">Minibus · 8–18 passengers</option>
-            </select>
-          </label>
+          <div className="form-span-2">
+            <AirportVehiclePicker
+              guests={guests}
+              destination={dropoffLocation}
+              initialVehicleType={initialValues.vehicleType}
+              initialVehicleId={initialValues.vehicleId}
+              vehicles={vehicles}
+              compact={compact}
+            />
+          </div>
         </div>
       )}
 
@@ -231,8 +241,8 @@ export function BookingForm({
 
         <div className="booking-form__heading">
           <span>Step {step} of 2</span>
-          <h3>{step === 1 ? (type === "BIKE" ? "When would you like to ride?" : type === "TOUR" ? "Tell us about your trip" : "Share your arrival details") : "Where should we reply?"}</h3>
-          <p>{step === 1 ? "Only the essentials — you can fine-tune everything with our local team." : "We use these details only to answer this request."}</p>
+          <h3>{step === 1 ? (type === "BIKE" ? "When would you like to ride?" : type === "TOUR" ? "Tell us about your trip" : "Share your ride details") : "Where should we reply?"}</h3>
+          <p>{step === 1 ? (type === "AIRPORT" ? "Choose a vehicle that fits your group — budget, standard or luxury." : "Only the essentials — you can fine-tune everything with our local team.") : "We use these details only to answer this request."}</p>
         </div>
 
         <fieldset data-booking-step="details" className={step === 1 ? "booking-form__step is-active" : "booking-form__step"}>

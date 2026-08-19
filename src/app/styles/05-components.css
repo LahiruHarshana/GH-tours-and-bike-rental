@@ -1086,7 +1086,7 @@ p { color: var(--color-ink-soft); }
 .airport-quick-book__toggle { padding: .3rem; background: rgba(83,109,97,.08); border: 1px solid var(--color-line); border-radius: 999px; }
 .airport-quick-book__toggle button { min-height: 2.45rem; padding: 0 1rem; color: var(--color-ink-soft); background: transparent; border: 0; border-radius: 999px; font-size: .58rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .airport-quick-book__toggle button.is-active { color: var(--color-paper); background: var(--color-ink); }
-.airport-quick-book__fields { display: grid; grid-template-columns: .85fr 1.5fr 1fr .85fr; border: 1px solid var(--color-line); background: var(--color-paper); }
+.airport-quick-book__fields { display: grid; grid-template-columns: .75fr 1.3fr .85fr .6fr .85fr; border: 1px solid var(--color-line); background: var(--color-paper); }
 .airport-quick-book__fields > * { min-height: 6.2rem; margin: 0; padding: 1.1rem 1.3rem; border-right: 1px solid var(--color-line); }
 .airport-quick-book__fields > *:last-child { border-right: 0; }
 .airport-quick-book__fields label, .airport-quick-book__airport { display: grid; align-content: center; gap: .4rem; }
@@ -1428,9 +1428,9 @@ p { color: var(--color-ink-soft); }
   .route-explorer__story { grid-template-columns: 1fr; }
   .route-explorer__story figure { min-height: 31rem; }
   .route-explorer__story > div { max-width: 35rem; }
-  .airport-quick-book__fields { grid-template-columns: 1fr 1.25fr 1fr; }
+  .airport-quick-book__fields { grid-template-columns: 1fr 1.25fr .8fr .7fr; }
   .airport-quick-book__submit { grid-column: 1/-1; min-height: 4.5rem; }
-  .airport-quick-book__fields > *:nth-child(3) { border-right: 0; }
+  .airport-quick-book__fields > *:nth-child(4) { border-right: 0; }
   .footer-grid { grid-template-columns: 1.3fr repeat(2,1fr); }
   .footer-grid > :last-child { grid-column: 2; }
 }

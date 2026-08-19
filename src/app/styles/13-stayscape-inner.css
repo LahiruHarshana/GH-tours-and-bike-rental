@@ -1514,7 +1514,7 @@
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: .85fr 1.45fr 1fr .9fr;
+  grid-template-columns: .75fr 1.25fr .9fr .65fr .9fr;
   overflow: hidden;
   border: 0;
   border-radius: 1.35rem;
@@ -1636,10 +1636,10 @@
   }
 
   .ss-airport-booking .airport-quick-book__fields {
-    grid-template-columns: .85fr 1.35fr 1fr;
+    grid-template-columns: .85fr 1.2fr .8fr .7fr;
   }
 
-  .ss-airport-booking .airport-quick-book__fields > *:nth-child(3) {
+  .ss-airport-booking .airport-quick-book__fields > *:nth-child(4) {
     border-right: 0;
   }
 

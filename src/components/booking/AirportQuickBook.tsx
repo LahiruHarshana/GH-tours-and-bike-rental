@@ -16,6 +16,7 @@ export function AirportQuickBook() {
   const [direction, setDirection] = useState<"ARRIVAL" | "DEPARTURE">("ARRIVAL");
   const [destination, setDestination] = useState("");
   const [travelDate, setTravelDate] = useState("");
+  const [guests, setGuests] = useState(2);
   const [open, setOpen] = useState(false);
   const [request, setRequest] = useState<BookingInitialValues>({});
 
@@ -24,12 +25,13 @@ export function AirportQuickBook() {
     const form = new FormData(event.currentTarget);
     const selectedDestination = String(form.get("destination") ?? destination);
     const selectedDate = String(form.get("travelDate") ?? travelDate);
+    const selectedGuests = Number(form.get("guests") ?? guests) || 2;
     setRequest({
       travelDate: selectedDate,
-      guests: 2,
+      guests: selectedGuests,
       pickupLocation: direction === "ARRIVAL" ? AIRPORT : selectedDestination,
       dropoffLocation: direction === "ARRIVAL" ? selectedDestination : AIRPORT,
-      vehicleType: "CAR",
+      vehicleType: selectedGuests >= 8 ? "MINIBUS" : selectedGuests >= 4 ? "VAN" : "CAR",
     });
     setOpen(true);
   }
@@ -67,6 +69,10 @@ export function AirportQuickBook() {
           <label>
             <span>{direction === "ARRIVAL" ? "Arrival date" : "Pickup date"}</span>
             <input name="travelDate" type="date" min={localToday()} value={travelDate} onChange={(event) => setTravelDate(event.target.value)} required />
+          </label>
+          <label>
+            <span>Travellers</span>
+            <input name="guests" type="number" min="1" max="30" value={guests} onChange={(event) => setGuests(Number(event.target.value) || 1)} required />
           </label>
           <button className="airport-quick-book__submit" type="submit">
             <span>Continue booking</span><b aria-hidden="true">→</b>

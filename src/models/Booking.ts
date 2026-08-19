@@ -32,6 +32,8 @@ const bookingSchema = new Schema(
     flightNumber: { type: String, trim: true },
     arrivalTime: { type: String, trim: true },
     vehicleType: { type: String, trim: true },
+    vehicleId: { type: String, trim: true },
+    estimatedAmountUSD: { type: Number, min: 0 },
     licenseNumber: { type: String, trim: true },
     notes: { type: String, trim: true },
     adminNotes: { type: String, trim: true },

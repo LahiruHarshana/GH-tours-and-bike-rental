@@ -18,8 +18,8 @@ const modalCopy: Record<BookingType, { label: string; description: string; benef
   },
   AIRPORT: {
     label: "Airport transfer request",
-    description: "Send your arrival details and our local team will confirm the vehicle, meeting point and fixed quotation.",
-    benefits: ["Flight-aware pickup", "Private vehicle", "No payment required now"],
+    description: "Choose a vehicle that fits your group, then send your arrival details. We confirm the meeting point and fare.",
+    benefits: ["Flight-aware pickup", "Budget, standard or luxury", "No payment required now"],
   },
 };
 

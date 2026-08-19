@@ -25,6 +25,11 @@ export const bookingSchema = z
     flightNumber: optionalText,
     arrivalTime: optionalText,
     vehicleType: optionalText,
+    vehicleId: optionalText,
+    estimatedAmountUSD: z.preprocess(
+      (value: unknown) => (value === "" || value === null || value === undefined ? undefined : value),
+      z.coerce.number().min(0).optional(),
+    ),
     licenseNumber: optionalText,
     notes: optionalText,
   })
@@ -35,6 +40,9 @@ export const bookingSchema = z
       }
       if (!data.dropoffLocation) {
         ctx.addIssue({ code: "custom", path: ["dropoffLocation"], message: "Drop-off location is required." });
+      }
+      if (!data.guests) {
+        ctx.addIssue({ code: "custom", path: ["guests"], message: "Passenger count is required." });
       }
     }
     if (data.type === "BIKE" && !data.returnDate) {
@@ -87,6 +95,38 @@ export const bikeSchema = z.object({
   available: z.boolean().default(true),
   quantity: z.coerce.number().int().min(0).max(999),
   status: z.enum(["DRAFT", "PUBLISHED"]),
+});
+
+export const airportVehicleSchema = z.object({
+  name: z.string().trim().min(2).max(140),
+  slug: z.string().trim().min(2).max(160).regex(/^[a-z0-9-]+$/),
+  vehicleClass: z.enum(["CAR", "VAN", "MINIBUS"]),
+  tier: z.enum(["BUDGET", "STANDARD", "LUXURY"]),
+  minPassengers: z.coerce.number().int().min(1).max(40),
+  maxPassengers: z.coerce.number().int().min(1).max(40),
+  luggagePieces: z.coerce.number().int().min(0).max(40),
+  priceFromUSD: z.coerce.number().min(0),
+  routePrices: z
+    .array(
+      z.object({
+        destination: z.string().trim().min(2).max(80),
+        duration: optionalText,
+        priceUSD: z.coerce.number().min(0),
+      }),
+    )
+    .max(20)
+    .default([]),
+  image: z.string().trim().min(1).max(500),
+  shortDescription: z.string().trim().min(12).max(260),
+  features: z.array(z.string().trim().min(1)).max(20),
+  recommended: z.boolean().default(false),
+  available: z.boolean().default(true),
+  status: z.enum(["DRAFT", "PUBLISHED"]),
+  sortOrder: z.coerce.number().int().min(0).max(999).default(0),
+}).superRefine((data, ctx) => {
+  if (data.maxPassengers < data.minPassengers) {
+    ctx.addIssue({ code: "custom", path: ["maxPassengers"], message: "Maximum passengers must be at least the minimum." });
+  }
 });
 
 export const bookingStatusSchema = z.object({
