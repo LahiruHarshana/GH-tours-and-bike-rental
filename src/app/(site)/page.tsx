@@ -118,110 +118,124 @@ export default async function HomePage() {
       <section
         id="quick-airport-booking"
         className="ss-airport-booking"
-        aria-label="Quick airport transfer booking"
+        aria-labelledby="ss-airport-chapter-title"
       >
+        <header className="ss-airport-booking__intro">
+          <p className="ss-section-kicker">Arrivals</p>
+          <h2 id="ss-airport-chapter-title">Land soft.<br />Start south.</h2>
+          <p>
+            Private CMB transfers to the south coast — flight tracked, fixed fare,
+            driver waiting. Book in minutes, confirm on WhatsApp.
+          </p>
+          <Link href="/airport-hire">Full airport hire details ↗</Link>
+        </header>
         <AirportQuickBook />
       </section>
 
-      <section className="ss-experiences" aria-labelledby="ss-experiences-title">
-        <p className="ss-section-kicker">{home.experiencesEyebrow}</p>
-        <h2 id="ss-experiences-title"><Multiline text={home.experiencesTitle} /></h2>
-        <p className="ss-section-copy">{home.experiencesCopy}</p>
-
-        <nav className="ss-pills" aria-label="Explore our services">
-          <Link href="/tours" className="is-active">Tours</Link>
-          <Link href="/airport-hire">Airport hire</Link>
-          <Link href="/bikes">Bike rental</Link>
-          <Link href="/custom-tour">Custom journey</Link>
-        </nav>
-
-        <p className="ss-catalogue-count">
-          All {tours.length} private journeys, shown below —{" "}
-          <Link href="/tours">browse the full list ↗</Link>
-        </p>
-
-        <div className="ss-card-grid" data-scroll-motion>
-          {tours.map((tour) => (
-            <Link href={`/tours/${tour.slug}`} className="ss-product-card" key={tour.id} data-cursor-depth>
-              <span className="ss-product-card__image">
-                <Image
-                  src={tour.image}
-                  alt={tour.title}
-                  fill
-                  sizes="(max-width: 760px) 88vw, 25vw"
-                  unoptimized={tour.image.startsWith("http")}
-                />
-              </span>
-              <span className="ss-product-card__body">
-                <strong>{tour.title}</strong>
-                <small>{tour.location}</small>
-                <span className="ss-product-card__meta">
-                  <em>{tour.durationDays} days</em>
-                  <b>{formatUSD(tour.priceFrom)}</b>
-                </span>
-              </span>
+      <section className="ss-experiences ss-journeys" aria-labelledby="ss-experiences-title">
+        <div className="ss-journeys__shell">
+          <header className="ss-journeys__intro">
+            <p className="ss-section-kicker">{home.experiencesEyebrow}</p>
+            <h2 id="ss-experiences-title"><Multiline text={home.experiencesTitle} /></h2>
+            <p className="ss-section-copy">{home.experiencesCopy}</p>
+            <p className="ss-catalogue-count">
+              {tours.length} private journeys —{" "}
+              <Link href="/tours">browse the full list ↗</Link>
+            </p>
+            <Link href="/tours" className="ss-journeys__cta">
+              See all signature journeys
+              <span aria-hidden="true">↗</span>
             </Link>
-          ))}
-
-          <Link href="/custom-tour" className="ss-orange-card" style={{ background: 'var(--ss-ink)' }} data-cursor-depth>
-            <span>
-              <strong>Custom<br />journey</strong>
-              <small>Build your own route</small>
-            </span>
-            <i className="ss-round-arrow" style={{ color: 'var(--ss-ink)' }}>↗</i>
-          </Link>
-
-          <Link href="/tours" className="ss-orange-card" data-cursor-depth>
-            <span>
-              <strong>Signature<br />journeys</strong>
-              <small>Private · Flexible · Local</small>
-            </span>
-            <i className="ss-round-arrow">↗</i>
-          </Link>
-        </div>
-
-        <section className="ss-journey-chooser" aria-labelledby="ss-journey-chooser-title">
-          <header className="ss-journey-chooser__intro">
-          <span>{home.chooserEyebrow}</span>
-          <div>
-              <h3 id="ss-journey-chooser-title"><Multiline text={home.chooserTitle} /></h3>
-              <p>{home.chooserCopy}</p>
-            </div>
           </header>
 
-          <nav className="ss-journey-chooser__grid" aria-label="Choose a Sri Lanka travel style">
-            <Link href="/tours" className="ss-journey-choice ss-journey-choice--orange">
-              <span>01</span>
-              <div><small>Private journeys</small><strong>See the whole island</strong><p>Culture, hills, wildlife and coast—arranged around your pace.</p></div>
-              <i aria-hidden="true">↗</i>
-            </Link>
-            <Link href="/airport-hire" className="ss-journey-choice">
-              <span>02</span>
-              <div><small>Easy arrivals</small><strong>Land without the stress</strong><p>A tracked flight, waiting driver and a clear first road.</p></div>
-              <i aria-hidden="true">↗</i>
-            </Link>
-            <Link href="/bikes" className="ss-journey-choice ss-journey-choice--dark">
-              <span>03</span>
-              <div><small>Two-wheel freedom</small><strong>Ride your own rhythm</strong><p>Reliable bikes, proper handover and local support.</p></div>
-              <i aria-hidden="true">↗</i>
-            </Link>
-            <Link href="/custom-tour" className="ss-journey-choice ss-journey-choice--soft">
-              <span>04</span>
-              <div><small>Made for you</small><strong>Build something different</strong><p>Tell us what matters and start with a blank page.</p></div>
-              <i aria-hidden="true">↗</i>
-            </Link>
-          </nav>
-        </section>
+          <div className="ss-journeys__main">
+            <div className="ss-journeys__rail" role="navigation" aria-label="Journey moods">
+              <Link href="/tours" className="ss-journeys__mood">
+                <span>01</span>
+                <strong>Cultural triangle</strong>
+                <small>Ancient heights &amp; plains</small>
+              </Link>
+              <Link href="/tours" className="ss-journeys__mood">
+                <span>02</span>
+                <strong>Hill country</strong>
+                <small>Mist, tea &amp; trains</small>
+              </Link>
+              <Link href="/tours" className="ss-journeys__mood">
+                <span>03</span>
+                <strong>South coast</strong>
+                <small>Ocean light &amp; surf towns</small>
+              </Link>
+              <Link href="/custom-tour" className="ss-journeys__mood ss-journeys__mood--accent">
+                <span>04</span>
+                <strong>Build your own</strong>
+                <small>Blank page, your pace</small>
+              </Link>
+            </div>
+
+            <div className="ss-card-grid ss-journeys__grid" data-scroll-motion>
+              {tours.map((tour, index) => (
+                <Link
+                  href={`/tours/${tour.slug}`}
+                  className={`ss-product-card${index === 0 ? " ss-product-card--featured" : ""}`}
+                  key={tour.id}
+                  data-cursor-depth
+                >
+                  <span className="ss-product-card__index" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="ss-product-card__image">
+                    <Image
+                      src={tour.image}
+                      alt={tour.title}
+                      fill
+                      sizes="(max-width: 760px) 88vw, 25vw"
+                      unoptimized={tour.image.startsWith("http")}
+                    />
+                  </span>
+                  <span className="ss-product-card__body">
+                    <strong>{tour.title}</strong>
+                    <small>{tour.location}</small>
+                    <span className="ss-product-card__meta">
+                      <em>{tour.durationDays} days</em>
+                      <b>{formatUSD(tour.priceFrom)}</b>
+                    </span>
+                  </span>
+                </Link>
+              ))}
+
+              <Link href="/custom-tour" className="ss-orange-card ss-orange-card--ink" data-cursor-depth>
+                <span>
+                  <strong>Custom<br />journey</strong>
+                  <small>Build your own route</small>
+                </span>
+                <i className="ss-round-arrow">↗</i>
+              </Link>
+
+              <Link href="/tours" className="ss-orange-card" data-cursor-depth>
+                <span>
+                  <strong>Signature<br />journeys</strong>
+                  <small>Private · Flexible · Local</small>
+                </span>
+                <i className="ss-round-arrow">↗</i>
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section className="ss-dark" aria-labelledby="ss-dark-title">
+      <section className="ss-dark ss-ride" aria-labelledby="ss-dark-title">
         <div className="ss-dark__intro">
-          <p>{home.bikeEyebrow}</p>
+          <p className="ss-section-kicker ss-section-kicker--light">{home.bikeEyebrow}</p>
           <h2 id="ss-dark-title"><Multiline text={home.bikeTitle} /></h2>
           <p className="ss-catalogue-count ss-catalogue-count--dark">
-            All {bikes.length} bikes in the fleet, shown below —{" "}
-            <Link href="/bikes">browse the full list ↗</Link>
+            Ride the south coast on your own rhythm — {bikes.length} bikes ready, with
+            a clear handover.{" "}
+            <Link href="/bikes">browse the full fleet ↗</Link>
           </p>
+          <nav className="ss-ride__links" aria-label="Ride and arrival">
+            <Link href="/bikes">Bike rental</Link>
+            <Link href="/airport-hire">Airport transfer</Link>
+          </nav>
         </div>
 
         <div className="ss-mosaic" data-scroll-motion>

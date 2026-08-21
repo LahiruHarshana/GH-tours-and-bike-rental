@@ -413,10 +413,188 @@ body {
   font-size: .7rem;
 }
 
-/* First light collection */
-.ss-experiences {
-  padding: 7rem clamp(.75rem, 1.6vw, 1.75rem) 8rem;
-  text-align: center;
+/* Signature journeys — tours only */
+.ss-experiences.ss-journeys {
+  padding: clamp(5rem, 9vw, 9rem) clamp(.75rem, 1.6vw, 1.75rem);
+  text-align: left;
+}
+
+.ss-journeys__shell {
+  display: grid;
+  max-width: 116rem;
+  grid-template-columns: minmax(16rem, .78fr) minmax(0, 1.72fr);
+  gap: clamp(2rem, 5vw, 5.5rem);
+  margin-inline: auto;
+  align-items: start;
+}
+
+.ss-journeys__intro {
+  position: sticky;
+  top: 7.5rem;
+  display: grid;
+  gap: 1.1rem;
+  padding-top: .35rem;
+}
+
+.ss-journeys__intro .ss-section-kicker {
+  margin: 0;
+  color: var(--ss-orange);
+  font-size: .72rem;
+  font-weight: 750;
+  letter-spacing: .04em;
+}
+
+.ss-journeys__intro h2 {
+  max-width: 10ch;
+  margin: 0;
+  font-size: clamp(3.6rem, 6.5vw, 7.8rem);
+  font-weight: 470;
+  letter-spacing: -.09em;
+  line-height: .8;
+}
+
+.ss-journeys__intro .ss-section-copy {
+  max-width: 28rem;
+  margin: 0;
+  color: var(--ss-muted);
+  font-size: .95rem;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.ss-journeys__intro .ss-catalogue-count {
+  margin: .25rem 0 0;
+  max-width: 24rem;
+  color: #877c6f;
+  font-size: .78rem;
+  text-align: left;
+}
+
+.ss-journeys__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  width: fit-content;
+  margin-top: .65rem;
+  padding: .85rem 1.25rem;
+  border-radius: 999px;
+  background: var(--ss-ink);
+  color: #f5f4f2;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1), background .25s ease;
+}
+
+.ss-journeys__cta:hover {
+  background: var(--ss-orange);
+  transform: translateY(-2px);
+}
+
+.ss-journeys__main {
+  display: grid;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.ss-journeys__rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .55rem;
+}
+
+.ss-journeys__mood {
+  display: grid;
+  gap: .35rem;
+  min-height: 7.5rem;
+  padding: 1rem 1.05rem 1.1rem;
+  border: 1px solid rgb(8 9 9 / .08);
+  border-radius: 1.35rem;
+  background: var(--ss-paper);
+  color: var(--ss-ink);
+  transition: transform .35s cubic-bezier(.2, .8, .2, 1), border-color .25s ease, background .25s ease;
+}
+
+.ss-journeys__mood:hover {
+  border-color: rgb(8 9 9 / .18);
+  transform: translateY(-.3rem);
+}
+
+.ss-journeys__mood span {
+  color: var(--ss-orange);
+  font-size: .62rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .08em;
+}
+
+.ss-journeys__mood strong {
+  font-size: clamp(.95rem, 1.2vw, 1.15rem);
+  font-weight: 680;
+  letter-spacing: -.035em;
+  line-height: 1.15;
+}
+
+.ss-journeys__mood small {
+  color: var(--ss-muted);
+  font-size: .68rem;
+  line-height: 1.35;
+}
+
+.ss-journeys__mood--accent {
+  background: var(--ss-ink);
+  border-color: transparent;
+  color: #f5f4f2;
+}
+
+.ss-journeys__mood--accent small {
+  color: rgb(245 244 242 / .62);
+}
+
+.ss-journeys__grid.ss-card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .85rem;
+}
+
+.ss-product-card {
+  position: relative;
+}
+
+.ss-product-card__index {
+  position: absolute;
+  z-index: 3;
+  top: 1rem;
+  left: 1rem;
+  padding: .28rem .55rem;
+  border-radius: 999px;
+  background: rgb(248 247 244 / .92);
+  color: var(--ss-ink);
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  backdrop-filter: blur(8px);
+}
+
+.ss-product-card--featured {
+  grid-column: span 2;
+}
+
+.ss-product-card--featured .ss-product-card__image {
+  height: clamp(20rem, 32vw, 36rem);
+}
+
+.ss-product-card--featured .ss-product-card__body > strong {
+  font-size: clamp(1.35rem, 2.2vw, 2rem);
+  white-space: normal;
+}
+
+.ss-orange-card--ink {
+  background: var(--ss-ink);
+}
+
+.ss-orange-card--ink .ss-round-arrow {
+  background: white;
+  color: var(--ss-ink);
 }
 
 .ss-experiences > h2,
@@ -435,35 +613,11 @@ body {
   line-height: 1.55;
 }
 
-.ss-pills {
-  display: grid;
-  width: min(48rem, 100%);
-  grid-template-columns: repeat(4, 1fr);
-  margin: 4rem auto 4.5rem;
-  padding: .35rem;
-  border-radius: 999px;
-  background: #dedbd6;
-}
-
-.ss-pills a {
-  padding: .95rem .8rem;
-  border-radius: 999px;
-  color: #6b655d;
-  font-size: .75rem;
-}
-
-.ss-pills a:hover,
-.ss-pills a.is-active {
-  background: #f3f2ef;
-  color: var(--ss-ink);
-}
-
 .ss-catalogue-count {
-  margin: -2.5rem auto 2.5rem;
+  margin: 0;
   max-width: 30rem;
   color: #877c6f;
   font-size: .8rem;
-  text-align: center;
 }
 
 .ss-catalogue-count a {
@@ -672,6 +826,40 @@ a.ss-product-card:hover {
   position: relative;
   z-index: 0;
   text-align: center;
+}
+
+.ss-dark__intro .ss-section-kicker--light {
+  margin: 0 0 1rem;
+  color: rgb(255 129 8 / .95);
+  font-size: .75rem;
+  font-weight: 750;
+  letter-spacing: .04em;
+}
+
+.ss-ride__links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .55rem;
+  margin: 1.5rem auto 0;
+}
+
+.ss-ride__links a {
+  display: inline-flex;
+  min-height: 2.6rem;
+  align-items: center;
+  padding: 0 1.1rem;
+  border: 1px solid rgb(245 244 242 / .18);
+  border-radius: 999px;
+  color: #f5f4f2;
+  font-size: .7rem;
+  font-weight: 700;
+  transition: background .25s ease, border-color .25s ease;
+}
+
+.ss-ride__links a:hover {
+  border-color: transparent;
+  background: var(--ss-orange);
 }
 
 .ss-dark__intro h2 {
@@ -1085,9 +1273,30 @@ a.ss-product-card:hover {
     top: 43rem;
   }
 
-  .ss-experiences > h2,
+  .ss-journeys__intro h2,
   .ss-story > h2 {
     font-size: clamp(3.2rem, 8vw, 6rem);
+  }
+
+  .ss-journeys__shell {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  .ss-journeys__intro {
+    position: static;
+  }
+
+  .ss-journeys__rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ss-journeys__grid.ss-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ss-product-card--featured {
+    grid-column: span 2;
   }
 }
 
@@ -1213,31 +1422,67 @@ a.ss-product-card:hover {
     justify-content: start;
   }
 
-  .ss-experiences {
+  .ss-experiences.ss-journeys {
     padding-block: 5rem 5.5rem;
   }
 
-  .ss-experiences > h2,
+  .ss-journeys__shell {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .ss-journeys__intro {
+    position: static;
+  }
+
+  .ss-journeys__intro h2 {
+    max-width: 12ch;
+    font-size: clamp(2.8rem, 12vw, 4.2rem);
+  }
+
+  .ss-journeys__rail {
+    display: flex;
+    overflow-x: auto;
+    gap: .55rem;
+    margin-right: -.75rem;
+    padding-right: .75rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .ss-journeys__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ss-journeys__mood {
+    min-width: 11.5rem;
+    scroll-snap-align: start;
+  }
+
+  .ss-journeys__grid.ss-card-grid {
+    display: flex;
+    overflow-x: auto;
+    margin-right: -.75rem;
+    padding-right: .75rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .ss-journeys__grid.ss-card-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ss-product-card--featured {
+    grid-column: auto;
+  }
+
   .ss-story > h2 {
     font-size: clamp(2.5rem, 11.5vw, 3.9rem);
   }
 
   .ss-section-copy {
-    padding-inline: 1rem;
+    padding-inline: 0;
     font-size: .85rem;
-  }
-
-  .ss-pills {
-    display: flex;
-    overflow-x: auto;
-    justify-content: start;
-    margin: 2.5rem auto 3rem;
-    padding: .3rem;
-  }
-
-  .ss-pills a {
-    min-width: max-content;
-    padding: .8rem 1.15rem;
   }
 
   .ss-card-grid,

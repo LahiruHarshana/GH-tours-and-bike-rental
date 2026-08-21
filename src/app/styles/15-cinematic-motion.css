@@ -372,6 +372,10 @@
     transform: none !important;
   }
 
+  .cinema-enabled .ss-journeys__mood[data-cinema="rise"].is-cinema-visible {
+    animation: none !important;
+  }
+
   .cinema-atmosphere {
     transform: none !important;
   }
@@ -473,6 +477,7 @@
         calc(var(--motion-progress, 0) * .6rem),
         0
       )
+      scale(calc(1 - (var(--motion-progress, 0) * .018)))
       rotateX(calc(var(--tilt-x, 0) * 1deg))
       rotateY(calc(var(--tilt-y, 0) * 1deg));
     transform-style: preserve-3d;
@@ -490,6 +495,31 @@
         calc(var(--motion-progress, 0) * -.6rem),
         20px
       )
+      scale(calc(1 - (var(--motion-progress, 0) * .012)))
+      rotateX(calc(var(--tilt-x, 0) * 1deg))
+      rotateY(calc(var(--tilt-y, 0) * 1deg));
+  }
+
+  .ss-journeys__grid[data-scroll-motion] > *:nth-child(3n) {
+    transform:
+      translate3d(
+        0,
+        calc(var(--motion-progress, 0) * 1.15rem),
+        12px
+      )
+      scale(calc(1 - (var(--motion-progress, 0) * .02)))
+      rotateX(calc(var(--tilt-x, 0) * 1deg))
+      rotateY(calc(var(--tilt-y, 0) * 1deg));
+  }
+
+  .ss-journeys__grid[data-scroll-motion] > .ss-product-card--featured {
+    transform:
+      translate3d(
+        calc(var(--motion-progress, 0) * -1.1rem),
+        calc(var(--motion-progress, 0) * .85rem),
+        28px
+      )
+      scale(calc(1.02 - (var(--motion-progress, 0) * .025)))
       rotateX(calc(var(--tilt-x, 0) * 1deg))
       rotateY(calc(var(--tilt-y, 0) * 1deg));
   }
@@ -502,6 +532,46 @@
       translate3d(0, -.65rem, 70px)
       rotateX(calc(var(--tilt-x, 0) * 1deg))
       rotateY(calc(var(--tilt-y, 0) * 1deg));
+  }
+
+  .ss-journeys__intro[data-cinema="drift"] {
+    --cinema-x: -.8rem;
+    --cinema-y: 1.6rem;
+  }
+
+  .ss-journeys__intro [data-cinema] {
+    --cinema-y: 1.4rem;
+  }
+
+  .ss-journeys__mood[data-cinema="rise"] {
+    --cinema-y: 2rem;
+  }
+
+  .cinema-enabled .ss-journeys__mood[data-cinema="rise"].is-cinema-visible {
+    animation: ss-journeys-mood-in .85s var(--ease-island) both;
+  }
+
+  .cinema-enabled .ss-journeys__mood[data-cinema="rise"]:nth-child(2).is-cinema-visible {
+    animation-delay: 70ms;
+  }
+
+  .cinema-enabled .ss-journeys__mood[data-cinema="rise"]:nth-child(3).is-cinema-visible {
+    animation-delay: 140ms;
+  }
+
+  .cinema-enabled .ss-journeys__mood[data-cinema="rise"]:nth-child(4).is-cinema-visible {
+    animation-delay: 210ms;
+  }
+}
+
+@keyframes ss-journeys-mood-in {
+  from {
+    opacity: 0;
+    transform: translate3d(1.4rem, .6rem, 0) scale(.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 

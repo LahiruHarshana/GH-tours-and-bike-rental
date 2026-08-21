@@ -1470,6 +1470,46 @@
   font-family: var(--body);
 }
 
+.ss-airport-booking__intro {
+  display: grid;
+  max-width: 116rem;
+  gap: .85rem;
+  margin: 0 auto clamp(1.5rem, 3vw, 2.5rem);
+  padding-inline: clamp(.35rem, 1vw, 1rem);
+}
+
+.ss-airport-booking__intro .ss-section-kicker {
+  margin: 0;
+  color: var(--ss-orange);
+  font-size: .72rem;
+  font-weight: 750;
+  letter-spacing: .04em;
+}
+
+.ss-airport-booking__intro h2 {
+  max-width: 11ch;
+  margin: 0;
+  font-size: clamp(3rem, 6vw, 5.8rem);
+  font-weight: 470;
+  letter-spacing: -.085em;
+  line-height: .82;
+}
+
+.ss-airport-booking__intro p {
+  max-width: 36rem;
+  margin: 0;
+  color: var(--ss-muted);
+  font-size: .95rem;
+  line-height: 1.55;
+}
+
+.ss-airport-booking__intro > a {
+  width: fit-content;
+  color: var(--ss-orange);
+  font-size: .78rem;
+  font-weight: 700;
+}
+
 .ss-airport-booking .airport-quick-book {
   position: relative;
   width: min(100%, 116rem);
@@ -1722,6 +1762,15 @@
 @media (max-width: 700px) {
   .ss-airport-booking {
     padding-inline: .45rem;
+  }
+
+  .ss-airport-booking__intro {
+    margin-bottom: 1.25rem;
+    padding-inline: .35rem;
+  }
+
+  .ss-airport-booking__intro h2 {
+    font-size: clamp(2.6rem, 12vw, 3.8rem);
   }
 
   .ss-airport-booking .airport-quick-book {
