@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import type { BookingDTO, BookingStatus, PaymentStatus } from "@/types";
 import { formatDate, formatUSD } from "@/lib/utils";
 import { buildCustomerReplyMessage, buildWhatsAppUrl } from "@/lib/whatsapp-links";
+import { formatAirportTaxiChoice, resolveAirportTaxiType } from "@/lib/airport-vehicles";
 
 type BookingUpdate = {
   status: BookingStatus;
@@ -19,9 +20,9 @@ function WhatsAppReplyComposer({ booking }: { booking: BookingDTO }) {
     <div className="booking-whatsapp-composer">
       <div>
         <small>WhatsApp reply to customer</small>
-        <strong>Prepared automatically — edit before opening WhatsApp</strong>
+        <strong>{booking.type === "AIRPORT" ? "Includes taxi photos — edit, then press Send in WhatsApp" : "Prepared automatically — edit before opening WhatsApp"}</strong>
       </div>
-      <textarea value={message} onChange={(event) => setMessage(event.target.value)} rows={9} aria-label="Prepared WhatsApp reply" />
+      <textarea value={message} onChange={(event) => setMessage(event.target.value)} rows={booking.type === "AIRPORT" ? 16 : 9} aria-label="Prepared WhatsApp reply" />
       <a className="admin-whatsapp-button" href={buildWhatsAppUrl(booking.whatsapp || booking.phone, message)} target="_blank" rel="noreferrer">
         Open in WhatsApp — press Send there ↗
       </a>
@@ -40,6 +41,9 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
     [bookings, filter],
   );
   const selected = filtered.find((booking) => booking.id === selectedId) ?? filtered[0] ?? null;
+  const selectedTaxi = selected?.type === "AIRPORT"
+    ? resolveAirportTaxiType(selected.vehicleType, selected.vehicleId)
+    : undefined;
 
   useEffect(() => {
     const interval = window.setInterval(() => router.refresh(), 10000);
@@ -156,6 +160,16 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
               {selected.arrivalTime && <p><span>Time</span>{selected.arrivalTime}</p>}
               {selected.vehicleType && <p><span>Vehicle</span>{selected.vehicleType}</p>}
               {selected.estimatedAmountUSD !== undefined && <p><span>Quoted fare</span>{formatUSD(selected.estimatedAmountUSD)}</p>}
+              {selectedTaxi && (
+                <div className="booking-vehicle-preview">
+                  <img src={selectedTaxi.image} alt={formatAirportTaxiChoice(selectedTaxi)} />
+                  <div>
+                    <strong>{formatAirportTaxiChoice(selectedTaxi)}</strong>
+                    <small>{selectedTaxi.capacity} · {selectedTaxi.luggagePieces} bags</small>
+                    <p>Send the prepared WhatsApp message and the customer receives these taxi photos.</p>
+                  </div>
+                </div>
+              )}
               {selected.notes && <blockquote>{selected.notes}</blockquote>}
             </div>
 

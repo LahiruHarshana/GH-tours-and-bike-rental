@@ -31,7 +31,8 @@ export function AirportQuickBook() {
       guests: selectedGuests,
       pickupLocation: direction === "ARRIVAL" ? AIRPORT : selectedDestination,
       dropoffLocation: direction === "ARRIVAL" ? selectedDestination : AIRPORT,
-      vehicleType: selectedGuests >= 8 ? "MINIBUS" : selectedGuests >= 4 ? "VAN" : "CAR",
+      vehicleId: selectedGuests >= 8 ? "bus" : selectedGuests >= 4 ? "van" : "car",
+      vehicleType: selectedGuests >= 8 ? "🚌 Bus" : selectedGuests >= 4 ? "🚐 Van" : "🚗 Car",
     });
     setOpen(true);
   }

@@ -44,6 +44,9 @@ export const bookingSchema = z
       if (!data.guests) {
         ctx.addIssue({ code: "custom", path: ["guests"], message: "Passenger count is required." });
       }
+      if (!data.vehicleType && !data.vehicleId) {
+        ctx.addIssue({ code: "custom", path: ["vehicleType"], message: "Please choose a car, van or bus." });
+      }
     }
     if (data.type === "BIKE" && !data.returnDate) {
       ctx.addIssue({ code: "custom", path: ["returnDate"], message: "Return date is required." });

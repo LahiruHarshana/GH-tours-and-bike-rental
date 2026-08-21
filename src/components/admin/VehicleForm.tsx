@@ -99,7 +99,7 @@ export function VehicleForm({ vehicle }: { vehicle?: AirportVehicleDTO }) {
             <select name="vehicleClass" defaultValue={vehicle?.vehicleClass ?? "CAR"}>
               <option value="CAR">Car</option>
               <option value="VAN">Van</option>
-              <option value="MINIBUS">Minibus</option>
+              <option value="MINIBUS">Bus</option>
             </select>
           </label>
           <label>

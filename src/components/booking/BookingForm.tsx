@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import type { AirportVehicleDTO, BookingType } from "@/types";
+import type { BookingType } from "@/types";
 import { AirportVehiclePicker } from "@/components/booking/AirportVehiclePicker";
 
 export type BookingInitialValues = Partial<{
@@ -28,7 +28,6 @@ export function BookingForm({
   sourceTitle,
   compact = false,
   initialValues = {},
-  vehicles,
   onSuccess,
 }: {
   type: BookingType;
@@ -36,7 +35,6 @@ export function BookingForm({
   sourceTitle?: string;
   compact?: boolean;
   initialValues?: BookingInitialValues;
-  vehicles?: AirportVehicleDTO[];
   onSuccess?: (bookingCode: string) => void;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
@@ -174,7 +172,6 @@ export function BookingForm({
               destination={dropoffLocation}
               initialVehicleType={initialValues.vehicleType}
               initialVehicleId={initialValues.vehicleId}
-              vehicles={vehicles}
               compact={compact}
             />
           </div>
@@ -216,10 +213,14 @@ export function BookingForm({
       <div ref={feedbackRef} className="booking-success" role="status" tabIndex={-1}>
         <span className="booking-success__icon" aria-hidden="true">✓</span>
         <p>Request received</p>
-        <h3>We are checking the details.</h3>
-        <p>Your request is safely saved. Open WhatsApp to send the prepared details to our admin, then press Send in WhatsApp.</p>
+        <h3>{type === "AIRPORT" ? "Your taxi details are on the way." : "We are checking the details."}</h3>
+        <p>
+          {type === "AIRPORT"
+            ? "Your request is saved. Our team will WhatsApp you the photos and details of the taxi you chose — you do not need to send a message."
+            : "Your request is safely saved. Open WhatsApp to send the prepared details to our admin, then press Send in WhatsApp."}
+        </p>
         <strong>{success.bookingCode}</strong>
-        {success.whatsappUrl && (
+        {type !== "AIRPORT" && success.whatsappUrl && (
           <a className="button button--gold" href={success.whatsappUrl} target="_blank" rel="noreferrer">
             Open prepared WhatsApp message ↗
           </a>
@@ -242,7 +243,7 @@ export function BookingForm({
         <div className="booking-form__heading">
           <span>Step {step} of 2</span>
           <h3>{step === 1 ? (type === "BIKE" ? "When would you like to ride?" : type === "TOUR" ? "Tell us about your trip" : "Share your ride details") : "Where should we reply?"}</h3>
-          <p>{step === 1 ? (type === "AIRPORT" ? "Choose a vehicle that fits your group — budget, standard or luxury." : "Only the essentials — you can fine-tune everything with our local team.") : "We use these details only to answer this request."}</p>
+          <p>{step === 1 ? (type === "AIRPORT" ? "Pick a car, van or bus — we will send the matching taxi photos on WhatsApp." : "Only the essentials — you can fine-tune everything with our local team.") : "We use these details only to answer this request."}</p>
         </div>
 
         <fieldset data-booking-step="details" className={step === 1 ? "booking-form__step is-active" : "booking-form__step"}>
@@ -268,7 +269,7 @@ export function BookingForm({
             </>
           )}
         </div>
-        <p className="form-footnote">No payment or card details needed.</p>
+        <p className="form-footnote">{type === "AIRPORT" ? "No payment now. We WhatsApp the taxi photos after you request." : "No payment or card details needed."}</p>
       </form>
     );
   }
@@ -282,7 +283,11 @@ export function BookingForm({
       <button className="button button--gold button--wide" disabled={submitting} aria-busy={submitting}>
         {submitting ? "Sending request..." : type === "AIRPORT" ? "Request airport transfer" : type === "BIKE" ? "Request this bike" : "Request this tour"}
       </button>
-      <p className="form-footnote">No online payment required. Our local team confirms availability and the final price by WhatsApp or email.</p>
+      <p className="form-footnote">
+        {type === "AIRPORT"
+          ? "No payment now. After you request, we WhatsApp the photos of your car, van or bus and confirm the fare."
+          : "No online payment required. Our local team confirms availability and the final price by WhatsApp or email."}
+      </p>
     </form>
   );
 }

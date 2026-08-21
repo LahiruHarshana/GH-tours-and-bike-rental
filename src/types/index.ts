@@ -28,6 +28,23 @@ export type AirportVehicleDTO = {
   sortOrder: number;
 };
 
+export type AirportTaxiType = {
+  id: "car" | "van" | "bus";
+  vehicleClass: VehicleClass;
+  emoji: string;
+  label: string;
+  minPassengers: number;
+  maxPassengers: number;
+  luggagePieces: number;
+  priceFromUSD: number;
+  routePrices: VehicleRoutePrice[];
+  image: string;
+  photos: string[];
+  shortDescription: string;
+  features: string[];
+  capacity: string;
+};
+
 export type BookingStatus =
   | "PENDING"
   | "CONFIRMED"

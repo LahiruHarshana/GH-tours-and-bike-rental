@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import type { AirportVehicleDTO } from "@/types";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import {
-  formatVehicleChoice,
-  groupVehiclesByClass,
+  AIRPORT_TAXI_TYPES,
+  formatAirportTaxiChoice,
   matchRoutePrice,
-  quotedPriceForVehicle,
-  resolveInitialVehicle,
-  vehiclesForGuests,
-  VEHICLE_TIER_LABELS,
+  quotedPriceForTaxi,
+  resolveInitialTaxi,
+  suggestAirportTaxiType,
+  taxiFitsGuests,
 } from "@/lib/airport-vehicles";
 import { formatUSD } from "@/lib/utils";
 
@@ -18,122 +18,103 @@ export function AirportVehiclePicker({
   destination,
   initialVehicleType,
   initialVehicleId,
-  vehicles: providedVehicles,
   compact = false,
 }: {
   guests: number;
   destination?: string;
   initialVehicleType?: string;
   initialVehicleId?: string;
-  vehicles?: AirportVehicleDTO[];
   compact?: boolean;
 }) {
-  const [vehicles, setVehicles] = useState<AirportVehicleDTO[]>(providedVehicles ?? []);
-  const [selectedId, setSelectedId] = useState(initialVehicleId ?? "");
-  const [loading, setLoading] = useState(!providedVehicles);
-
-  useEffect(() => {
-    if (providedVehicles) {
-      setVehicles(providedVehicles);
-      setLoading(false);
-      return;
-    }
-    let active = true;
-    fetch("/api/vehicles")
-      .then((response) => response.json())
-      .then((result) => {
-        if (!active) return;
-        setVehicles((result.data as AirportVehicleDTO[]) ?? []);
-      })
-      .catch(() => {
-        if (active) setVehicles([]);
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-    return () => {
-      active = false;
-    };
-  }, [providedVehicles]);
-
-  const matching = useMemo(() => vehiclesForGuests(vehicles, guests || 1), [vehicles, guests]);
-  const groups = useMemo(() => groupVehiclesByClass(matching), [matching]);
+  const partySize = guests || 1;
+  const [selectedId, setSelectedId] = useState(
+    () => resolveInitialTaxi(partySize, initialVehicleType, initialVehicleId).id,
+  );
 
   useEffect(() => {
     setSelectedId((current) => {
-      const resolved = resolveInitialVehicle(vehicles, guests || 1, initialVehicleType, current || initialVehicleId);
-      return resolved?.id ?? "";
+      const currentTaxi = AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === current);
+      if (currentTaxi && taxiFitsGuests(currentTaxi, partySize)) return current;
+      return resolveInitialTaxi(partySize, initialVehicleType, initialVehicleId).id;
     });
-  }, [vehicles, guests, initialVehicleType, initialVehicleId]);
+  }, [partySize, initialVehicleType, initialVehicleId]);
 
-  const selected = matching.find((vehicle) => vehicle.id === selectedId);
+  const selected = AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === selectedId);
+  const suggested = suggestAirportTaxiType(partySize);
 
   return (
-    <div className={`vehicle-picker ${compact ? "vehicle-picker--compact" : ""}`}>
+    <div className={`vehicle-picker vehicle-picker--taxi ${compact ? "vehicle-picker--compact" : ""}`}>
       <div className="vehicle-picker__head">
         <div>
           <span>Choose a vehicle</span>
-          <strong>Options that fit {guests || 1} {guests === 1 ? "traveller" : "travellers"}</strong>
+          <strong>Car, van or bus — tap the one that fits your group</strong>
         </div>
-        <p>Budget, standard and luxury for each class. The fare updates if your destination matches a listed route.</p>
+        <p>
+          {compact
+            ? "We will WhatsApp the photos and details of the taxi you pick."
+            : "These are the same taxis shown below. We will send the photos and details on WhatsApp after you request."}
+        </p>
       </div>
 
-      {loading && <p className="vehicle-picker__status">Loading vehicles…</p>}
+      <div className="vehicle-picker__grid" role="radiogroup" aria-label="Airport taxi type">
+        {AIRPORT_TAXI_TYPES.map((taxi) => {
+          const fits = taxiFitsGuests(taxi, partySize);
+          const tooSmall = partySize > taxi.maxPassengers && taxi.id !== "bus";
+          const checked = selectedId === taxi.id;
+          const route = matchRoutePrice(taxi, destination);
+          const price = quotedPriceForTaxi(taxi, destination);
 
-      {!loading && matching.length === 0 && (
-        <p className="vehicle-picker__status">
-          No listed vehicle fits this group size. Continue with your details and we will arrange a suitable option.
-        </p>
-      )}
-
-      {groups.map((group) => (
-        <section className="vehicle-picker__group" key={group.vehicleClass}>
-          <header>
-            <h4>{group.label}</h4>
-            <small>{group.capacity}</small>
-          </header>
-          <div className="vehicle-picker__grid" role="radiogroup" aria-label={`${group.label} options`}>
-            {group.vehicles.map((vehicle) => {
-              const route = matchRoutePrice(vehicle, destination);
-              const price = quotedPriceForVehicle(vehicle, destination);
-              const checked = selectedId === vehicle.id;
-              return (
-                <label
-                  key={vehicle.id}
-                  className={`vehicle-option vehicle-option--${vehicle.tier.toLowerCase()} ${checked ? "is-selected" : ""}`}
-                >
-                  <input
-                    type="radio"
-                    name="vehicleId"
-                    value={vehicle.id}
-                    checked={checked}
-                    required={matching.length > 0}
-                    onChange={() => setSelectedId(vehicle.id)}
-                  />
-                  <span className="vehicle-option__tier">{VEHICLE_TIER_LABELS[vehicle.tier]}</span>
-                  {vehicle.recommended && <span className="vehicle-option__badge">Best value</span>}
-                  <strong>{vehicle.name}</strong>
-                  <p>{vehicle.shortDescription}</p>
-                  <ul>
-                    <li>{vehicle.minPassengers}–{vehicle.maxPassengers} people</li>
-                    <li>{vehicle.luggagePieces} bags</li>
-                    {vehicle.features.slice(0, 2).map((feature) => <li key={feature}>{feature}</li>)}
-                  </ul>
-                  <div className="vehicle-option__price">
-                    <b>{formatUSD(price)}</b>
-                    <small>{route ? `CMB → ${route.destination}` : "from this fare"}</small>
-                  </div>
-                </label>
-              );
-            })}
-          </div>
-        </section>
-      ))}
+          return (
+            <label
+              key={taxi.id}
+              className={`vehicle-option vehicle-option--taxi ${checked ? "is-selected" : ""} ${!fits ? "is-disabled" : ""}`}
+            >
+              <input
+                type="radio"
+                name="vehicleId"
+                value={taxi.id}
+                checked={checked}
+                required
+                disabled={!fits}
+                onChange={() => setSelectedId(taxi.id)}
+              />
+              <span className="vehicle-option__visual">
+                <Image
+                  src={taxi.image}
+                  alt={`${taxi.label} airport taxi`}
+                  fill
+                  sizes="(max-width: 800px) 100vw, 33vw"
+                  style={{ objectFit: "cover" }}
+                  unoptimized
+                />
+              </span>
+              <span className="vehicle-option__emoji" aria-hidden="true">{taxi.emoji}</span>
+              {suggested.id === taxi.id && fits && <span className="vehicle-option__badge">Fits this group</span>}
+              <strong>{taxi.label}</strong>
+              <p>{taxi.shortDescription}</p>
+              <ul>
+                <li>{taxi.capacity}</li>
+                <li>{taxi.luggagePieces} bags</li>
+              </ul>
+              {tooSmall && <small className="vehicle-option__hint">Too small for {partySize} travellers</small>}
+              {!tooSmall && taxi.id === "bus" && partySize < taxi.minPassengers && (
+                <small className="vehicle-option__hint">Larger than this group needs</small>
+              )}
+              {fits && (
+                <div className="vehicle-option__price">
+                  <b>{formatUSD(price)}</b>
+                  <small>{route ? `CMB → ${route.destination}` : "from this fare"}</small>
+                </div>
+              )}
+            </label>
+          );
+        })}
+      </div>
 
       {selected && (
         <>
-          <input type="hidden" name="vehicleType" value={formatVehicleChoice(selected)} />
-          <input type="hidden" name="estimatedAmountUSD" value={quotedPriceForVehicle(selected, destination)} />
+          <input type="hidden" name="vehicleType" value={formatAirportTaxiChoice(selected)} />
+          <input type="hidden" name="estimatedAmountUSD" value={quotedPriceForTaxi(selected, destination)} />
         </>
       )}
     </div>
