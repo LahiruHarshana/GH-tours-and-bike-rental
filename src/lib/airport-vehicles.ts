@@ -97,6 +97,7 @@ export const AIRPORT_TAXI_TYPES: AirportTaxiType[] = [
     shortDescription: "A more comfortable private sedan after a long flight.",
     features: ["Premium interior", "Bottled water", "Name board pickup", "3 bags"],
     capacity: "1–3 travellers",
+    marketingBadge: "Premium comfort",
   },
   {
     id: "van",

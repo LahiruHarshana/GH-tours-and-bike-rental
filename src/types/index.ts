@@ -41,6 +41,7 @@ export type AirportTaxiType = {
   shortDescription: string;
   features: string[];
   capacity: string;
+  marketingBadge?: string;
 };
 
 export type AirportDestination = {

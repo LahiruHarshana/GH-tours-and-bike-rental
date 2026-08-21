@@ -123,11 +123,16 @@
 }
 
 .vehicle-option__badge,
+.vehicle-gallery__badge,
 .vehicle-gallery__card em {
   position: absolute;
   z-index: 2;
   top: .85rem;
   right: .85rem;
+  left: .85rem;
+  width: fit-content;
+  max-width: calc(100% - 1.7rem);
+  margin-inline: auto;
   padding: .22rem .5rem;
   border-radius: 999px;
   background: var(--sun-100);
@@ -137,6 +142,12 @@
   font-weight: 800;
   letter-spacing: .04em;
   text-transform: uppercase;
+}
+
+.vehicle-option__badge--premium,
+.vehicle-gallery__badge--premium {
+  background: rgb(255 243 220);
+  color: #8a4d00;
 }
 
 .vehicle-option--budget {

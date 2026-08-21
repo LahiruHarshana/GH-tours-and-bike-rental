@@ -7,6 +7,7 @@ export function AirportVehicleGallery() {
     <div className="vehicle-gallery vehicle-gallery--taxi">
       {AIRPORT_TAXI_TYPES.map((taxi) => (
         <article className="vehicle-gallery__card vehicle-gallery__card--icon" id={`taxi-${taxi.id}`} key={taxi.id}>
+          {taxi.marketingBadge && <em className="vehicle-gallery__badge vehicle-gallery__badge--premium">{taxi.marketingBadge}</em>}
           <span className="vehicle-gallery__icon" aria-hidden="true">
             <AirportTaxiIcon id={taxi.id} />
           </span>
