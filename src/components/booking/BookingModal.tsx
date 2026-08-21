@@ -99,7 +99,7 @@ export function BookingModal({
     <div className="modal-backdrop" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
       <div
         ref={modalRef}
-        className="booking-modal"
+        className={`booking-modal${type === "AIRPORT" ? " booking-modal--airport" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}

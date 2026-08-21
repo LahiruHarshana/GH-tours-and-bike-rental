@@ -199,6 +199,30 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.booking-modal .vehicle-picker--taxi .vehicle-picker__grid {
+  grid-template-columns: 1fr;
+}
+
+.booking-modal .vehicle-option--taxi {
+  padding-bottom: 1rem;
+  text-align: left;
+}
+
+.booking-modal .vehicle-option--taxi strong {
+  padding-right: 0;
+}
+
+.booking-modal .vehicle-option--taxi p,
+.booking-modal .vehicle-option--taxi ul,
+.booking-modal .vehicle-option--taxi .vehicle-option__price,
+.booking-modal .vehicle-option--taxi .vehicle-option__hint {
+  padding-inline: .85rem;
+}
+
+.booking-modal .vehicle-option--taxi ul {
+  justify-content: flex-start;
+}
+
 .vehicle-option--taxi {
   overflow: hidden;
   padding: 0 0 1rem;

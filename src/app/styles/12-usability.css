@@ -123,7 +123,9 @@
   display: grid;
   width: min(64rem, 100%);
   grid-template-columns: minmax(17rem, .8fr) minmax(0, 1.2fr);
-  max-height: min(52rem, calc(100dvh - 2rem));
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+  max-height: calc(100dvh - 2rem);
   padding: 0;
   overflow: hidden;
 }
@@ -132,6 +134,9 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: clamp(2rem, 4vw, 3.25rem);
 }
 
@@ -203,15 +208,18 @@
 
 .booking-modal__form-panel {
   min-width: 0;
+  min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
   background: var(--color-paper, #f7f4ec);
 }
 
 .booking-form--compact {
-  min-height: 100%;
+  min-height: auto;
   align-content: start;
-  padding: clamp(4.5rem, 7vw, 5.5rem) clamp(1.25rem, 4vw, 3.25rem) 2rem;
+  padding: clamp(4.5rem, 7vw, 5.5rem) clamp(1.25rem, 4vw, 3.25rem) 2.5rem;
 }
 
 .booking-progress {
@@ -400,11 +408,20 @@
   font-weight: 700;
 }
 
+.booking-modal--airport {
+  width: min(68rem, 100%);
+}
+
+.booking-modal--airport .booking-modal__form-panel {
+  scroll-padding-bottom: 1.5rem;
+}
+
 @media (max-width: 760px) {
   .booking-modal {
-    display: block;
+    display: flex;
+    flex-direction: column;
     max-height: calc(100dvh - 1rem);
-    overflow-y: auto;
+    overflow: hidden;
   }
 
   .modal-backdrop {
@@ -412,6 +429,9 @@
   }
 
   .booking-modal__summary {
+    flex: 0 0 auto;
+    max-height: none;
+    overflow: visible;
     padding: 1.5rem;
   }
 
@@ -424,8 +444,14 @@
     display: none;
   }
 
+  .booking-modal__form-panel {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
   .booking-form--compact {
     padding-top: 3.5rem;
+    padding-bottom: 2rem;
   }
 
   .booking-progress span b {
