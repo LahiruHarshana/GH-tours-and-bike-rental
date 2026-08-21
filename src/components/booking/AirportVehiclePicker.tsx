@@ -79,7 +79,7 @@ export function AirportVehiclePicker({
                 disabled={!fits}
                 onChange={() => setSelectedId(taxi.id)}
               />
-              <span className="vehicle-option__icon" aria-hidden="true">
+              <span className={`vehicle-option__icon vehicle-option__icon--${taxi.id}`} aria-hidden="true">
                 <AirportTaxiIcon id={taxi.id} />
               </span>
               {suggested.id === taxi.id && fits && <span className="vehicle-option__badge">Fits this group</span>}

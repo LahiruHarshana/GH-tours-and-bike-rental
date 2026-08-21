@@ -241,22 +241,50 @@
 
 .vehicle-option__icon {
   display: grid;
-  width: 3.4rem;
-  height: 3.4rem;
+  width: 100%;
+  min-height: 4.75rem;
   place-items: center;
+  margin-bottom: .15rem;
+  padding: .55rem .65rem;
   border-radius: 1rem;
-  background: rgb(232 241 234 / .85);
+  background: linear-gradient(180deg, rgb(244 247 245 / .95), rgb(232 241 234 / .9));
   color: var(--color-moss, #356b56);
 }
 
 .vehicle-option__icon svg {
-  width: 1.65rem;
-  height: 1.65rem;
+  width: min(100%, 5.5rem);
+  height: auto;
+}
+
+.vehicle-option__icon--budget-car {
+  color: #3f6f5d;
+}
+
+.vehicle-option__icon--premium-car {
+  color: #264a58;
+  background: linear-gradient(180deg, rgb(244 246 248 / .98), rgb(228 235 240 / .92));
+}
+
+.vehicle-option__icon--van {
+  color: #4a5f48;
+  background: linear-gradient(180deg, rgb(246 247 244 / .98), rgb(236 240 232 / .92));
 }
 
 .vehicle-option--icon.is-selected .vehicle-option__icon {
-  background: var(--color-moss, #356b56);
-  color: #fff;
+  background: linear-gradient(180deg, rgb(255 255 255 / .98), rgb(246 248 247 / .96));
+  box-shadow: inset 0 0 0 1.5px rgb(53 107 86 / .18);
+}
+
+.vehicle-option--icon.is-selected .vehicle-option__icon--budget-car {
+  color: #2f6654;
+}
+
+.vehicle-option--icon.is-selected .vehicle-option__icon--premium-car {
+  color: #1f4656;
+}
+
+.vehicle-option--icon.is-selected .vehicle-option__icon--van {
+  color: #465c44;
 }
 
 .vehicle-option--icon p,
@@ -305,17 +333,18 @@
 
 .booking-vehicle-preview__icon {
   display: grid;
-  width: 3.4rem;
-  height: 3.4rem;
+  width: 5.5rem;
+  min-height: 3.75rem;
   place-items: center;
+  padding: .45rem .55rem;
   border-radius: 1rem;
-  background: rgb(232 241 234 / .85);
+  background: linear-gradient(180deg, rgb(244 247 245 / .95), rgb(232 241 234 / .9));
   color: var(--color-moss, #356b56);
 }
 
 .booking-vehicle-preview__icon svg {
-  width: 1.65rem;
-  height: 1.65rem;
+  width: 4.5rem;
+  height: auto;
 }
 
 .booking-vehicle-preview strong,
@@ -346,18 +375,19 @@
 
 .vehicle-gallery__icon {
   display: grid;
-  width: 3.6rem;
-  height: 3.6rem;
+  width: 100%;
+  min-height: 5rem;
   place-items: center;
   margin-bottom: .85rem;
+  padding: .65rem .75rem;
   border-radius: 1rem;
-  background: rgb(232 241 234 / .85);
+  background: linear-gradient(180deg, rgb(244 247 245 / .95), rgb(232 241 234 / .9));
   color: var(--color-moss, #356b56);
 }
 
 .vehicle-gallery__icon svg {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: min(100%, 5.75rem);
+  height: auto;
 }
 
 .vehicle-gallery__card--icon strong,
@@ -369,17 +399,20 @@
 
 .airport-fare-table__icon {
   display: inline-grid;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2.75rem;
+  min-height: 1.85rem;
   place-items: center;
-  margin-right: .35rem;
+  margin-right: .45rem;
+  padding: .15rem .25rem;
   vertical-align: middle;
+  border-radius: .55rem;
+  background: rgb(232 241 234 / .85);
   color: var(--color-moss, #356b56);
 }
 
 .airport-fare-table__icon svg {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 2.35rem;
+  height: auto;
 }
 
 .airport-fare-table thead th {
