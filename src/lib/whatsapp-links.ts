@@ -21,17 +21,19 @@ function airportTaxiPageUrl(taxiId: string) {
   return `${siteConfig.url.replace(/\/$/, "")}/airport-hire#taxi-${taxiId}`;
 }
 
-export function buildAirportTaxiWhatsAppDetails(booking: Pick<BookingDTO, "vehicleType" | "vehicleId">) {
+export function buildAirportTaxiWhatsAppDetails(booking: Pick<BookingDTO, "vehicleType" | "vehicleId" | "dropoffLocation" | "pickupLocation" | "estimatedAmountUSD">) {
   const taxi = resolveAirportTaxiType(booking.vehicleType, booking.vehicleId);
   if (!taxi) return [];
 
   const extraPhotos = taxi.photos.filter((photo) => photo !== taxi.image);
+  const fare = booking.estimatedAmountUSD;
   return [
     `Your taxi: ${formatAirportTaxiChoice(taxi)}`,
     taxi.shortDescription,
     `Seats: ${taxi.capacity}`,
     `Luggage: ${taxi.luggagePieces} bags`,
     `Includes: ${taxi.features.join(", ")}`,
+    fare !== undefined ? `Quoted fare: LKR ${fare.toLocaleString("en-LK")}` : undefined,
     "",
     "See the vehicle:",
     taxi.image,
@@ -81,7 +83,9 @@ export function buildAdminRequestMessage(
     booking.flightNumber ? `Flight: ${booking.flightNumber}` : "",
     booking.arrivalTime ? `Time: ${booking.arrivalTime}` : "",
     booking.vehicleType ? `Vehicle: ${booking.vehicleType}` : "",
-    booking.estimatedAmountUSD !== undefined ? `Quoted fare: USD ${booking.estimatedAmountUSD}` : "",
+    booking.estimatedAmountUSD !== undefined
+      ? `Quoted fare: ${booking.type === "AIRPORT" ? "LKR" : "USD"} ${booking.estimatedAmountUSD.toLocaleString(booking.type === "AIRPORT" ? "en-LK" : "en-US")}`
+      : "",
     booking.notes ? `Notes: ${booking.notes}` : "",
     "",
     "Please confirm availability and the next steps. Thank you.",

@@ -3,8 +3,7 @@
 import { FormEvent, useState } from "react";
 import { BookingModal } from "@/components/booking/BookingModal";
 import type { BookingInitialValues } from "@/components/booking/BookingForm";
-
-const AIRPORT = "Bandaranaike International Airport (CMB)";
+import { AIRPORT_DESTINATIONS, CMB_AIRPORT, suggestAirportTaxiType } from "@/lib/airport-vehicles";
 
 function localToday() {
   const now = new Date();
@@ -25,14 +24,15 @@ export function AirportQuickBook() {
     const form = new FormData(event.currentTarget);
     const selectedDestination = String(form.get("destination") ?? destination);
     const selectedDate = String(form.get("travelDate") ?? travelDate);
-    const selectedGuests = Number(form.get("guests") ?? guests) || 2;
+    const selectedGuests = Math.min(7, Number(form.get("guests") ?? guests) || 2);
+    const taxi = suggestAirportTaxiType(selectedGuests);
     setRequest({
       travelDate: selectedDate,
       guests: selectedGuests,
-      pickupLocation: direction === "ARRIVAL" ? AIRPORT : selectedDestination,
-      dropoffLocation: direction === "ARRIVAL" ? selectedDestination : AIRPORT,
-      vehicleId: selectedGuests >= 8 ? "bus" : selectedGuests >= 4 ? "van" : "car",
-      vehicleType: selectedGuests >= 8 ? "🚌 Bus" : selectedGuests >= 4 ? "🚐 Van" : "🚗 Car",
+      pickupLocation: direction === "ARRIVAL" ? CMB_AIRPORT : selectedDestination,
+      dropoffLocation: direction === "ARRIVAL" ? selectedDestination : CMB_AIRPORT,
+      vehicleId: taxi.id,
+      vehicleType: `${taxi.emoji} ${taxi.label}`,
     });
     setOpen(true);
   }
@@ -58,14 +58,19 @@ export function AirportQuickBook() {
           </div>
           <label>
             <span>{direction === "ARRIVAL" ? "Where are you going?" : "Where should we collect you?"}</span>
-            <input
+            <select
               name="destination"
               value={destination}
               onChange={(event) => setDestination(event.target.value)}
               required
-              autoComplete="street-address"
-              placeholder={direction === "ARRIVAL" ? "Hotel, villa or town" : "Hotel or pickup address"}
-            />
+            >
+              <option value="">Choose a town</option>
+              {AIRPORT_DESTINATIONS.map((place) => (
+                <option key={place.id} value={place.name}>
+                  {place.name}
+                </option>
+              ))}
+            </select>
           </label>
           <label>
             <span>{direction === "ARRIVAL" ? "Arrival date" : "Pickup date"}</span>
@@ -73,13 +78,13 @@ export function AirportQuickBook() {
           </label>
           <label>
             <span>Travellers</span>
-            <input name="guests" type="number" min="1" max="30" value={guests} onChange={(event) => setGuests(Number(event.target.value) || 1)} required />
+            <input name="guests" type="number" min="1" max="7" value={guests} onChange={(event) => setGuests(Number(event.target.value) || 1)} required />
           </label>
           <button className="airport-quick-book__submit" type="submit">
             <span>Continue booking</span><b aria-hidden="true">→</b>
           </button>
         </div>
-        <p><span>✓ Flight delay monitoring</span><span>✓ Fixed quote before travel</span><span>✓ No payment now</span></p>
+        <p><span>✓ Listed fares in rupees</span><span>✓ Budget or premium car</span><span>✓ Van for groups</span></p>
       </form>
 
       <BookingModal

@@ -6,6 +6,10 @@ export function formatUSD(value: number) {
   }).format(value);
 }
 
+export function formatLKR(value: number) {
+  return `LKR ${new Intl.NumberFormat("en-LK", { maximumFractionDigits: 0 }).format(value)}`;
+}
+
 export function formatDate(value: string | Date) {
   return new Intl.DateTimeFormat("en-GB", {
     day: "2-digit",

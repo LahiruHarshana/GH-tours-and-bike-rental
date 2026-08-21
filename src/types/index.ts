@@ -28,21 +28,31 @@ export type AirportVehicleDTO = {
   sortOrder: number;
 };
 
+export type AirportTaxiId = "budget-car" | "premium-car" | "van";
+
 export type AirportTaxiType = {
-  id: "car" | "van" | "bus";
-  vehicleClass: VehicleClass;
+  id: AirportTaxiId;
+  vehicleClass: Extract<VehicleClass, "CAR" | "VAN">;
   emoji: string;
   label: string;
   minPassengers: number;
   maxPassengers: number;
   luggagePieces: number;
-  priceFromUSD: number;
-  routePrices: VehicleRoutePrice[];
+  priceFromLKR: number;
   image: string;
   photos: string[];
   shortDescription: string;
   features: string[];
   capacity: string;
+};
+
+export type AirportDestination = {
+  id: string;
+  name: string;
+  region: string;
+  duration: string;
+  covers?: string[];
+  fares: Record<AirportTaxiId, number>;
 };
 
 export type BookingStatus =

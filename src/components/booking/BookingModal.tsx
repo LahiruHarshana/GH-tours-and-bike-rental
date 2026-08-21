@@ -18,8 +18,8 @@ const modalCopy: Record<BookingType, { label: string; description: string; benef
   },
   AIRPORT: {
     label: "Airport transfer request",
-    description: "Choose a car, van or bus, then send your arrival details. We WhatsApp the taxi photos and confirm the meeting point and fare.",
-    benefits: ["Flight-aware pickup", "Car, van or bus", "Taxi photos on WhatsApp"],
+    description: "Choose your town, then a budget car, premium car or van. The listed fare is in rupees.",
+    benefits: ["Listed town fares", "Budget or premium car", "Van for families"],
   },
 };
 

@@ -5,13 +5,13 @@ import Image from "next/image";
 import {
   AIRPORT_TAXI_TYPES,
   formatAirportTaxiChoice,
-  matchRoutePrice,
+  matchAirportDestination,
   quotedPriceForTaxi,
   resolveInitialTaxi,
   suggestAirportTaxiType,
   taxiFitsGuests,
 } from "@/lib/airport-vehicles";
-import { formatUSD } from "@/lib/utils";
+import { formatLKR } from "@/lib/utils";
 
 export function AirportVehiclePicker({
   guests,
@@ -41,28 +41,29 @@ export function AirportVehiclePicker({
 
   const selected = AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === selectedId);
   const suggested = suggestAirportTaxiType(partySize);
+  const place = matchAirportDestination(destination);
+  const selectedFare = selected ? quotedPriceForTaxi(selected, destination) : undefined;
 
   return (
     <div className={`vehicle-picker vehicle-picker--taxi ${compact ? "vehicle-picker--compact" : ""}`}>
       <div className="vehicle-picker__head">
         <div>
           <span>Choose a vehicle</span>
-          <strong>Car, van or bus — tap the one that fits your group</strong>
+          <strong>Budget car, premium car or van</strong>
         </div>
         <p>
-          {compact
-            ? "We will WhatsApp the photos and details of the taxi you pick."
-            : "These are the same taxis shown below. We will send the photos and details on WhatsApp after you request."}
+          {place
+            ? `CMB → ${place.name} · about ${place.duration}. Budget and premium apply to cars only.`
+            : "Select your town first to see the exact fare. Budget and premium apply to cars only."}
         </p>
       </div>
 
       <div className="vehicle-picker__grid" role="radiogroup" aria-label="Airport taxi type">
         {AIRPORT_TAXI_TYPES.map((taxi) => {
           const fits = taxiFitsGuests(taxi, partySize);
-          const tooSmall = partySize > taxi.maxPassengers && taxi.id !== "bus";
+          const tooSmall = partySize > taxi.maxPassengers;
           const checked = selectedId === taxi.id;
-          const route = matchRoutePrice(taxi, destination);
-          const price = quotedPriceForTaxi(taxi, destination);
+          const fare = quotedPriceForTaxi(taxi, destination);
 
           return (
             <label
@@ -97,13 +98,10 @@ export function AirportVehiclePicker({
                 <li>{taxi.luggagePieces} bags</li>
               </ul>
               {tooSmall && <small className="vehicle-option__hint">Too small for {partySize} travellers</small>}
-              {!tooSmall && taxi.id === "bus" && partySize < taxi.minPassengers && (
-                <small className="vehicle-option__hint">Larger than this group needs</small>
-              )}
               {fits && (
                 <div className="vehicle-option__price">
-                  <b>{formatUSD(price)}</b>
-                  <small>{route ? `CMB → ${route.destination}` : "from this fare"}</small>
+                  <b>{fare !== undefined ? formatLKR(fare) : `From ${formatLKR(taxi.priceFromLKR)}`}</b>
+                  <small>{place ? `CMB → ${place.name}` : "choose a town to lock the fare"}</small>
                 </div>
               )}
             </label>
@@ -111,10 +109,20 @@ export function AirportVehiclePicker({
         })}
       </div>
 
+      {selected && selectedFare !== undefined && place && (
+        <p className="vehicle-picker__quote" role="status">
+          {formatAirportTaxiChoice(selected)} to {place.name}: <strong>{formatLKR(selectedFare)}</strong>
+        </p>
+      )}
+
+      {partySize > 7 && (
+        <p className="vehicle-picker__status">Groups larger than 7 should add a note — we will arrange a suitable vehicle and confirm the fare on WhatsApp.</p>
+      )}
+
       {selected && (
         <>
           <input type="hidden" name="vehicleType" value={formatAirportTaxiChoice(selected)} />
-          <input type="hidden" name="estimatedAmountUSD" value={quotedPriceForTaxi(selected, destination)} />
+          {selectedFare !== undefined && <input type="hidden" name="estimatedAmountUSD" value={selectedFare} />}
         </>
       )}
     </div>

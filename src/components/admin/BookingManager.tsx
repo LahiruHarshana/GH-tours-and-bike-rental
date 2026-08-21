@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { BookingDTO, BookingStatus, PaymentStatus } from "@/types";
-import { formatDate, formatUSD } from "@/lib/utils";
+import { formatDate, formatLKR, formatUSD } from "@/lib/utils";
 import { buildCustomerReplyMessage, buildWhatsAppUrl } from "@/lib/whatsapp-links";
 import { formatAirportTaxiChoice, resolveAirportTaxiType } from "@/lib/airport-vehicles";
 
@@ -159,7 +159,12 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
               {selected.flightNumber && <p><span>Flight</span>{selected.flightNumber}</p>}
               {selected.arrivalTime && <p><span>Time</span>{selected.arrivalTime}</p>}
               {selected.vehicleType && <p><span>Vehicle</span>{selected.vehicleType}</p>}
-              {selected.estimatedAmountUSD !== undefined && <p><span>Quoted fare</span>{formatUSD(selected.estimatedAmountUSD)}</p>}
+              {selected.estimatedAmountUSD !== undefined && (
+                <p>
+                  <span>Quoted fare</span>
+                  {selected.type === "AIRPORT" ? formatLKR(selected.estimatedAmountUSD) : formatUSD(selected.estimatedAmountUSD)}
+                </p>
+              )}
               {selectedTaxi && (
                 <div className="booking-vehicle-preview">
                   <img src={selectedTaxi.image} alt={formatAirportTaxiChoice(selectedTaxi)} />

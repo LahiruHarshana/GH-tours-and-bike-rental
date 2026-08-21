@@ -1,4 +1,14 @@
-import type { AirportTaxiType, AirportVehicleDTO, VehicleClass, VehicleRoutePrice, VehicleTier } from "@/types";
+import type {
+  AirportDestination,
+  AirportTaxiId,
+  AirportTaxiType,
+  AirportVehicleDTO,
+  VehicleClass,
+  VehicleRoutePrice,
+  VehicleTier,
+} from "@/types";
+
+export const CMB_AIRPORT = "Bandaranaike International Airport (CMB)";
 
 export const VEHICLE_CLASS_LABELS: Record<VehicleClass, string> = {
   CAR: "Car",
@@ -21,50 +31,84 @@ export const VEHICLE_TIER_LABELS: Record<VehicleTier, string> = {
 const CLASS_ORDER: VehicleClass[] = ["CAR", "VAN", "MINIBUS"];
 const TIER_ORDER: VehicleTier[] = ["BUDGET", "STANDARD", "LUXURY"];
 
-const CMB_ROUTES = {
-  CAR: [
-    { destination: "Weligama", duration: "2.5–3 hrs", priceUSD: 65 },
-    { destination: "Galle", duration: "2–2.5 hrs", priceUSD: 62 },
-    { destination: "Kandy", duration: "3–4 hrs", priceUSD: 80 },
-    { destination: "Ella", duration: "5–6 hrs", priceUSD: 125 },
-    { destination: "Colombo", duration: "45–70 min", priceUSD: 35 },
-  ],
-  VAN: [
-    { destination: "Weligama", duration: "2.5–3 hrs", priceUSD: 90 },
-    { destination: "Galle", duration: "2–2.5 hrs", priceUSD: 85 },
-    { destination: "Kandy", duration: "3–4 hrs", priceUSD: 110 },
-    { destination: "Ella", duration: "5–6 hrs", priceUSD: 155 },
-    { destination: "Colombo", duration: "45–70 min", priceUSD: 48 },
-  ],
-  MINIBUS: [
-    { destination: "Weligama", duration: "2.5–3 hrs", priceUSD: 140 },
-    { destination: "Galle", duration: "2–2.5 hrs", priceUSD: 135 },
-    { destination: "Kandy", duration: "3–4 hrs", priceUSD: 170 },
-    { destination: "Ella", duration: "5–6 hrs", priceUSD: 230 },
-    { destination: "Colombo", duration: "45–70 min", priceUSD: 80 },
-  ],
-} satisfies Record<VehicleClass, VehicleRoutePrice[]>;
+function destination(
+  id: string,
+  name: string,
+  region: string,
+  duration: string,
+  budgetCar: number,
+  premiumCar: number,
+  van: number,
+  covers?: string[],
+): AirportDestination {
+  return {
+    id,
+    name,
+    region,
+    duration,
+    covers,
+    fares: {
+      "budget-car": budgetCar,
+      "premium-car": premiumCar,
+      van,
+    },
+  };
+}
+
+export const AIRPORT_DESTINATIONS: AirportDestination[] = [
+  destination("bentota", "Bentota", "West coast", "1.5–2 hrs", 12000, 14000, 20000, ["Aluthgama", "Beruwala"]),
+  destination("hikkaduwa", "Hikkaduwa", "South coast", "2–2.5 hrs", 14000, 16000, 25000, ["Dodanduwa"]),
+  destination("galle", "Galle", "South coast", "2–2.5 hrs", 14000, 16000, 25000, ["Unawatuna"]),
+  destination("unawatuna", "Unawatuna", "South coast", "2–2.5 hrs", 14000, 16000, 25000),
+  destination("weligama", "Weligama", "South coast", "2.5–3 hrs", 16000, 18000, 27000, ["Midigama"]),
+  destination("mirissa", "Mirissa", "South coast", "2.5–3 hrs", 16000, 18000, 27000),
+  destination("ahangama", "Ahangama", "South coast", "2.5–3 hrs", 16000, 18000, 27000),
+  destination("hiriketiya", "Hiriketiya", "South coast", "3–3.5 hrs", 20000, 22000, 30000, ["Dikwella", "Tangalle"]),
+  destination("kandy", "Kandy", "Hill country", "3–4 hrs", 20000, 22000, 30000),
+  destination("sigiriya", "Sigiriya", "Cultural triangle", "3.5–4.5 hrs", 16000, 18000, 27000),
+  destination("dambulla", "Dambulla", "Cultural triangle", "3.5–4 hrs", 16000, 18000, 27000),
+  destination("arugam-bay", "Arugam Bay", "East coast", "6–7 hrs", 30000, 35000, 50000, ["Pottuvil"]),
+];
+
+const lowestFare = (id: AirportTaxiId) =>
+  Math.min(...AIRPORT_DESTINATIONS.map((place) => place.fares[id]));
 
 export const AIRPORT_TAXI_TYPES: AirportTaxiType[] = [
   {
-    id: "car",
+    id: "budget-car",
     vehicleClass: "CAR",
     emoji: "🚗",
-    label: "Car",
+    label: "Budget car",
+    minPassengers: 1,
+    maxPassengers: 3,
+    luggagePieces: 2,
+    priceFromLKR: lowestFare("budget-car"),
+    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=80",
+    photos: [
+      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=1200&q=80",
+    ],
+    shortDescription: "A clean air-conditioned car for 1–3 travellers with light luggage.",
+    features: ["Air-conditioned", "Meet and greet", "Flight tracking", "2 bags"],
+    capacity: "1–3 travellers",
+  },
+  {
+    id: "premium-car",
+    vehicleClass: "CAR",
+    emoji: "🚙",
+    label: "Premium car",
     minPassengers: 1,
     maxPassengers: 3,
     luggagePieces: 3,
-    priceFromUSD: 50,
-    routePrices: CMB_ROUTES.CAR,
-    image: "https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=1200&q=80",
+    priceFromLKR: lowestFare("premium-car"),
+    image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&q=80",
     photos: [
-      "https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=1200&q=80",
     ],
-    shortDescription: "A private sedan for light luggage and small groups after a long flight.",
-    features: ["Air-conditioned", "Meet and greet", "Flight tracking", "3 bags"],
-    capacity: VEHICLE_CLASS_CAPACITY.CAR,
+    shortDescription: "A more comfortable private sedan after a long flight.",
+    features: ["Premium interior", "Bottled water", "Name board pickup", "3 bags"],
+    capacity: "1–3 travellers",
   },
   {
     id: "van",
@@ -74,37 +118,15 @@ export const AIRPORT_TAXI_TYPES: AirportTaxiType[] = [
     minPassengers: 1,
     maxPassengers: 7,
     luggagePieces: 7,
-    priceFromUSD: 75,
-    routePrices: CMB_ROUTES.VAN,
+    priceFromLKR: lowestFare("van"),
     image: "https://images.unsplash.com/photo-1464219782434-3473fb1918bc?auto=format&fit=crop&w=1200&q=80",
     photos: [
       "https://images.unsplash.com/photo-1464219782434-3473fb1918bc?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1527786356703-4b32d19c0903?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=1200&q=80",
     ],
-    shortDescription: "The usual family choice — private, comfortable and ready for south-coast luggage.",
+    shortDescription: "The family choice for extra seats, bags and surfboards.",
     features: ["High-roof van", "Child-seat on request", "Surfboard-friendly", "7 bags"],
-    capacity: VEHICLE_CLASS_CAPACITY.VAN,
-  },
-  {
-    id: "bus",
-    vehicleClass: "MINIBUS",
-    emoji: "🚌",
-    label: "Bus",
-    minPassengers: 8,
-    maxPassengers: 18,
-    luggagePieces: 16,
-    priceFromUSD: 110,
-    routePrices: CMB_ROUTES.MINIBUS,
-    image: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=1200&q=80",
-    photos: [
-      "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1544620341-11cb2cd07adc?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1570125909517-53cb21c89ff2?auto=format&fit=crop&w=1200&q=80",
-    ],
-    shortDescription: "A roomy group transfer for larger parties heading to the coast, hills or city.",
-    features: ["Up to 18 seats", "Meet and greet", "Flight tracking", "Generous luggage"],
-    capacity: VEHICLE_CLASS_CAPACITY.MINIBUS,
+    capacity: "1–7 travellers",
   },
 ];
 
@@ -150,36 +172,50 @@ export function quotedPriceForVehicle(vehicle: Pick<AirportVehicleDTO, "routePri
   return matchRoutePrice(vehicle, destination)?.priceUSD ?? vehicle.priceFromUSD;
 }
 
+function normalisedPlace(value: string) {
+  return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, " ");
+}
+
+export function matchAirportDestination(destination?: string) {
+  const query = normalisedPlace(destination ?? "");
+  if (!query) return undefined;
+
+  return AIRPORT_DESTINATIONS.find((place) => {
+    const names = [place.name, place.id.replace(/-/g, " "), ...(place.covers ?? [])].map(normalisedPlace);
+    return names.some((name) => query === name || query.includes(name) || name.includes(query));
+  });
+}
+
 export function quotedPriceForTaxi(taxi: AirportTaxiType, destination?: string) {
-  return matchRoutePrice(taxi, destination)?.priceUSD ?? taxi.priceFromUSD;
+  const place = matchAirportDestination(destination);
+  if (!place) return undefined;
+  return place.fares[taxi.id];
 }
 
 export function taxiFitsGuests(taxi: AirportTaxiType, guests: number) {
-  if (taxi.vehicleClass === "MINIBUS") return guests >= 1;
   return guests >= taxi.minPassengers && guests <= taxi.maxPassengers;
 }
 
 export function suggestAirportTaxiType(guests: number) {
-  if (guests >= 8) return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "bus") ?? AIRPORT_TAXI_TYPES[2];
-  if (guests >= 4) return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "van") ?? AIRPORT_TAXI_TYPES[1];
-  return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "car") ?? AIRPORT_TAXI_TYPES[0];
+  if (guests >= 4) return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "van") ?? AIRPORT_TAXI_TYPES[2];
+  return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "budget-car") ?? AIRPORT_TAXI_TYPES[0];
 }
 
 export function resolveAirportTaxiType(vehicleType?: string, vehicleId?: string) {
   const haystack = `${vehicleId ?? ""} ${vehicleType ?? ""}`.trim().toUpperCase();
   if (!haystack) return undefined;
 
-  const byId = AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === (vehicleId ?? "").toLowerCase() || taxi.vehicleClass === vehicleId);
+  const byId = AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === (vehicleId ?? "").toLowerCase());
   if (byId) return byId;
 
-  if (/\bMINIBUS\b|\bBUS\b|\bCOACH\b|🚌/.test(haystack)) {
-    return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "bus");
+  if (/\bPREMIUM\b|\bLUXURY\b|🚙/.test(haystack)) {
+    return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "premium-car");
   }
-  if (/\bVAN\b|🚐/.test(haystack)) {
+  if (/\bVAN\b|🚐|\bBUS\b|\bMINIBUS\b/.test(haystack)) {
     return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "van");
   }
-  if (/\bCAR\b|\bTAXI\b|\bSEDAN\b|🚗/.test(haystack)) {
-    return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "car");
+  if (/\bBUDGET\b|\bCAR\b|\bTAXI\b|\bSEDAN\b|🚗/.test(haystack)) {
+    return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "budget-car");
   }
   return undefined;
 }

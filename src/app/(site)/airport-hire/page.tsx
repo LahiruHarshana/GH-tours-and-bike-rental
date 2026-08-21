@@ -4,6 +4,7 @@ import { BookingForm } from "@/components/booking/BookingForm";
 import { Reveal } from "@/components/public/motion/Reveal";
 import { ServiceBar } from "@/components/public/navigation/ServiceBar";
 import { AirportVehicleGallery } from "@/components/public/collections/AirportVehicleGallery";
+import { AirportFareTable } from "@/components/public/collections/AirportFareTable";
 import { JsonLd } from "@/components/seo/JsonLd";
 import {
   absoluteUrl,
@@ -69,10 +70,10 @@ export default function AirportHirePage() {
           <Reveal className="airport-page__copy">
             <span className="eyebrow"><i />Simple from the start</span>
             <h2>Private airport pickup, planned before you land.</h2>
-            <p>Send your flight, passenger count and destination. Choose a car, van or bus, then we WhatsApp the photos of that taxi and confirm the driver, meeting point and fare before you travel.</p>
+            <p>Choose the town you are heading to, then a budget car, premium car or van. The fare is shown in Sri Lankan rupees before you send the request.</p>
             <div className="process-list">
-              <article><span>01</span><div><h3>Send your arrival</h3><p>Flight number, date, passengers and destination.</p></div></article>
-              <article><span>02</span><div><h3>Choose your vehicle</h3><p>Car, van or bus — tap the emoji that fits your group.</p></div></article>
+              <article><span>01</span><div><h3>Choose your town</h3><p>Weligama, Hikkaduwa, Hiriketiya, Arugam Bay, Kandy, Sigiriya, Bentota and nearby towns.</p></div></article>
+              <article><span>02</span><div><h3>Pick a vehicle</h3><p>Budget or premium car for 1–3 people, or a van for up to 7.</p></div></article>
               <article><span>03</span><div><h3>Meet your driver</h3><p>Your name board is waiting in the arrivals hall—even when the flight is delayed.</p></div></article>
             </div>
           </Reveal>
@@ -85,11 +86,17 @@ export default function AirportHirePage() {
       <section className="route-prices modern-section">
         <div className="container">
           <span className="eyebrow"><i />Sized to your group</span>
-          <h2>Car, van or bus — pick the taxi that fits.</h2>
+          <h2>Budget car, premium car or van.</h2>
           <AirportVehicleGallery />
         </div>
       </section>
-      <section className="route-prices modern-section"><div className="container"><span className="eyebrow"><i />From arrivals to island life</span><h2>Popular airport transfer routes</h2><div className="route-grid"><article><span>CMB</span><b>→</b><div><strong>Weligama</strong><small>Approx. 2.5–3 hrs</small></div></article><article><span>CMB</span><b>→</b><div><strong>Galle</strong><small>Approx. 2–2.5 hrs</small></div></article><article><span>CMB</span><b>→</b><div><strong>Kandy</strong><small>Approx. 3–4 hrs</small></div></article><article><span>CMB</span><b>→</b><div><strong>Ella</strong><small>Approx. 5–6 hrs</small></div></article></div></div></section>
+      <section className="route-prices modern-section">
+        <div className="container">
+          <span className="eyebrow"><i />Listed fares from CMB</span>
+          <h2>Check the price for your town, then book.</h2>
+          <AirportFareTable />
+        </div>
+      </section>
       <section className="section seo-guide modern-section" aria-labelledby="airport-guide-title">
         <div className="container seo-guide__grid">
           <div>
@@ -131,7 +138,11 @@ export default function AirportHirePage() {
             </details>
             <details>
               <summary>How is the airport transfer price confirmed?</summary>
-              <p>Your quotation is prepared from the route, passenger number, luggage and whether you choose a car, van or bus. We send the taxi photos on WhatsApp and confirm the full details before your travel date.</p>
+              <p>Choose your town from the list, then a budget car, premium car or van. The fare is shown in Sri Lankan rupees. We send the taxi photos on WhatsApp and confirm any extras before you travel.</p>
+            </details>
+            <details>
+              <summary>What if my hotel is near a listed town?</summary>
+              <p>Pick the nearest town on the list and add your hotel or villa name. Nearby places such as Midigama, Unawatuna or Pottuvil use the same listed fare as the town they sit beside.</p>
             </details>
           </div>
         </div>

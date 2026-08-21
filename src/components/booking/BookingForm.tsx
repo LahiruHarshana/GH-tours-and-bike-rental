@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import type { BookingType } from "@/types";
 import { AirportVehiclePicker } from "@/components/booking/AirportVehiclePicker";
+import { AIRPORT_DESTINATIONS, CMB_AIRPORT, matchAirportDestination } from "@/lib/airport-vehicles";
 
 export type BookingInitialValues = Partial<{
   travelDate: string;
@@ -12,7 +13,7 @@ export type BookingInitialValues = Partial<{
   pickupLocation: string;
   dropoffLocation: string;
   flightNumber: string;
-  vehicleType: "CAR" | "VAN" | "MINIBUS" | string;
+  vehicleType: "CAR" | "VAN" | string;
   vehicleId: string;
 }>;
 
@@ -43,7 +44,16 @@ export function BookingForm({
   const [submitting, setSubmitting] = useState(false);
   const [pickupDate, setPickupDate] = useState(initialValues.travelDate ?? "");
   const [guests, setGuests] = useState(initialValues.guests ?? 2);
-  const [dropoffLocation, setDropoffLocation] = useState(initialValues.dropoffLocation ?? "");
+  const departing = Boolean(
+    matchAirportDestination(initialValues.pickupLocation) &&
+    /cmb|airport/i.test(initialValues.dropoffLocation ?? ""),
+  );
+  const [town, setTown] = useState(
+    () => matchAirportDestination(initialValues.dropoffLocation)?.name
+      ?? matchAirportDestination(initialValues.pickupLocation)?.name
+      ?? "",
+  );
+  const [stayAddress, setStayAddress] = useState("");
   const [success, setSuccess] = useState<{ bookingCode: string; whatsappUrl: string } | null>(null);
   const [message, setMessage] = useState<{ type: "error"; text: string } | null>(null);
   const today = localToday();
@@ -71,6 +81,19 @@ export function BookingForm({
     setMessage(null);
     const form = new FormData(formElement);
     const payload = Object.fromEntries(form.entries());
+    const stay = String(payload.stayAddress ?? "").trim();
+    const selectedTown = String(payload.destinationTown ?? "").trim();
+    delete payload.stayAddress;
+    delete payload.destinationTown;
+    if (type === "AIRPORT" && selectedTown) {
+      if (departing) {
+        payload.pickupLocation = stay ? `${selectedTown} — ${stay}` : selectedTown;
+        payload.dropoffLocation = CMB_AIRPORT;
+      } else {
+        payload.pickupLocation = String(payload.pickupLocation || CMB_AIRPORT);
+        payload.dropoffLocation = stay ? `${selectedTown} — ${stay}` : selectedTown;
+      }
+    }
 
     try {
       const response = await fetch("/api/bookings", {
@@ -84,7 +107,12 @@ export function BookingForm({
       formElement.reset();
       setPickupDate("");
       setGuests(initialValues.guests ?? 2);
-      setDropoffLocation(initialValues.dropoffLocation ?? "");
+      setTown(
+        matchAirportDestination(initialValues.dropoffLocation)?.name
+          ?? matchAirportDestination(initialValues.pickupLocation)?.name
+          ?? "",
+      );
+      setStayAddress("");
       setSuccess({ bookingCode, whatsappUrl: String(result.data.whatsappUrl ?? "") });
       onSuccess?.(bookingCode);
     } catch (error) {
@@ -151,12 +179,25 @@ export function BookingForm({
             <input name="arrivalTime" type="time" defaultValue={initialValues.arrivalTime} />
           </label>
           <label>
-            <span>Pickup location *</span>
-            <input name="pickupLocation" required defaultValue={initialValues.pickupLocation} placeholder="CMB Airport / hotel" />
+            <span>{departing ? "Pickup town *" : "Going to *"}</span>
+            <select name="destinationTown" required value={town} onChange={(event) => setTown(event.target.value)}>
+              <option value="">Choose a town</option>
+              {AIRPORT_DESTINATIONS.map((place) => (
+                <option key={place.id} value={place.name}>
+                  {place.name} · {place.duration}
+                </option>
+              ))}
+            </select>
           </label>
           <label>
-            <span>Drop-off location *</span>
-            <input name="dropoffLocation" required value={dropoffLocation} onChange={(event) => setDropoffLocation(event.target.value)} placeholder="Galle, Ella, Kandy..." />
+            <span>{departing ? "Drop-off *" : "Pickup location *"}</span>
+            <input
+              name="pickupLocation"
+              required={!departing}
+              readOnly={departing}
+              defaultValue={departing ? CMB_AIRPORT : (initialValues.pickupLocation ?? CMB_AIRPORT)}
+              placeholder="CMB Airport / hotel"
+            />
           </label>
           <label>
             <span>Flight number</span>
@@ -164,12 +205,16 @@ export function BookingForm({
           </label>
           <label>
             <span>Passengers *</span>
-            <input name="guests" type="number" min="1" max="30" value={guests} onChange={(event) => setGuests(Number(event.target.value) || 1)} required />
+            <input name="guests" type="number" min="1" max="7" value={guests} onChange={(event) => setGuests(Number(event.target.value) || 1)} required />
+          </label>
+          <label className="form-span-2">
+            <span>Hotel or exact address</span>
+            <input name="stayAddress" value={stayAddress} onChange={(event) => setStayAddress(event.target.value)} placeholder="Villa, hotel or surf camp (optional)" />
           </label>
           <div className="form-span-2">
             <AirportVehiclePicker
               guests={guests}
-              destination={dropoffLocation}
+              destination={town}
               initialVehicleType={initialValues.vehicleType}
               initialVehicleId={initialValues.vehicleId}
               compact={compact}
@@ -243,7 +288,7 @@ export function BookingForm({
         <div className="booking-form__heading">
           <span>Step {step} of 2</span>
           <h3>{step === 1 ? (type === "BIKE" ? "When would you like to ride?" : type === "TOUR" ? "Tell us about your trip" : "Share your ride details") : "Where should we reply?"}</h3>
-          <p>{step === 1 ? (type === "AIRPORT" ? "Pick a car, van or bus — we will send the matching taxi photos on WhatsApp." : "Only the essentials — you can fine-tune everything with our local team.") : "We use these details only to answer this request."}</p>
+          <p>{step === 1 ? (type === "AIRPORT" ? "Choose your town, then a budget car, premium car or van — the fare updates in rupees." : "Only the essentials — you can fine-tune everything with our local team.") : "We use these details only to answer this request."}</p>
         </div>
 
         <fieldset data-booking-step="details" className={step === 1 ? "booking-form__step is-active" : "booking-form__step"}>
@@ -285,7 +330,7 @@ export function BookingForm({
       </button>
       <p className="form-footnote">
         {type === "AIRPORT"
-          ? "No payment now. After you request, we WhatsApp the photos of your car, van or bus and confirm the fare."
+          ? "No payment now. After you request, we WhatsApp the photos of your taxi and confirm the fare."
           : "No online payment required. Our local team confirms availability and the final price by WhatsApp or email."}
       </p>
     </form>

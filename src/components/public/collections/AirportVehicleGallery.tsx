@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { AIRPORT_TAXI_TYPES } from "@/lib/airport-vehicles";
-import { formatUSD } from "@/lib/utils";
+import { formatLKR } from "@/lib/utils";
 
 export function AirportVehicleGallery() {
   return (
@@ -21,7 +21,7 @@ export function AirportVehicleGallery() {
           <strong>{taxi.emoji} {taxi.label}</strong>
           <p>{taxi.shortDescription}</p>
           <small>{taxi.capacity} · {taxi.luggagePieces} bags</small>
-          <b>From {formatUSD(taxi.priceFromUSD)}</b>
+          <b>From {formatLKR(taxi.priceFromLKR)}</b>
         </article>
       ))}
     </div>

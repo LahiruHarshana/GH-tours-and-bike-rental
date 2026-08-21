@@ -45,7 +45,10 @@ export const bookingSchema = z
         ctx.addIssue({ code: "custom", path: ["guests"], message: "Passenger count is required." });
       }
       if (!data.vehicleType && !data.vehicleId) {
-        ctx.addIssue({ code: "custom", path: ["vehicleType"], message: "Please choose a car, van or bus." });
+        ctx.addIssue({ code: "custom", path: ["vehicleType"], message: "Please choose a budget car, premium car or van." });
+      }
+      if (data.guests && data.guests > 7) {
+        ctx.addIssue({ code: "custom", path: ["guests"], message: "Listed cars and vans seat up to 7 travellers." });
       }
     }
     if (data.type === "BIKE" && !data.returnDate) {
