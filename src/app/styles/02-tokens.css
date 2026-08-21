@@ -43,11 +43,13 @@
   --track-display: -.045em;
   --track-micro: .21em;
 
-  /* Fonts (self-hosted by next/font; system faces remain as resilient fallbacks) */
-  --sinhala-display: var(--font-sinhala-display), "Noto Serif Sinhala", "Iskoola Pota", serif;
+  /* Fonts — Instrument Sans everywhere (homepage system). Display/sans aliases
+     resolve to the same stack so inner pages, forms, modals, and admin match. */
   --sinhala-body: var(--font-sinhala-body), "Noto Sans Sinhala", "Nirmala UI", sans-serif;
-  --display: var(--font-display), var(--sinhala-display), Georgia, serif;
   --body: var(--font-body), var(--sinhala-body), Arial, sans-serif;
+  --display: var(--body);
+  --sans: var(--body);
+  --sinhala-display: var(--sinhala-body);
 
   /* Rhythm and Spacing */
   --space-xs: .5rem;

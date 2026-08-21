@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import {
   Instrument_Sans,
-  Instrument_Serif,
   Noto_Sans_Sinhala,
-  Noto_Serif_Sinhala,
 } from "next/font/google";
 import "./styles/01-reset.css";
 import "./styles/02-tokens.css";
@@ -33,24 +31,9 @@ const instrumentSans = Instrument_Sans({
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: "400",
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
 const notoSansSinhala = Noto_Sans_Sinhala({
   subsets: ["sinhala"],
   variable: "--font-sinhala-body",
-  weight: "variable",
-  display: "swap",
-});
-
-const notoSerifSinhala = Noto_Serif_Sinhala({
-  subsets: ["sinhala"],
-  variable: "--font-sinhala-display",
   weight: "variable",
   display: "swap",
 });
@@ -120,7 +103,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       lang="en"
       suppressHydrationWarning
       data-scroll-behavior="smooth"
-      className={`${instrumentSans.variable} ${instrumentSerif.variable} ${notoSansSinhala.variable} ${notoSerifSinhala.variable}`}
+      className={`${instrumentSans.variable} ${notoSansSinhala.variable}`}
     >
       <body>{children}</body>
     </html>
