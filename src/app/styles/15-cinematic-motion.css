@@ -102,65 +102,28 @@
   100% { transform: translate3d(0, 1%, 0); }
 }
 
-/* Page changes play like a film splice instead of flashing between routes. */
+/* Page changes use the same light Stayscape loader panel as route loading. */
 .cinema-curtain {
-  position: fixed;
-  z-index: 400;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 72% 28%, rgb(240 201 107 / .13), transparent 24%),
-    var(--ink-900);
-  transform: scaleY(0);
-  transform-origin: 50% 0;
-  transition: transform .72s var(--ease-island);
+  transform: none;
+  background: rgb(231 229 227 / .82);
+  backdrop-filter: blur(14px);
+  transition: opacity .28s ease, visibility .28s ease;
 }
 
 .cinema-curtain::before,
-.cinema-curtain::after {
-  content: "";
-  position: absolute;
-  inset: 1rem;
-  border: 1px solid rgb(247 244 236 / .14);
-  transform: scaleX(.25);
-  transition: transform .75s var(--ease-island);
-}
-
-.cinema-curtain::after {
-  inset: 2rem;
-  border-color: rgb(240 201 107 / .14);
-  transform: scaleY(.3);
-}
-
+.cinema-curtain::after,
 .cinema-curtain > span {
-  color: var(--sun-300);
-  font-family: var(--display);
-  font-size: clamp(1rem, 2vw, 1.4rem);
-  font-style: italic;
-  letter-spacing: .2em;
-  opacity: 0;
-  text-transform: uppercase;
-  transform: translateY(1rem);
-  transition: opacity .3s ease, transform .65s var(--ease-island);
+  display: none;
 }
 
 .cinema-leaving .cinema-curtain {
-  pointer-events: auto;
-  transform: scaleY(1);
-  transform-origin: 50% 100%;
+  transform: none;
+  transform-origin: unset;
 }
 
 .cinema-leaving .cinema-curtain::before,
 .cinema-leaving .cinema-curtain::after {
   transform: none;
-}
-
-.cinema-leaving .cinema-curtain > span {
-  opacity: 1;
-  transform: none;
-  transition-delay: .22s;
 }
 
 .cinema-entering main {
@@ -371,12 +334,9 @@
     transform: translate3d(0, calc(var(--scroll-progress-smooth, 0) * -3vh), 0);
   }
 
-  .cinema-curtain::before {
-    inset: .65rem;
-  }
-
+  .cinema-curtain::before,
   .cinema-curtain::after {
-    inset: 1.25rem;
+    display: none;
   }
 }
 

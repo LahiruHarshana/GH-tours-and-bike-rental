@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
+import { SiteLoaderPanel } from "@/components/public/layout/SiteLoaderPanel";
 
 const clamp = (value: number, minimum = 0, maximum = 1) =>
   Math.max(minimum, Math.min(maximum, value));
@@ -491,7 +492,7 @@ export function ScrollExperience() {
         <span className="cinema-atmosphere__grain" />
       </div>
       <div className="cinema-curtain" aria-hidden="true">
-        <span>GH · Sri Lanka</span>
+        <SiteLoaderPanel message="Moving to the next page" />
       </div>
       <div className="scroll-progress" aria-hidden="true">
         <span />
