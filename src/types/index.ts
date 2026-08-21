@@ -33,14 +33,11 @@ export type AirportTaxiId = "budget-car" | "premium-car" | "van";
 export type AirportTaxiType = {
   id: AirportTaxiId;
   vehicleClass: Extract<VehicleClass, "CAR" | "VAN">;
-  emoji: string;
   label: string;
   minPassengers: number;
   maxPassengers: number;
   luggagePieces: number;
   priceFromLKR: number;
-  image: string;
-  photos: string[];
   shortDescription: string;
   features: string[];
   capacity: string;

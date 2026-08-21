@@ -6,6 +6,7 @@ import type { BookingDTO, BookingStatus, PaymentStatus } from "@/types";
 import { formatDate, formatLKR, formatUSD } from "@/lib/utils";
 import { buildCustomerReplyMessage, buildWhatsAppUrl } from "@/lib/whatsapp-links";
 import { formatAirportTaxiChoice, resolveAirportTaxiType } from "@/lib/airport-vehicles";
+import { AirportTaxiIcon } from "@/components/booking/AirportTaxiIcon";
 
 type BookingUpdate = {
   status: BookingStatus;
@@ -20,7 +21,7 @@ function WhatsAppReplyComposer({ booking }: { booking: BookingDTO }) {
     <div className="booking-whatsapp-composer">
       <div>
         <small>WhatsApp reply to customer</small>
-        <strong>{booking.type === "AIRPORT" ? "Includes taxi photos — edit, then press Send in WhatsApp" : "Prepared automatically — edit before opening WhatsApp"}</strong>
+        <strong>{booking.type === "AIRPORT" ? "Includes vehicle details — edit, then press Send in WhatsApp" : "Prepared automatically — edit before opening WhatsApp"}</strong>
       </div>
       <textarea value={message} onChange={(event) => setMessage(event.target.value)} rows={booking.type === "AIRPORT" ? 16 : 9} aria-label="Prepared WhatsApp reply" />
       <a className="admin-whatsapp-button" href={buildWhatsAppUrl(booking.whatsapp || booking.phone, message)} target="_blank" rel="noreferrer">
@@ -167,11 +168,13 @@ export function BookingManager({ bookings }: { bookings: BookingDTO[] }) {
               )}
               {selectedTaxi && (
                 <div className="booking-vehicle-preview">
-                  <img src={selectedTaxi.image} alt={formatAirportTaxiChoice(selectedTaxi)} />
+                  <span className="booking-vehicle-preview__icon" aria-hidden="true">
+                    <AirportTaxiIcon id={selectedTaxi.id} />
+                  </span>
                   <div>
                     <strong>{formatAirportTaxiChoice(selectedTaxi)}</strong>
                     <small>{selectedTaxi.capacity} · {selectedTaxi.luggagePieces} bags</small>
-                    <p>Send the prepared WhatsApp message and the customer receives these taxi photos.</p>
+                    <p>Send the prepared WhatsApp message with the vehicle details and quoted fare.</p>
                   </div>
                 </div>
               )}

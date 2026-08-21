@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import { AirportTaxiIcon } from "@/components/booking/AirportTaxiIcon";
 import {
   AIRPORT_TAXI_TYPES,
   formatAirportTaxiChoice,
@@ -68,7 +68,7 @@ export function AirportVehiclePicker({
           return (
             <label
               key={taxi.id}
-              className={`vehicle-option vehicle-option--taxi ${checked ? "is-selected" : ""} ${!fits ? "is-disabled" : ""}`}
+              className={`vehicle-option vehicle-option--taxi vehicle-option--icon ${checked ? "is-selected" : ""} ${!fits ? "is-disabled" : ""}`}
             >
               <input
                 type="radio"
@@ -79,17 +79,9 @@ export function AirportVehiclePicker({
                 disabled={!fits}
                 onChange={() => setSelectedId(taxi.id)}
               />
-              <span className="vehicle-option__visual">
-                <Image
-                  src={taxi.image}
-                  alt={`${taxi.label} airport taxi`}
-                  fill
-                  sizes="(max-width: 800px) 100vw, 33vw"
-                  style={{ objectFit: "cover" }}
-                  unoptimized
-                />
+              <span className="vehicle-option__icon" aria-hidden="true">
+                <AirportTaxiIcon id={taxi.id} />
               </span>
-              <span className="vehicle-option__emoji" aria-hidden="true">{taxi.emoji}</span>
               {suggested.id === taxi.id && fits && <span className="vehicle-option__badge">Fits this group</span>}
               <strong>{taxi.label}</strong>
               <p>{taxi.shortDescription}</p>

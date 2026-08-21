@@ -32,7 +32,7 @@ export function AirportQuickBook() {
       pickupLocation: direction === "ARRIVAL" ? CMB_AIRPORT : selectedDestination,
       dropoffLocation: direction === "ARRIVAL" ? selectedDestination : CMB_AIRPORT,
       vehicleId: taxi.id,
-      vehicleType: `${taxi.emoji} ${taxi.label}`,
+      vehicleType: taxi.label,
     });
     setOpen(true);
   }

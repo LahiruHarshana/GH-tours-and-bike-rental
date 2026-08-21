@@ -1,3 +1,4 @@
+import { AirportTaxiIcon } from "@/components/booking/AirportTaxiIcon";
 import { AIRPORT_DESTINATIONS, AIRPORT_TAXI_TYPES } from "@/lib/airport-vehicles";
 import { formatLKR } from "@/lib/utils";
 
@@ -12,7 +13,12 @@ export function AirportFareTable() {
               <th>Destination</th>
               <th>Travel time</th>
               {AIRPORT_TAXI_TYPES.map((taxi) => (
-                <th key={taxi.id}>{taxi.emoji} {taxi.label}</th>
+                <th key={taxi.id}>
+                  <span className="airport-fare-table__icon" aria-hidden="true">
+                    <AirportTaxiIcon id={taxi.id} />
+                  </span>
+                  {taxi.label}
+                </th>
               ))}
             </tr>
           </thead>

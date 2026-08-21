@@ -25,7 +25,6 @@ export function buildAirportTaxiWhatsAppDetails(booking: Pick<BookingDTO, "vehic
   const taxi = resolveAirportTaxiType(booking.vehicleType, booking.vehicleId);
   if (!taxi) return [];
 
-  const extraPhotos = taxi.photos.filter((photo) => photo !== taxi.image);
   const fare = booking.estimatedAmountUSD;
   return [
     `Your taxi: ${formatAirportTaxiChoice(taxi)}`,
@@ -35,12 +34,7 @@ export function buildAirportTaxiWhatsAppDetails(booking: Pick<BookingDTO, "vehic
     `Includes: ${taxi.features.join(", ")}`,
     fare !== undefined ? `Quoted fare: LKR ${fare.toLocaleString("en-LK")}` : undefined,
     "",
-    "See the vehicle:",
-    taxi.image,
-    extraPhotos.length ? "More photos:" : undefined,
-    ...extraPhotos,
-    "",
-    `Vehicle page: ${airportTaxiPageUrl(taxi.id)}`,
+    `Vehicle details: ${airportTaxiPageUrl(taxi.id)}`,
   ].filter((line): line is string => line !== undefined);
 }
 

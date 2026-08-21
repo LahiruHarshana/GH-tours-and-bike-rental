@@ -261,7 +261,7 @@ export function BookingForm({
         <h3>{type === "AIRPORT" ? "Your taxi details are on the way." : "We are checking the details."}</h3>
         <p>
           {type === "AIRPORT"
-            ? "Your request is saved. Our team will WhatsApp you the photos and details of the taxi you chose — you do not need to send a message."
+            ? "Your request is saved. Our team will WhatsApp you the vehicle details and quoted fare — you do not need to send a message."
             : "Your request is safely saved. Open WhatsApp to send the prepared details to our admin, then press Send in WhatsApp."}
         </p>
         <strong>{success.bookingCode}</strong>
@@ -314,7 +314,7 @@ export function BookingForm({
             </>
           )}
         </div>
-        <p className="form-footnote">{type === "AIRPORT" ? "No payment now. We WhatsApp the taxi photos after you request." : "No payment or card details needed."}</p>
+        <p className="form-footnote">{type === "AIRPORT" ? "No payment now. We WhatsApp the vehicle details after you request." : "No payment or card details needed."}</p>
       </form>
     );
   }
@@ -330,7 +330,7 @@ export function BookingForm({
       </button>
       <p className="form-footnote">
         {type === "AIRPORT"
-          ? "No payment now. After you request, we WhatsApp the photos of your taxi and confirm the fare."
+          ? "No payment now. After you request, we WhatsApp the vehicle details and confirm the fare."
           : "No online payment required. Our local team confirms availability and the final price by WhatsApp or email."}
       </p>
     </form>

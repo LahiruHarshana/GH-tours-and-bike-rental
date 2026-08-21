@@ -138,7 +138,7 @@ export default function AirportHirePage() {
             </details>
             <details>
               <summary>How is the airport transfer price confirmed?</summary>
-              <p>Choose your town from the list, then a budget car, premium car or van. The fare is shown in Sri Lankan rupees. We send the taxi photos on WhatsApp and confirm any extras before you travel.</p>
+              <p>Choose your town from the list, then a budget car, premium car or van. The fare is shown in Sri Lankan rupees. We send the vehicle details on WhatsApp and confirm any extras before you travel.</p>
             </details>
             <details>
               <summary>What if my hotel is near a listed town?</summary>

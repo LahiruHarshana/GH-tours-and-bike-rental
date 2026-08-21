@@ -77,17 +77,11 @@ export const AIRPORT_TAXI_TYPES: AirportTaxiType[] = [
   {
     id: "budget-car",
     vehicleClass: "CAR",
-    emoji: "🚗",
     label: "Budget car",
     minPassengers: 1,
     maxPassengers: 3,
     luggagePieces: 2,
     priceFromLKR: lowestFare("budget-car"),
-    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=80",
-    photos: [
-      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=1200&q=80",
-    ],
     shortDescription: "A clean air-conditioned car for 1–3 travellers with light luggage.",
     features: ["Air-conditioned", "Meet and greet", "Flight tracking", "2 bags"],
     capacity: "1–3 travellers",
@@ -95,17 +89,11 @@ export const AIRPORT_TAXI_TYPES: AirportTaxiType[] = [
   {
     id: "premium-car",
     vehicleClass: "CAR",
-    emoji: "🚙",
     label: "Premium car",
     minPassengers: 1,
     maxPassengers: 3,
     luggagePieces: 3,
     priceFromLKR: lowestFare("premium-car"),
-    image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&q=80",
-    photos: [
-      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=1200&q=80",
-    ],
     shortDescription: "A more comfortable private sedan after a long flight.",
     features: ["Premium interior", "Bottled water", "Name board pickup", "3 bags"],
     capacity: "1–3 travellers",
@@ -113,17 +101,11 @@ export const AIRPORT_TAXI_TYPES: AirportTaxiType[] = [
   {
     id: "van",
     vehicleClass: "VAN",
-    emoji: "🚐",
     label: "Van",
     minPassengers: 1,
     maxPassengers: 7,
     luggagePieces: 7,
     priceFromLKR: lowestFare("van"),
-    image: "https://images.unsplash.com/photo-1464219782434-3473fb1918bc?auto=format&fit=crop&w=1200&q=80",
-    photos: [
-      "https://images.unsplash.com/photo-1464219782434-3473fb1918bc?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1527786356703-4b32d19c0903?auto=format&fit=crop&w=1200&q=80",
-    ],
     shortDescription: "The family choice for extra seats, bags and surfboards.",
     features: ["High-roof van", "Child-seat on request", "Surfboard-friendly", "7 bags"],
     capacity: "1–7 travellers",
@@ -134,8 +116,8 @@ export function formatVehicleChoice(vehicle: Pick<AirportVehicleDTO, "name" | "v
   return `${vehicle.name} · ${VEHICLE_TIER_LABELS[vehicle.tier]} ${VEHICLE_CLASS_LABELS[vehicle.vehicleClass]}`;
 }
 
-export function formatAirportTaxiChoice(taxi: Pick<AirportTaxiType, "emoji" | "label">) {
-  return `${taxi.emoji} ${taxi.label}`;
+export function formatAirportTaxiChoice(taxi: Pick<AirportTaxiType, "label">) {
+  return taxi.label;
 }
 
 export function vehiclesForGuests(vehicles: AirportVehicleDTO[], guests: number) {
@@ -208,13 +190,13 @@ export function resolveAirportTaxiType(vehicleType?: string, vehicleId?: string)
   const byId = AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === (vehicleId ?? "").toLowerCase());
   if (byId) return byId;
 
-  if (/\bPREMIUM\b|\bLUXURY\b|🚙/.test(haystack)) {
+  if (/\bPREMIUM\b|\bLUXURY\b/.test(haystack)) {
     return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "premium-car");
   }
-  if (/\bVAN\b|🚐|\bBUS\b|\bMINIBUS\b/.test(haystack)) {
+  if (/\bVAN\b|\bBUS\b|\bMINIBUS\b/.test(haystack)) {
     return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "van");
   }
-  if (/\bBUDGET\b|\bCAR\b|\bTAXI\b|\bSEDAN\b|🚗/.test(haystack)) {
+  if (/\bBUDGET\b|\bCAR\b|\bTAXI\b|\bSEDAN\b/.test(haystack)) {
     return AIRPORT_TAXI_TYPES.find((taxi) => taxi.id === "budget-car");
   }
   return undefined;

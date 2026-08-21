@@ -203,76 +203,71 @@
   grid-template-columns: 1fr;
 }
 
-.booking-modal .vehicle-option--taxi {
-  padding-bottom: 1rem;
+@media (min-width: 640px) {
+  .booking-modal .vehicle-picker--taxi .vehicle-picker__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.booking-modal .vehicle-option--icon {
+  padding: 1rem .85rem;
   text-align: left;
 }
 
-.booking-modal .vehicle-option--taxi strong {
+.booking-modal .vehicle-option--icon strong {
   padding-right: 0;
 }
 
-.booking-modal .vehicle-option--taxi p,
-.booking-modal .vehicle-option--taxi ul,
-.booking-modal .vehicle-option--taxi .vehicle-option__price,
-.booking-modal .vehicle-option--taxi .vehicle-option__hint {
-  padding-inline: .85rem;
+.booking-modal .vehicle-option--icon p,
+.booking-modal .vehicle-option--icon ul,
+.booking-modal .vehicle-option--icon .vehicle-option__price,
+.booking-modal .vehicle-option--icon .vehicle-option__hint {
+  padding-inline: 0;
 }
 
-.booking-modal .vehicle-option--taxi ul {
+.booking-modal .vehicle-option--icon ul {
   justify-content: flex-start;
 }
 
-.vehicle-option--taxi {
-  overflow: hidden;
-  padding: 0 0 1rem;
-  text-align: center;
-  justify-items: center;
+.vehicle-option--taxi.vehicle-option--icon {
+  padding: 1rem .85rem 1.05rem;
+  text-align: left;
+  justify-items: start;
 }
 
-.vehicle-option--taxi strong {
+.vehicle-option--icon strong {
   padding-right: 0;
 }
 
-.vehicle-option__visual {
-  display: block;
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: var(--paper-300, #efe8d8);
-}
-
-.vehicle-option__visual img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.vehicle-option__emoji {
-  position: relative;
-  z-index: 2;
+.vehicle-option__icon {
   display: grid;
-  width: 3.1rem;
-  height: 3.1rem;
+  width: 3.4rem;
+  height: 3.4rem;
   place-items: center;
-  margin-top: -1.55rem;
-  border-radius: 999px;
-  background: #fff;
-  box-shadow: 0 10px 24px -16px rgb(16 32 27 / .7);
-  font-size: 1.7rem;
-  line-height: 1;
+  border-radius: 1rem;
+  background: rgb(232 241 234 / .85);
+  color: var(--color-moss, #356b56);
 }
 
-.vehicle-option--taxi p,
-.vehicle-option--taxi ul,
-.vehicle-option--taxi .vehicle-option__price,
-.vehicle-option--taxi .vehicle-option__hint {
-  padding-inline: .85rem;
+.vehicle-option__icon svg {
+  width: 1.65rem;
+  height: 1.65rem;
 }
 
-.vehicle-option--taxi ul {
-  justify-content: center;
+.vehicle-option--icon.is-selected .vehicle-option__icon {
+  background: var(--color-moss, #356b56);
+  color: #fff;
+}
+
+.vehicle-option--icon p,
+.vehicle-option--icon ul,
+.vehicle-option--icon .vehicle-option__price,
+.vehicle-option--icon .vehicle-option__hint {
+  padding-inline: 0;
+}
+
+.vehicle-option--icon ul {
+  justify-content: flex-start;
 }
 
 .vehicle-option__hint {
@@ -298,7 +293,7 @@
 
 .booking-vehicle-preview {
   display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
   gap: .85rem;
   align-items: center;
   margin-top: .85rem;
@@ -308,11 +303,19 @@
   background: rgb(253 251 245 / .8);
 }
 
-.booking-vehicle-preview img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  border-radius: .55rem;
+.booking-vehicle-preview__icon {
+  display: grid;
+  width: 3.4rem;
+  height: 3.4rem;
+  place-items: center;
+  border-radius: 1rem;
+  background: rgb(232 241 234 / .85);
+  color: var(--color-moss, #356b56);
+}
+
+.booking-vehicle-preview__icon svg {
+  width: 1.65rem;
+  height: 1.65rem;
 }
 
 .booking-vehicle-preview strong,
@@ -332,8 +335,55 @@
   padding: .9rem;
 }
 
-.vehicle-picker--compact .vehicle-option--taxi {
-  padding: 0 0 .9rem;
+.vehicle-picker--compact .vehicle-option--icon {
+  padding: 1rem .85rem;
+}
+
+.vehicle-gallery__card--icon {
+  padding: 1.15rem;
+  text-align: left;
+}
+
+.vehicle-gallery__icon {
+  display: grid;
+  width: 3.6rem;
+  height: 3.6rem;
+  place-items: center;
+  margin-bottom: .85rem;
+  border-radius: 1rem;
+  background: rgb(232 241 234 / .85);
+  color: var(--color-moss, #356b56);
+}
+
+.vehicle-gallery__icon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.vehicle-gallery__card--icon strong,
+.vehicle-gallery__card--icon p,
+.vehicle-gallery__card--icon small,
+.vehicle-gallery__card--icon b {
+  margin-inline: 0;
+}
+
+.airport-fare-table__icon {
+  display: inline-grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  margin-right: .35rem;
+  vertical-align: middle;
+  color: var(--color-moss, #356b56);
+}
+
+.airport-fare-table__icon svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.airport-fare-table thead th {
+  white-space: nowrap;
 }
 
 .vehicle-gallery {
