@@ -864,16 +864,16 @@
 }
 
 .booking-modal__summary {
-  background: var(--ss-orange);
+  background: transparent;
 }
 
 .booking-modal__type {
-  color: white;
+  color: var(--ss-orange);
 }
 
 .booking-modal__description,
 .booking-modal__help p {
-  color: rgb(255 255 255 / .76);
+  color: rgb(245 244 242 / .68);
 }
 
 .booking-modal__form-panel {
@@ -908,7 +908,8 @@
 }
 
 .modal-backdrop {
-  background: rgb(8 9 9 / .62);
+  background: rgb(8 9 9 / .72);
+  backdrop-filter: blur(14px);
 }
 
 .contact-page__grid {

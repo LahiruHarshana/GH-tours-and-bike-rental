@@ -106,19 +106,23 @@ export function BookingModal({
         aria-describedby={descriptionId}
         onMouseDown={(event) => event.stopPropagation()}
       >
-        <button className="modal-close" onClick={onClose} aria-label="Close booking form">×</button>
+        <button className="modal-close booking-modal__close" onClick={onClose} aria-label="Close booking form">
+          <span aria-hidden="true">×</span>
+        </button>
 
         <aside className="booking-modal__summary">
-          <span className="booking-modal__type">{copy.label}</span>
-          <p className="booking-modal__selected">Your selection</p>
-          <h2 id={titleId}>{sourceTitle ?? "Start your Sri Lanka journey"}</h2>
-          <p id={descriptionId} className="booking-modal__description">{copy.description}</p>
-          <ul>
-            {copy.benefits.map((benefit) => <li key={benefit}><span>✓</span>{benefit}</li>)}
-          </ul>
-          <div className="booking-modal__help">
-            <small>What happens next?</small>
-            <p>We reply by WhatsApp or email with availability and a clear quotation.</p>
+          <div className="booking-modal__summary-inner">
+            <span className="booking-modal__type">{copy.label}</span>
+            <p className="booking-modal__selected">Your selection</p>
+            <h2 id={titleId}>{sourceTitle ?? "Start your Sri Lanka journey"}</h2>
+            <p id={descriptionId} className="booking-modal__description">{copy.description}</p>
+            <ul className="booking-modal__benefits">
+              {copy.benefits.map((benefit) => <li key={benefit}><span aria-hidden="true">✓</span>{benefit}</li>)}
+            </ul>
+            <div className="booking-modal__help">
+              <small>What happens next?</small>
+              <p>We reply by WhatsApp or email with availability and a clear quotation.</p>
+            </div>
           </div>
         </aside>
 
