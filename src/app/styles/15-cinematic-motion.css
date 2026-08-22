@@ -585,11 +585,16 @@
     max-width: 12ch;
   }
 
-  .ss-bike-fleet[data-scroll-motion] {
+  .ss-bike-reel .story-reel__copy-card {
     transform:
-      translate3d(0, calc(var(--motion-progress, 0) * 1.4rem), 0)
-      scale(calc(1.01 - (var(--motion-progress, 0) * .015)));
-    opacity: calc(1 - (var(--motion-progress, 0) * .12));
+      translate3d(0, calc(var(--f, 0) * -.8rem), 0)
+      scale(calc(1 - (var(--f-abs, 0) * .03)));
+    transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+  }
+
+  .ss-bike-reel .story-reel__copy.is-active .story-reel__copy-card {
+    border-color: rgb(255 129 8 / .35);
+    box-shadow: 0 2.4rem 6rem rgb(0 0 0 / .38);
   }
 
   .bikes-page-client__detail {

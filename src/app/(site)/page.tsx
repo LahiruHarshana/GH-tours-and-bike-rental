@@ -161,10 +161,13 @@ export default async function HomePage() {
             <Link href="/bikes">Bike rental</Link>
             <Link href="/airport-hire">Airport transfer</Link>
           </nav>
+          <p className="ss-ride__scroll-hint">Scroll to browse the fleet ↓</p>
         </div>
 
-        <div className="ss-ride__showcase">
-          <Link href="/airport-hire" className="ss-orange-card ss-orange-card--wide ss-ride__airport" data-cursor-depth>
+        <BikeFleetShowcase bikes={bikes} />
+
+        <div className="ss-ride__supporting">
+          <Link href="/airport-hire" className="ss-orange-card ss-ride__airport" data-cursor-depth>
             <span>
               <strong><Multiline text={home.airportCardTitle} /></strong>
               <small>{home.airportCardCopy}</small>
@@ -173,9 +176,7 @@ export default async function HomePage() {
             <span className="ss-service-tags">Flight tracked · Fixed fare · Meet &amp; greet</span>
           </Link>
 
-          <BikeFleetShowcase bikes={bikes} />
-
-          <div className="ss-proof-card" data-cursor-depth>
+          <div className="ss-proof-card ss-proof-card--ride" data-cursor-depth>
             <div className="ss-proof-card__intro">
               <strong><Multiline text={home.proofTitle} /></strong>
               <p>{home.proofCopy}</p>
