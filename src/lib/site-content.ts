@@ -54,7 +54,7 @@ export const defaultSiteContent: SiteContent = {
     email: "ghtoursandbikerental@gmail.com",
   },
   home: {
-    heroEyebrow: "",
+    heroEyebrow: "Weligama-based Sri Lanka journeys",
     heroTitle: "Sri Lanka,\nat your pace.",
     heroImage: "/images/hero-sigiriya-cinematic.webp",
     heroImageAlt: "Sigiriya rock fortress rising above Sri Lanka's green central plains",
