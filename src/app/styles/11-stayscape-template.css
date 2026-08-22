@@ -1715,6 +1715,7 @@ a.ss-product-card:hover {
 }
 
 /* Signature journeys — intro + reel layout */
+.ss-journeys__intro--cinema {
   position: relative;
   z-index: 2;
   display: grid;
