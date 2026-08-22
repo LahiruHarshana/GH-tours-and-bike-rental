@@ -62,7 +62,6 @@ export default async function HomePage() {
       <div id="hero-sentinel" className="stayscape-sentinel" />
 
       <section className="ss-hero" aria-labelledby="ss-hero-title">
-        <p className="ss-hero__eyebrow">{home.heroEyebrow}</p>
         <h1 id="ss-hero-title"><Multiline text={home.heroTitle} /></h1>
 
         <div
