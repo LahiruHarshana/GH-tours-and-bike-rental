@@ -9,7 +9,6 @@ import {
   createPageMetadata,
   localBusinessSchema,
 } from "@/lib/seo";
-import { formatUSD } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 export const metadata = createPageMetadata({
@@ -188,9 +187,9 @@ export default async function HomePage() {
                 <small>{bike.engineCC}cc · {bike.transmission === "AUTOMATIC" ? "Automatic" : "Manual"}</small>
                 <span className="ss-product-card__meta">
                   <em>{bike.available ? "Available" : "Unavailable"}</em>
-                  <b>{formatUSD(bike.dailyRateUSD)}<small>/day</small></b>
+                  <b>Request only</b>
                 </span>
-                <span className="ss-product-card__action">View rental details <b aria-hidden="true">→</b></span>
+                <span className="ss-product-card__action">Request this bike <b aria-hidden="true">→</b></span>
               </span>
             </Link>
           ))}

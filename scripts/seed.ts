@@ -50,6 +50,12 @@ async function seed() {
     );
   }
 
+  const fleetSlugs = demoBikes.map((bike) => bike.slug);
+  const removed = await Bike.deleteMany({ slug: { $nin: fleetSlugs } });
+  if (removed.deletedCount > 0) {
+    console.log(`Removed ${removed.deletedCount} bikes no longer in the fleet seed.`);
+  }
+
   for (const vehicle of demoAirportVehicles) {
     const { id: _id, ...payload } = vehicle;
     void _id;

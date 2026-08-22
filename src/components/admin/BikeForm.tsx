@@ -25,8 +25,8 @@ export function BikeForm({ bike }: { bike?: BikeDTO }) {
       model: form.get("model"),
       engineCC: form.get("engineCC"),
       category: form.get("category"),
-      dailyRateUSD: form.get("dailyRateUSD"),
-      depositUSD: form.get("depositUSD"),
+      dailyRateUSD: form.get("dailyRateUSD") || 0,
+      depositUSD: form.get("depositUSD") || 0,
       transmission: form.get("transmission"),
       fuelType: form.get("fuelType"),
       seats: form.get("seats"),
@@ -56,16 +56,16 @@ export function BikeForm({ bike }: { bike?: BikeDTO }) {
   return (
     <form className="admin-form" onSubmit={submit}>
       <section className="admin-form-card">
-        <div className="admin-form-card__head"><div><h2>Bike information</h2><p>Fleet details, pricing and public availability.</p></div></div>
+        <div className="admin-form-card__head"><div><h2>Bike information</h2><p>Fleet details, engine capacity, image and public availability. Pricing is confirmed on request.</p></div></div>
         <div className="admin-form-grid admin-form-grid--2">
           <label><span>Display name *</span><input value={name} onChange={(event) => { setName(event.target.value); if (!bike) setSlug(slugify(event.target.value)); }} required /></label>
           <label><span>URL slug *</span><input value={slug} onChange={(event) => setSlug(slugify(event.target.value))} required /></label>
           <label><span>Brand *</span><input name="brand" defaultValue={bike?.brand} required /></label>
           <label><span>Model *</span><input name="model" defaultValue={bike?.model} required /></label>
-          <label><span>Engine CC *</span><input name="engineCC" type="number" min="0" defaultValue={bike?.engineCC ?? 110} required /></label>
+          <label><span>Engine capacity (cc) *</span><input name="engineCC" type="number" min="0" defaultValue={bike?.engineCC ?? 125} required /></label>
           <label><span>Category *</span><select name="category" defaultValue={bike?.category ?? "SCOOTER"}><option value="SCOOTER">Scooter</option><option value="MOTORBIKE">Motorbike</option><option value="ADVENTURE">Adventure</option></select></label>
-          <label><span>Daily rate (USD) *</span><input name="dailyRateUSD" type="number" min="0" step="1" defaultValue={bike?.dailyRateUSD ?? 12} required /></label>
-          <label><span>Refundable deposit (USD) *</span><input name="depositUSD" type="number" min="0" step="1" defaultValue={bike?.depositUSD ?? 100} required /></label>
+          <label><span>Internal daily rate (USD)</span><input name="dailyRateUSD" type="number" min="0" step="1" defaultValue={bike?.dailyRateUSD ?? 0} placeholder="Optional — not shown publicly" /></label>
+          <label><span>Internal deposit (USD)</span><input name="depositUSD" type="number" min="0" step="1" defaultValue={bike?.depositUSD ?? 0} placeholder="Optional — not shown publicly" /></label>
           <label><span>Transmission *</span><select name="transmission" defaultValue={bike?.transmission ?? "AUTOMATIC"}><option value="AUTOMATIC">Automatic</option><option value="MANUAL">Manual</option></select></label>
           <label><span>Fuel type *</span><select name="fuelType" defaultValue={bike?.fuelType ?? "PETROL"}><option value="PETROL">Petrol</option><option value="ELECTRIC">Electric</option></select></label>
           <label><span>Seats *</span><input name="seats" type="number" min="1" max="3" defaultValue={bike?.seats ?? 2} required /></label>
