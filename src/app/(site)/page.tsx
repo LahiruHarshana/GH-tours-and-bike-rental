@@ -62,8 +62,16 @@ export default async function HomePage() {
       <div id="hero-sentinel" className="stayscape-sentinel" />
 
       <section className="ss-hero" aria-labelledby="ss-hero-title">
-        <p className="ss-hero__eyebrow">{home.heroEyebrow}</p>
-        <h1 id="ss-hero-title"><Multiline text={home.heroTitle} /></h1>
+        <div className="ss-hero__head">
+          <h1 id="ss-hero-title"><Multiline text={home.heroTitle} /></h1>
+          <nav className="ss-hero__meta" aria-label="GH Tours services">
+            <Link href="/tours">Private tours</Link>
+            <span aria-hidden="true">·</span>
+            <Link href="/airport-hire">Airport transfers</Link>
+            <span aria-hidden="true">·</span>
+            <Link href="/bikes">Bike rental</Link>
+          </nav>
+        </div>
 
         <div
           className="ss-hero__visual"
