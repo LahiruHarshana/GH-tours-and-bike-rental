@@ -413,10 +413,11 @@ body {
   font-size: .7rem;
 }
 
-/* Signature journeys — tours only */
+/* Signature journeys — cinematic destination reel */
 .ss-experiences.ss-journeys {
-  padding: clamp(5rem, 9vw, 9rem) clamp(.75rem, 1.6vw, 1.75rem);
+  padding: clamp(5rem, 9vw, 9rem) 0 0;
   text-align: left;
+  overflow: clip;
 }
 
 .ss-journeys__shell {
@@ -1713,14 +1714,202 @@ a.ss-product-card:hover {
   content: "→";
 }
 
-@media (max-width: 760px) {
-  .ss-local-intro {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    padding-block: 5rem;
+/* Signature journeys — intro + reel layout */
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 1.1rem;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 clamp(.75rem, 1.6vw, 1.75rem) clamp(2.5rem, 5vw, 4rem);
+}
+
+.ss-journeys__intro--cinema .ss-section-kicker {
+  margin: 0;
+  color: var(--ss-orange);
+  font-size: .72rem;
+  font-weight: 750;
+  letter-spacing: .04em;
+}
+
+.ss-journeys__intro--cinema h2 {
+  max-width: 11ch;
+  margin: 0;
+  font-size: clamp(3.6rem, 6.5vw, 7.8rem);
+  font-weight: 470;
+  letter-spacing: -.09em;
+  line-height: .8;
+}
+
+.ss-journeys__intro--cinema .ss-section-copy {
+  max-width: 36rem;
+  margin: 0;
+  color: var(--ss-muted);
+  font-size: .95rem;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.ss-journeys__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.35rem;
+  margin-top: .5rem;
+}
+
+.ss-journeys__secondary {
+  color: var(--ss-ink);
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-decoration: underline;
+  text-decoration-color: rgb(8 9 9 / .22);
+  text-underline-offset: .22em;
+  transition: color .25s ease;
+}
+
+.ss-journeys__secondary:hover {
+  color: var(--ss-orange);
+}
+
+.ss-signature-reel.story-reel {
+  min-height: 760vh;
+  margin-top: 0;
+  background:
+    radial-gradient(circle at 18% 12%, rgb(255 129 8 / .14), transparent 28%),
+    #080909;
+}
+
+.ss-signature-reel .story-reel__sticky {
+  background: transparent;
+}
+
+.ss-signature-reel .story-reel__stage::after {
+  background:
+    linear-gradient(90deg, rgb(8 9 9 / .82) 0%, rgb(8 9 9 / .24) 44%, transparent 70%),
+    linear-gradient(180deg, rgb(8 9 9 / .58) 0%, transparent 24%, transparent 58%, rgb(8 9 9 / .82) 100%);
+}
+
+.ss-signature-reel .story-reel__image img {
+  filter: saturate(.9) contrast(1.05) brightness(.78);
+}
+
+.ss-signature-reel__region {
+  margin-left: auto;
+  padding: .22rem .55rem;
+  border: 1px solid rgb(255 255 255 / .16);
+  border-radius: 999px;
+  color: rgb(255 255 255 / .58);
+  font-size: .52rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.ss-signature-reel__card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform .4s cubic-bezier(.2, .8, .2, 1),
+    border-color .3s ease,
+    box-shadow .35s ease;
+}
+
+.ss-signature-reel__card:hover,
+.ss-signature-reel__card:focus-visible {
+  border-color: rgb(255 129 8 / .45);
+  box-shadow: 0 2.4rem 6rem rgb(0 0 0 / .38);
+  transform: translate3d(0, -.35rem, 0);
+}
+
+.ss-signature-reel__card .story-reel__place {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .55rem;
+  width: 100%;
+}
+
+.ss-signature-reel__timeline.story-reel__timeline {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.ss-signature-reel__cta {
+  position: absolute;
+  z-index: 26;
+  top: calc(var(--header-height, 5rem) + 2.25rem);
+  right: var(--page-gutter, 1.5rem);
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .72rem 1.1rem;
+  border-radius: 999px;
+  background: var(--ss-orange);
+  color: #111;
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1), background .25s ease;
+}
+
+.ss-signature-reel__cta:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .ss-signature-reel__cta {
+    display: none;
   }
 
-  .ss-local-intro h2 {
-    font-size: clamp(3.5rem, 17vw, 5.4rem);
+  .ss-signature-reel__timeline.story-reel__timeline {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: .3rem;
   }
 }
+
+@media (max-width: 760px) {
+  .ss-journeys__intro--cinema h2 {
+    font-size: clamp(3.2rem, 14vw, 5rem);
+  }
+
+  .ss-journeys__actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ss-signature-reel.story-reel {
+    min-height: 520vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ss-signature-reel.story-reel {
+    min-height: auto;
+  }
+
+  .ss-signature-reel .story-reel__content-layer {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem var(--page-gutter, 1.5rem) 2rem;
+  }
+
+  .ss-signature-reel .story-reel__copy {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    transform: none !important;
+    padding: 0;
+  }
+
+  .ss-signature-reel .story-reel__frames,
+  .ss-signature-reel .story-reel__timeline,
+  .ss-signature-reel .story-reel__chrome,
+  .ss-signature-reel__cta {
+    display: none;
+  }
+}
+

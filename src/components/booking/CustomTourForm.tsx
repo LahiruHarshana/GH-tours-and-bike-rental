@@ -19,6 +19,12 @@ export function CustomTourForm() {
   const [message, setMessage] = useState<{ type: "error"; text: string } | null>(null);
   const today = localToday();
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const destination = params.get("destination")?.trim();
+    if (destination) setDestinations([destination]);
+  }, []);
+
   const addDestination = () => setDestinations([...destinations, ""]);
   const updateDestination = (index: number, value: string) => {
     const newDest = [...destinations];

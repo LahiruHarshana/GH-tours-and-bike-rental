@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AirportQuickBook } from "@/components/booking/AirportQuickBook";
+import { SignatureJourneysReel } from "@/components/public/collections/SignatureJourneysReel";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { getBikes, getTours, getWebsiteContent } from "@/lib/data";
+import { getBikes, getWebsiteContent } from "@/lib/data";
 import {
   absoluteUrl,
   createPageMetadata,
@@ -33,15 +34,11 @@ function Multiline({ text }: { text: string }) {
 }
 
 export default async function HomePage() {
-  const [allTours, allBikes, content] = await Promise.all([
-    getTours({}),
+  const [allBikes, content] = await Promise.all([
     getBikes({}),
     getWebsiteContent(),
   ]);
   const home = content.home;
-  // Show the full catalogue on the homepage instead of a fixed 3-item preview,
-  // featured tours first so the strongest journeys lead.
-  const tours = [...allTours].sort((a, b) => Number(b.featured) - Number(a.featured));
   const bikes = allBikes;
 
   return (
@@ -133,94 +130,22 @@ export default async function HomePage() {
       </section>
 
       <section className="ss-experiences ss-journeys" aria-labelledby="ss-experiences-title">
-        <div className="ss-journeys__shell">
-          <header className="ss-journeys__intro">
-            <p className="ss-section-kicker">{home.experiencesEyebrow}</p>
-            <h2 id="ss-experiences-title"><Multiline text={home.experiencesTitle} /></h2>
-            <p className="ss-section-copy">{home.experiencesCopy}</p>
-            <p className="ss-catalogue-count">
-              {tours.length} private journeys —{" "}
-              <Link href="/tours">browse the full list ↗</Link>
-            </p>
-            <Link href="/tours" className="ss-journeys__cta">
-              See all signature journeys
+        <header className="ss-journeys__intro ss-journeys__intro--cinema" data-scroll-motion>
+          <p className="ss-section-kicker">{home.experiencesEyebrow}</p>
+          <h2 id="ss-experiences-title"><Multiline text={home.experiencesTitle} /></h2>
+          <p className="ss-section-copy">{home.experiencesCopy}</p>
+          <div className="ss-journeys__actions">
+            <Link href="/custom-tour" className="ss-journeys__cta">
+              Design my custom journey
               <span aria-hidden="true">↗</span>
             </Link>
-          </header>
-
-          <div className="ss-journeys__main">
-            <div className="ss-journeys__rail" role="navigation" aria-label="Journey moods">
-              <Link href="/tours" className="ss-journeys__mood">
-                <span>01</span>
-                <strong>Cultural triangle</strong>
-                <small>Ancient heights &amp; plains</small>
-              </Link>
-              <Link href="/tours" className="ss-journeys__mood">
-                <span>02</span>
-                <strong>Hill country</strong>
-                <small>Mist, tea &amp; trains</small>
-              </Link>
-              <Link href="/tours" className="ss-journeys__mood">
-                <span>03</span>
-                <strong>South coast</strong>
-                <small>Ocean light &amp; surf towns</small>
-              </Link>
-              <Link href="/custom-tour" className="ss-journeys__mood ss-journeys__mood--accent">
-                <span>04</span>
-                <strong>Build your own</strong>
-                <small>Blank page, your pace</small>
-              </Link>
-            </div>
-
-            <div className="ss-card-grid ss-journeys__grid" data-scroll-motion>
-              {tours.map((tour, index) => (
-                <Link
-                  href={`/tours/${tour.slug}`}
-                  className={`ss-product-card${index === 0 ? " ss-product-card--featured" : ""}`}
-                  key={tour.id}
-                  data-cursor-depth
-                >
-                  <span className="ss-product-card__index" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="ss-product-card__image">
-                    <Image
-                      src={tour.image}
-                      alt={tour.title}
-                      fill
-                      sizes="(max-width: 760px) 88vw, 25vw"
-                      unoptimized={tour.image.startsWith("http")}
-                    />
-                  </span>
-                  <span className="ss-product-card__body">
-                    <strong>{tour.title}</strong>
-                    <small>{tour.location}</small>
-                    <span className="ss-product-card__meta">
-                      <em>{tour.durationDays} days</em>
-                      <b>{formatUSD(tour.priceFrom)}</b>
-                    </span>
-                  </span>
-                </Link>
-              ))}
-
-              <Link href="/custom-tour" className="ss-orange-card ss-orange-card--ink" data-cursor-depth>
-                <span>
-                  <strong>Custom<br />journey</strong>
-                  <small>Build your own route</small>
-                </span>
-                <i className="ss-round-arrow">↗</i>
-              </Link>
-
-              <Link href="/tours" className="ss-orange-card" data-cursor-depth>
-                <span>
-                  <strong>Signature<br />journeys</strong>
-                  <small>Private · Flexible · Local</small>
-                </span>
-                <i className="ss-round-arrow">↗</i>
-              </Link>
-            </div>
+            <Link href="/tours" className="ss-journeys__secondary">
+              Browse ready-made tours ↗
+            </Link>
           </div>
-        </div>
+        </header>
+
+        <SignatureJourneysReel />
       </section>
 
       <section className="ss-dark ss-ride" aria-labelledby="ss-dark-title">
