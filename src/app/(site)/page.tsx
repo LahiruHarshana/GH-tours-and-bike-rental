@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AirportQuickBook } from "@/components/booking/AirportQuickBook";
 import { SignatureJourneysReel } from "@/components/public/collections/SignatureJourneysReel";
+import { BikeFleetShowcase } from "@/components/public/collections/BikeFleetShowcase";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getBikes, getWebsiteContent } from "@/lib/data";
 import {
@@ -132,6 +133,7 @@ export default async function HomePage() {
           <p className="ss-section-kicker">{home.experiencesEyebrow}</p>
           <h2 id="ss-experiences-title"><Multiline text={home.experiencesTitle} /></h2>
           <p className="ss-section-copy">{home.experiencesCopy}</p>
+          <p className="ss-journeys__scroll-hint">Scroll to explore seven destinations ↓</p>
           <div className="ss-journeys__actions">
             <Link href="/custom-tour" className="ss-journeys__cta">
               Design my custom journey
@@ -161,8 +163,8 @@ export default async function HomePage() {
           </nav>
         </div>
 
-        <div className="ss-mosaic" data-scroll-motion>
-          <Link href="/airport-hire" className="ss-orange-card ss-orange-card--wide" data-cursor-depth>
+        <div className="ss-ride__showcase">
+          <Link href="/airport-hire" className="ss-orange-card ss-orange-card--wide ss-ride__airport" data-cursor-depth>
             <span>
               <strong><Multiline text={home.airportCardTitle} /></strong>
               <small>{home.airportCardCopy}</small>
@@ -171,28 +173,7 @@ export default async function HomePage() {
             <span className="ss-service-tags">Flight tracked · Fixed fare · Meet &amp; greet</span>
           </Link>
 
-          {bikes.map((bike) => (
-            <Link href="/bikes" className="ss-product-card ss-product-card--dark ss-product-card--link" key={bike.id} aria-label={`View ${bike.name} rental details`} data-cursor-depth>
-              <span className="ss-product-card__image">
-                <Image
-                  src={bike.image}
-                  alt={`${bike.name} motorbike`}
-                  fill
-                  sizes="(max-width: 760px) 88vw, 25vw"
-                  unoptimized={bike.image.startsWith("http")}
-                />
-              </span>
-              <span className="ss-product-card__body">
-                <strong>{bike.name}</strong>
-                <small>{bike.engineCC}cc · {bike.transmission === "AUTOMATIC" ? "Automatic" : "Manual"}</small>
-                <span className="ss-product-card__meta">
-                  <em>{bike.available ? "Available" : "Unavailable"}</em>
-                  <b>Request only</b>
-                </span>
-                <span className="ss-product-card__action">Request this bike <b aria-hidden="true">→</b></span>
-              </span>
-            </Link>
-          ))}
+          <BikeFleetShowcase bikes={bikes} />
 
           <div className="ss-proof-card" data-cursor-depth>
             <div className="ss-proof-card__intro">

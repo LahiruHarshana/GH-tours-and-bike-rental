@@ -573,13 +573,28 @@
     background: var(--ss-orange);
   }
 
-  .ss-signature-reel .story-reel__card-mark,
+  .ss-signature-reel .story-reel__card-mark {
+    color: #f5f4f2;
+  }
+
   .ss-signature-reel .story-reel__place-si {
     color: var(--ss-orange);
   }
 
   .ss-signature-reel .story-reel__copy h3 {
     max-width: 12ch;
+  }
+
+  .ss-bike-fleet[data-scroll-motion] {
+    transform:
+      translate3d(0, calc(var(--motion-progress, 0) * 1.4rem), 0)
+      scale(calc(1.01 - (var(--motion-progress, 0) * .015)));
+    opacity: calc(1 - (var(--motion-progress, 0) * .12));
+  }
+
+  .bikes-page-client__detail {
+    transform: translate3d(0, calc((1 - var(--p, 0)) * 1.5rem), 0);
+    opacity: calc(.2 + var(--p, 0) * .8);
   }
 }
 

@@ -93,7 +93,7 @@
 /* Make home-page rental cards clearly actionable. */
 .ss-product-card--link {
   display: block;
-  color: inherit;
+  color: var(--ss-ink);
 }
 
 .ss-product-card__action {
@@ -103,13 +103,14 @@
   gap: 1rem;
   margin-top: 1rem;
   padding-top: .9rem;
-  border-top: 1px solid rgb(255 255 255 / .18);
-  color: rgb(255 255 255 / .82);
+  border-top: 1px solid rgb(8 9 9 / .1);
+  color: var(--ss-ink);
   font-size: .72rem;
   font-weight: 650;
 }
 
 .ss-product-card__action b {
+  color: var(--ss-orange);
   font-size: 1rem;
   transition: transform .2s ease;
 }

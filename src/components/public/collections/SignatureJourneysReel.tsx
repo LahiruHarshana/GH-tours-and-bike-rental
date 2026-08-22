@@ -113,7 +113,7 @@ export function SignatureJourneysReel() {
           <div className="story-reel__chrome" aria-hidden="true">
             <span className="story-reel__chrome-label">
               <i />
-              Seven places · one custom route
+              {frames[activeIndex]?.name ?? "Signature journeys"} · {frames[activeIndex]?.region}
             </span>
             <span className="story-reel__chrome-count">
               {String(activeIndex + 1).padStart(2, "0")} <i /> {String(frames.length).padStart(2, "0")}
@@ -178,13 +178,13 @@ export function SignatureJourneysReel() {
               <button
                 key={chapter.slug}
                 type="button"
-                className="story-reel__timeline-button"
+                className="story-reel__timeline-button ss-signature-reel__timeline-button"
                 aria-label={`Jump to ${chapter.name}`}
                 aria-current={activeIndex === index ? "step" : undefined}
                 onClick={() => jumpTo(index)}
               >
-                <span aria-hidden="true">{chapter.number}</span>
-                <span className="visually-hidden">{chapter.name}</span>
+                <span className="ss-signature-reel__timeline-no" aria-hidden="true">{chapter.number}</span>
+                <span className="ss-signature-reel__timeline-name">{chapter.name}</span>
               </button>
             ))}
           </nav>
