@@ -235,7 +235,7 @@ export function BookingForm({
           </label>
           <label>
             <span>Pickup town</span>
-            <input name="pickupLocation" defaultValue={initialValues.pickupLocation} placeholder="Weligama / Galle" />
+            <input name="pickupLocation" defaultValue={initialValues.pickupLocation} placeholder="Colombo / Galle / Ella / Weligama" />
           </label>
           <label>
             <span>Licence / permit</span>

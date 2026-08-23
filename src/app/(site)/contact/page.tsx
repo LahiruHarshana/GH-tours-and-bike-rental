@@ -6,9 +6,9 @@ import { getWebsiteContent } from "@/lib/data";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Contact GH Tours & Bike Rental Weligama",
+  title: "Contact GH Tours & Bike Rental",
   description:
-    "Contact GH Tours in Weligama for Sri Lanka airport transfers, private tours and scooter or motorbike rental. Send your dates for a direct quotation.",
+    "Contact GH Tours for Sri Lanka airport transfers, private tours and scooter or motorbike rental anywhere on the island. Send your dates for a direct quotation.",
   path: "/contact",
 });
 

@@ -26,6 +26,7 @@ import "./styles/20-bike-detail-cinematic.css";
 import "./styles/20-weligama-page.css";
 import "./styles/21-site-intro-loader.css";
 import "./styles/22-mobile-responsive.css";
+import "./styles/23-tours-page.css";
 import { siteConfig } from "@/config/site";
 
 const instrumentSans = Instrument_Sans({
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
   category: "travel",
   referrer: "origin-when-cross-origin",
   title: {
-    default: "GH Tours Weligama | Sri Lanka Airport Transfers & Bike Rental",
+    default: "GH Tours | Sri Lanka Tours, Airport Transfers & Bike Rental",
     template: `%s | ${siteConfig.shortName}`,
   },
   description: siteConfig.description,
@@ -67,10 +68,10 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
   },
   keywords: [
-    "Weligama tours",
+    "Sri Lanka tours",
     "Sri Lanka airport transfer",
-    "Colombo airport to Weligama taxi",
-    "Weligama bike rental",
+    "Colombo airport taxi",
+    "Sri Lanka bike rental",
     "private tours Sri Lanka",
   ],
   formatDetection: {
@@ -79,7 +80,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "GH Tours Weligama | Sri Lanka Airport Transfers & Bike Rental",
+    title: "GH Tours | Sri Lanka Tours, Airport Transfers & Bike Rental",
     description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
@@ -90,13 +91,13 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "GH Tours & Bike Rental in Weligama, Sri Lanka",
+        alt: "GH Tours & Bike Rental — private Sri Lanka travel services",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "GH Tours Weligama | Sri Lanka Airport Transfers & Bike Rental",
+    title: "GH Tours | Sri Lanka Tours, Airport Transfers & Bike Rental",
     description: siteConfig.description,
     images: ["/og.png"],
   },

@@ -20,7 +20,7 @@ export function BikeCard({
         </span>
         <Image
           src={bike.image}
-          alt={`${bike.name} available for rental in Weligama, Sri Lanka`}
+          alt={`${bike.name} available for rental in Sri Lanka`}
           loading={index < 3 ? "eager" : "lazy"}
           decoding="async"
           width={1920}

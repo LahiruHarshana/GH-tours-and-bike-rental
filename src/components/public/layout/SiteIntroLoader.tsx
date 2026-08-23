@@ -157,7 +157,7 @@ export function SiteIntroLoader() {
           <span>{progress}%</span>
         </p>
 
-        <p className="site-intro__location">Weligama · Sri Lanka</p>
+        <p className="site-intro__location">Sri Lanka</p>
       </div>
     </div>
   );

@@ -30,14 +30,10 @@ async function seed() {
     { upsert: true, new: true, setDefaultsOnInsert: true },
   );
 
-  for (const tour of demoTours) {
-    const { id: _id, ...payload } = tour;
-    void _id;
-    await TourPackage.findOneAndUpdate(
-      { slug: payload.slug },
-      payload,
-      { upsert: true, new: true, setDefaultsOnInsert: true },
-    );
+  const demoTourSlugs = demoTours.map((tour) => tour.slug);
+  const removedTours = await TourPackage.deleteMany({ slug: { $in: demoTourSlugs } });
+  if (removedTours.deletedCount > 0) {
+    console.log(`Removed ${removedTours.deletedCount} demo tour packages from the catalog.`);
   }
 
   for (const bike of demoBikes) {
@@ -66,7 +62,7 @@ async function seed() {
     );
   }
 
-  console.log(`Seed complete: ${demoTours.length} tours, ${demoBikes.length} bikes, ${demoAirportVehicles.length} airport vehicles, admin ${email}`);
+  console.log(`Seed complete: ${demoBikes.length} bikes, ${demoAirportVehicles.length} airport vehicles, admin ${email}`);
   await mongoose.disconnect();
 }
 

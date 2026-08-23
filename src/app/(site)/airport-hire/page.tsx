@@ -16,13 +16,14 @@ import {
 } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Sri Lanka Airport Transfer to Weligama & Islandwide",
+  title: "Sri Lanka Airport Transfer — Islandwide Private Taxi",
   description:
-    "Book a private CMB airport transfer to Weligama, Mirissa, Galle, Ella, Kandy or anywhere in Sri Lanka. Flight tracking, meet-and-greet and a confirmed quote.",
+    "Book a private CMB airport transfer to Galle, Ella, Kandy, Weligama, the south coast or anywhere in Sri Lanka. Flight tracking, meet-and-greet and a confirmed quote.",
   path: "/airport-hire",
   keywords: [
     "Sri Lanka airport transfer",
-    "Colombo airport to Weligama taxi",
+    "Colombo airport taxi",
+    "Sri Lanka airport transfer islandwide",
     "CMB airport transfer",
     "airport hire Sri Lanka",
     "Bandaranaike airport taxi",
@@ -33,7 +34,7 @@ const steps = [
   {
     no: "01",
     title: "Choose your town",
-    copy: "Weligama, Hikkaduwa, Hiriketiya, Arugam Bay, Kandy, Sigiriya, Bentota and nearby towns.",
+    copy: "Galle, Kandy, Ella, Weligama, Hikkaduwa, Hiriketiya, Arugam Bay, Sigiriya, Bentota and anywhere in Sri Lanka.",
   },
   {
     no: "02",
@@ -62,9 +63,9 @@ export default function AirportHirePage() {
               "@type": "Service",
               "@id": absoluteUrl("/airport-hire#service"),
               name: "Private Sri Lanka Airport Transfer",
-              alternateName: "Colombo Airport to Weligama Taxi",
+              alternateName: "Colombo Airport Private Transfer",
               description:
-                "Private airport pickup from Bandaranaike International Airport to Weligama and destinations across Sri Lanka.",
+                "Private airport pickup from Bandaranaike International Airport to destinations across Sri Lanka.",
               url: absoluteUrl("/airport-hire"),
               provider: { "@id": businessId },
               areaServed: { "@type": "Country", name: "Sri Lanka" },
@@ -95,11 +96,11 @@ export default function AirportHirePage() {
             <h1>
               Colombo airport
               <br />
-              <em>to Weligama.</em>
+              <em>to anywhere.</em>
             </h1>
             <p className="airport-hire-hero__lead">
               Flight-tracked private transfers from Bandaranaike International Airport (CMB) to
-              Weligama, the south coast and destinations across Sri Lanka.
+              destinations across Sri Lanka — south coast, hill country, east coast and beyond.
             </p>
             <ul className="airport-hire-hero__tags" aria-label="Transfer highlights">
               <li>Flight tracked</li>
@@ -211,24 +212,22 @@ export default function AirportHirePage() {
       <section className="airport-hire-guide seo-guide modern-section" aria-labelledby="airport-guide-title">
         <div className="container seo-guide__grid">
           <div data-cinema="rise">
-            <span className="eyebrow"><i />CMB to the south coast</span>
-            <h2 id="airport-guide-title">Colombo Airport to Weligama without the arrival stress.</h2>
+            <span className="eyebrow"><i />CMB airport transfers</span>
+            <h2 id="airport-guide-title">Colombo Airport transfers without the arrival stress.</h2>
           </div>
           <div className="seo-guide__copy" data-cinema="rise">
             <p>
-              Weligama is on Sri Lanka&apos;s southern coast in Matara District.
-              A private airport transfer normally follows the expressway and
-              takes around 2.5 to 3 hours, depending on traffic, weather and your
-              exact accommodation.
+              A private airport transfer from Bandaranaike International Airport (CMB) takes you
+              directly to your hotel, villa or guesthouse anywhere in Sri Lanka — with a driver who
+              tracks your flight and meets you in the arrivals hall.
             </p>
             <p>
-              Your pickup is arranged from the CMB arrivals hall. Share your
-              flight number so the driver can track changes, meet you with a
-              name board and take you directly to your hotel, villa or surf camp
-              in Weligama, Mirissa, Ahangama, Midigama or nearby.
+              Share your flight number, passenger count and destination. We confirm the vehicle,
+              meeting instructions and quotation before travel — whether you are heading to Galle,
+              Kandy, Ella, Weligama, the east coast or elsewhere on the island.
             </p>
-            <Link className="button button--dark" href="/weligama">
-              See our Weligama travel services
+            <Link className="button button--dark" href="/contact">
+              Request a transfer quote
             </Link>
           </div>
         </div>
@@ -236,16 +235,16 @@ export default function AirportHirePage() {
           <h2 id="airport-faq-title">Sri Lanka airport transfer questions</h2>
           <div>
             <details>
-              <summary>Can I book a Colombo Airport to Weligama transfer?</summary>
-              <p>Yes. Send your arrival date, flight number, passenger count and Weligama accommodation. We confirm the vehicle, meeting instructions and quotation before travel.</p>
+              <summary>Can I book a private Colombo Airport transfer?</summary>
+              <p>Yes. Send your arrival date, flight number, passenger count and destination anywhere in Sri Lanka. We confirm the vehicle, meeting instructions and quotation before travel.</p>
             </details>
             <details>
               <summary>What happens if my flight is delayed?</summary>
               <p>We use the flight number you provide to follow arrival changes and coordinate the adjusted pickup time with the driver.</p>
             </details>
             <details>
-              <summary>Do you provide airport transfers beyond Weligama?</summary>
-              <p>Yes. Private pickups and drop-offs can be arranged for Galle, Mirissa, Ahangama, Ella, Kandy, Colombo and other destinations across Sri Lanka.</p>
+              <summary>Which destinations do you cover?</summary>
+              <p>Private pickups and drop-offs can be arranged for Galle, Mirissa, Weligama, Ahangama, Ella, Kandy, Colombo, Sigiriya, Arugam Bay, Pasikuda and destinations across Sri Lanka.</p>
             </details>
             <details>
               <summary>How is the airport transfer price confirmed?</summary>

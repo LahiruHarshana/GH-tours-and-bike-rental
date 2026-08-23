@@ -15,15 +15,14 @@ export const dynamic = "force-dynamic";
 export const metadata = createPageMetadata({
   title: "Sri Lanka Tours, Airport Transfers & Bike Rental",
   description:
-    "Local travel services in Weligama, Matara: private Sri Lanka tours, CMB airport transfers to the south coast, and reliable scooter and motorbike rental.",
+    "Private Sri Lanka tours, islandwide CMB airport transfers, and reliable scooter and motorbike rental — planned by a local team.",
   path: "/",
   keywords: [
-    "GH Tours Weligama",
+    "GH Tours Sri Lanka",
     "Sri Lanka tours",
-    "Weligama tours",
     "Sri Lanka airport transfer",
-    "Weligama bike rental",
-    "tour operator Matara",
+    "Sri Lanka bike rental",
+    "private driver Sri Lanka",
   ],
 });
 
@@ -52,7 +51,7 @@ export default async function HomePage() {
               "@id": absoluteUrl("/#website"),
               url: absoluteUrl("/"),
               name: "GH Tours & Bike Rental",
-              alternateName: "GH Tours Weligama",
+              alternateName: "GH Tours Sri Lanka",
               inLanguage: "en-LK",
             },
             localBusinessSchema(),
@@ -120,7 +119,7 @@ export default async function HomePage() {
           <p className="ss-section-kicker">Arrivals</p>
           <h2 id="ss-airport-chapter-title">Land soft.<br />Start south.</h2>
           <p>
-            Private CMB transfers to the south coast — flight tracked, fixed fare,
+            Private CMB transfers islandwide — flight tracked, fixed fare,
             driver waiting. Book in minutes, confirm on WhatsApp.
           </p>
           <Link href="/airport-hire">Full airport hire details ↗</Link>
@@ -133,7 +132,6 @@ export default async function HomePage() {
           <p className="ss-section-kicker">{home.experiencesEyebrow}</p>
           <h2 id="ss-experiences-title"><Multiline text={home.experiencesTitle} /></h2>
           <p className="ss-section-copy">{home.experiencesCopy}</p>
-          <p className="ss-journeys__scroll-hint">Scroll to explore seven destinations ↓</p>
           <div className="ss-journeys__actions">
             <Link href="/custom-tour" className="ss-journeys__cta">
               Design my custom journey
@@ -142,6 +140,9 @@ export default async function HomePage() {
             <Link href="/tours" className="ss-journeys__secondary">
               Browse ready-made tours ↗
             </Link>
+          </div>
+          <div className="ss-journeys__intro-foot">
+            <p className="ss-journeys__scroll-hint">Scroll to explore seven destinations ↓</p>
           </div>
         </header>
 
@@ -153,7 +154,7 @@ export default async function HomePage() {
           <p className="ss-section-kicker ss-section-kicker--light">{home.bikeEyebrow}</p>
           <h2 id="ss-dark-title"><Multiline text={home.bikeTitle} /></h2>
           <p className="ss-catalogue-count ss-catalogue-count--dark">
-            Ride the south coast on your own rhythm — {bikes.length} bikes ready, with
+            Explore Sri Lanka on your own rhythm — {bikes.length} bikes ready, with
             a clear handover.{" "}
             <Link href="/bikes">browse the full fleet ↗</Link>
           </p>
@@ -251,7 +252,7 @@ export default async function HomePage() {
               <div>
                 <span>03 · Deep south</span>
                 <h3>Ocean<br />light</h3>
-                <small>Weligama · stay awhile</small>
+                <small>South coast · stay awhile</small>
               </div>
             </article>
           </div>
@@ -265,21 +266,21 @@ export default async function HomePage() {
 
       <section className="ss-local-intro" aria-labelledby="ss-local-title">
         <div>
-          <p className="ss-section-kicker">Based in Weligama, Matara</p>
+          <p className="ss-section-kicker">Island-wide Sri Lanka travel</p>
           <h2 id="ss-local-title">One local team.<br />Your whole Sri Lanka journey.</h2>
         </div>
         <div className="ss-local-intro__copy">
           <p>
-            GH Tours &amp; Bike Rental helps travellers begin on Sri Lanka&apos;s
-            south coast and explore further. Arrange a private transfer from
-            Bandaranaike International Airport to Weligama, collect a reliable
-            bike for local rides, or build a private island tour with one team
-            from arrival to departure.
+            GH Tours &amp; Bike Rental helps travellers explore Sri Lanka from
+            arrival to departure. Arrange a private transfer from Bandaranaike
+            International Airport to any destination, rent a reliable bike for
+            coastal or inland rides, or build a custom private tour across the
+            island with one team handling the details.
           </p>
-          <nav aria-label="Weligama travel services">
-            <Link href="/weligama">Explore Weligama services</Link>
+          <nav aria-label="Travel services">
+            <Link href="/tours">Design a custom tour</Link>
             <Link href="/airport-hire">Book an airport transfer</Link>
-            <Link href="/bikes">See Weligama bike rentals</Link>
+            <Link href="/bikes">Browse the bike fleet</Link>
           </nav>
         </div>
       </section>

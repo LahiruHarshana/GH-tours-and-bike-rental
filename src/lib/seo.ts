@@ -57,7 +57,7 @@ export function createPageMetadata({
           url: absoluteUrl(image),
           width: 1200,
           height: 630,
-          alt: `${siteConfig.name} in Weligama, Sri Lanka`,
+          alt: `${siteConfig.name} — private Sri Lanka tours, airport transfers and bike rental`,
         },
       ],
     },
@@ -118,9 +118,10 @@ export function localBusinessSchema() {
     },
     map: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Weligama, Sri Lanka")}`,
     areaServed: [
-      { "@type": "City", name: "Weligama" },
-      { "@type": "AdministrativeArea", name: "Matara District" },
       { "@type": "Country", name: "Sri Lanka" },
+      { "@type": "AdministrativeArea", name: "Southern Province" },
+      { "@type": "AdministrativeArea", name: "Central Province" },
+      { "@type": "AdministrativeArea", name: "Eastern Province" },
     ],
     knowsLanguage: ["en", "si"],
     hasOfferCatalog: {
@@ -139,7 +140,7 @@ export function localBusinessSchema() {
         },
         {
           "@type": "OfferCatalog",
-          name: "Weligama motorbike rentals",
+          name: "Sri Lanka motorbike rentals",
           url: absoluteUrl("/bikes"),
         },
       ],

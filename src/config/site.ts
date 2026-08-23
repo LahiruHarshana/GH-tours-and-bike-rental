@@ -3,7 +3,7 @@ export const siteConfig = {
   shortName: "GH Tours",
   tagline: "Ride the island. Feel the story.",
   description:
-    "Weligama-based private Sri Lanka tours, airport transfers and reliable motorbike rentals, planned by a local team in Matara.",
+    "Private Sri Lanka tours, islandwide airport transfers and reliable motorbike rentals, planned by a local team based in Matara.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ghtoursandbikerentals.com",
   phone: process.env.NEXT_PUBLIC_PHONE ?? "+94 77 131 3178",
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP ?? "94771313178",

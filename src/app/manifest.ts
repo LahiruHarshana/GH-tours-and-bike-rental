@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "GH Tours & Bike Rental",
     short_name: "GH Tours",
     description:
-      "Weligama-based Sri Lanka tours, airport transfers and motorbike rentals.",
+      "Private Sri Lanka tours, islandwide airport transfers and motorbike rentals.",
     start_url: "/",
     display: "standalone",
     background_color: "#f4f3f1",

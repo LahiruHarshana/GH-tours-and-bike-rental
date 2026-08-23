@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
           tour.title,
           "private Sri Lanka tour",
           `${tour.location} tour`,
-          "Sri Lanka tour from Weligama",
+          "Private Sri Lanka tour",
         ],
       })
     : createPageMetadata({

@@ -144,7 +144,7 @@ export function BikeFleetShowcase({ bikes }: { bikes: BikeDTO[] }) {
                   <div className="story-reel__image">
                     <Image
                       src={bike.image}
-                      alt={`${bike.name} available for rental in Weligama`}
+                      alt={`${bike.name} available for rental in Sri Lanka`}
                       width={1920}
                       height={1280}
                       sizes="100vw"

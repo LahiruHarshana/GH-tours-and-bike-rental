@@ -417,7 +417,7 @@ body {
 .ss-experiences.ss-journeys {
   padding: clamp(1.5rem, 3vw, 2.5rem) 0 0;
   text-align: left;
-  overflow: clip;
+  overflow: visible;
 }
 
 .ss-journeys__shell {
@@ -1742,14 +1742,21 @@ a.ss-product-card:hover {
 }
 
 /* Signature journeys — intro + reel layout */
+.ss-journeys__intro.ss-journeys__intro--cinema {
+  position: relative;
+  top: auto;
+}
+
 .ss-journeys__intro--cinema {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: grid;
-  gap: 1.1rem;
+  gap: 1.25rem;
   max-width: 72rem;
   margin: 0 auto;
-  padding: 0 clamp(.75rem, 1.6vw, 1.75rem) clamp(1.25rem, 2.5vw, 2rem);
+  padding:
+    0 clamp(.75rem, 1.6vw, 1.75rem)
+    clamp(2.75rem, 5vw, 4.5rem);
 }
 
 .ss-journeys__intro--cinema .ss-section-kicker {
@@ -1766,7 +1773,7 @@ a.ss-product-card:hover {
   font-size: clamp(3.6rem, 6.5vw, 7.8rem);
   font-weight: 470;
   letter-spacing: -.09em;
-  line-height: .8;
+  line-height: .9;
 }
 
 .ss-journeys__intro--cinema .ss-section-copy {
@@ -1782,35 +1789,57 @@ a.ss-product-card:hover {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem 1.35rem;
-  margin-top: .5rem;
+  gap: .75rem 1rem;
+  margin-top: .35rem;
 }
 
 .ss-journeys__secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .82rem 1.15rem;
+  border: 1px solid rgb(8 9 9 / .14);
+  border-radius: 999px;
+  background: rgb(244 243 241 / .88);
   color: var(--ss-ink);
-  font-size: .74rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .02em;
-  text-decoration: underline;
-  text-decoration-color: rgb(8 9 9 / .22);
-  text-underline-offset: .22em;
-  transition: color .25s ease;
+  text-decoration: none;
+  transition:
+    color .25s ease,
+    border-color .25s ease,
+    background .25s ease,
+    transform .25s ease;
 }
 
 .ss-journeys__secondary:hover {
+  border-color: rgb(255 129 8 / .45);
+  background: #fff;
   color: var(--ss-orange);
+  transform: translateY(-1px);
+}
+
+.ss-journeys__intro-foot {
+  display: grid;
+  gap: .65rem;
+  margin-top: .15rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid rgb(8 9 9 / .1);
 }
 
 .ss-journeys__scroll-hint {
-  margin: .25rem 0 0;
-  color: var(--ss-orange);
+  margin: 0;
+  color: var(--ss-muted);
   font-size: .68rem;
   font-weight: 700;
   letter-spacing: .08em;
+  line-height: 1.45;
   text-transform: uppercase;
 }
 
 .ss-signature-reel.story-reel {
+  position: relative;
   min-height: 760vh;
   margin-top: 0;
   background:
@@ -1819,7 +1848,20 @@ a.ss-product-card:hover {
     #0a0a0a;
 }
 
+.ss-signature-reel.story-reel::before {
+  content: "";
+  position: absolute;
+  z-index: 25;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(2.5rem, 5vw, 4rem);
+  background: linear-gradient(180deg, var(--ss-bg) 0%, rgb(231 229 227 / .72) 42%, transparent 100%);
+  pointer-events: none;
+}
+
 .ss-signature-reel .story-reel__sticky {
+  overflow: visible;
   background: transparent;
 }
 
@@ -1974,19 +2016,22 @@ a.ss-product-card:hover {
 
 .ss-signature-reel__cta {
   position: absolute;
-  z-index: 26;
+  z-index: 27;
   top: calc(var(--header-height, 5rem) + 2.25rem);
   right: var(--page-gutter, 1.5rem);
   display: inline-flex;
   align-items: center;
   gap: .55rem;
+  max-width: min(16rem, 42vw);
   padding: .72rem 1.1rem;
   border-radius: 999px;
   background: var(--ss-orange);
+  box-shadow: 0 .65rem 1.6rem rgb(0 0 0 / .28);
   color: #111;
   font-size: .62rem;
   font-weight: 800;
   letter-spacing: .06em;
+  line-height: 1.35;
   text-transform: uppercase;
   transition: transform .3s cubic-bezier(.2, .8, .2, 1), background .25s ease;
 }
@@ -2029,11 +2074,22 @@ a.ss-product-card:hover {
 @media (max-width: 760px) {
   .ss-journeys__intro--cinema h2 {
     font-size: clamp(3.2rem, 14vw, 5rem);
+    line-height: .92;
+  }
+
+  .ss-journeys__intro--cinema {
+    padding-bottom: clamp(2.25rem, 8vw, 3.25rem);
   }
 
   .ss-journeys__actions {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+  }
+
+  .ss-journeys__cta,
+  .ss-journeys__secondary {
+    justify-content: center;
+    width: 100%;
   }
 
   .ss-signature-reel.story-reel {
