@@ -119,8 +119,14 @@
   align-items: flex-end;
   justify-content: flex-start;
   padding: 0 var(--page-gutter) clamp(6.7rem, 11vh, 9rem);
+  pointer-events: none;
   transform: translate3d(0, calc(var(--f, 0) * -2rem), 0);
   transition: opacity .24s linear;
+}
+
+.story-reel__copy.is-active {
+  z-index: 2;
+  pointer-events: auto;
 }
 
 .story-reel__copy-card {
@@ -303,7 +309,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .story-reel__chrome { display: none; }
-  .story-reel__copy { padding: 0; }
+  .story-reel__copy {
+    pointer-events: auto;
+    padding: 0;
+  }
   .story-reel__copy-card {
     width: 100%;
     border: 0;

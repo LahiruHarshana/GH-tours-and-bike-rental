@@ -337,7 +337,7 @@ export function ScrollExperience() {
         el.style.setProperty("--f-abs", Math.abs(local).toFixed(4));
         el.classList.toggle("is-active", index === nearest);
         el.style.opacity = Math.abs(local) >= 1 ? "0" : "";
-        el.style.pointerEvents = Math.abs(local) >= 1 ? "none" : "auto";
+        el.style.pointerEvents = index === nearest ? "auto" : "none";
       });
     };
 

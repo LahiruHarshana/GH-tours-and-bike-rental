@@ -2132,7 +2132,19 @@ a.ss-product-card:hover {
   color: var(--ss-orange);
 }
 
+.ss-bike-reel .story-reel__content-layer {
+  z-index: 14;
+  pointer-events: none;
+}
+
+.ss-bike-reel .story-reel__copy.is-active {
+  z-index: 2;
+  pointer-events: auto;
+}
+
 .ss-bike-reel .story-reel__copy-card {
+  position: relative;
+  z-index: 1;
   width: min(38rem, 52vw);
   border: 1px solid rgb(255 255 255 / .22);
   border-radius: 1.15rem;
@@ -2253,6 +2265,7 @@ a.ss-product-card:hover {
 .ss-bike-reel__timeline.story-reel__timeline {
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: .4rem;
+  pointer-events: auto;
 }
 
 .ss-bike-reel__timeline-button {
@@ -2305,6 +2318,7 @@ a.ss-product-card:hover {
   font-weight: 800;
   letter-spacing: .06em;
   text-transform: uppercase;
+  pointer-events: auto;
   transition: transform .3s cubic-bezier(.2, .8, .2, 1), background .25s ease;
 }
 
