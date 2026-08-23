@@ -1465,7 +1465,7 @@
 /* Home-page airport booking */
 .ss-airport-booking {
   scroll-margin-top: 6.5rem;
-  padding: 0 clamp(.65rem, 1.5vw, 1.5rem) clamp(4rem, 7vw, 7rem);
+  padding: 0 clamp(.65rem, 1.5vw, 1.5rem) clamp(1.5rem, 3vw, 2.5rem);
   background: var(--ss-bg);
   color: var(--ss-ink);
   font-family: var(--body);

@@ -415,7 +415,7 @@ body {
 
 /* Signature journeys — cinematic destination reel */
 .ss-experiences.ss-journeys {
-  padding: clamp(5rem, 9vw, 9rem) 0 0;
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0 0;
   text-align: left;
   overflow: clip;
 }
@@ -1451,7 +1451,7 @@ a.ss-product-card:hover {
   }
 
   .ss-experiences.ss-journeys {
-    padding-block: 5rem 5.5rem;
+    padding-block: 2rem 4rem;
   }
 
   .ss-journeys__shell {
@@ -1749,7 +1749,7 @@ a.ss-product-card:hover {
   gap: 1.1rem;
   max-width: 72rem;
   margin: 0 auto;
-  padding: 0 clamp(.75rem, 1.6vw, 1.75rem) clamp(2.5rem, 5vw, 4rem);
+  padding: 0 clamp(.75rem, 1.6vw, 1.75rem) clamp(1.25rem, 2.5vw, 2rem);
 }
 
 .ss-journeys__intro--cinema .ss-section-kicker {
