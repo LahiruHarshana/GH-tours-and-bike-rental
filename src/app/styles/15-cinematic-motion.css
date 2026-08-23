@@ -597,9 +597,40 @@
     box-shadow: 0 2.4rem 6rem rgb(0 0 0 / .38);
   }
 
+  .bike-cinema[data-scroll-motion] .bike-cinema__content {
+    transform: translate3d(0, calc((1 - var(--motion-progress, 0)) * 2.2rem), 0);
+    opacity: calc(.25 + var(--motion-progress, 0) * .75);
+  }
+
+  .bike-cinema[data-scroll-motion] .bike-cinema__image {
+    transform:
+      scale(calc(1.08 - var(--motion-progress, 0) * .06))
+      translate3d(0, calc(var(--motion-progress, 0) * -1.8rem), 0);
+  }
+
+  .bike-cinema[data-scroll-motion] .bike-cinema__number {
+    transform: translate3d(calc(var(--motion-progress, 0) * 2rem), calc(var(--motion-progress, 0) * -1rem), 0);
+    opacity: calc(.04 + var(--motion-progress, 0) * .06);
+  }
+
   .bikes-page-client__detail {
     transform: translate3d(0, calc((1 - var(--p, 0)) * 1.5rem), 0);
-    opacity: calc(.2 + var(--p, 0) * .8);
+    opacity: calc(.15 + var(--p, 0) * .85);
+  }
+
+  .bikes-page-client__picker-shell[data-scroll-motion],
+  .bikes-page-client__picker-shell {
+    transform: translate3d(0, calc((1 - var(--p, 0)) * 1rem), 0);
+    opacity: calc(.4 + var(--p, 0) * .6);
+  }
+
+  .cinema-enabled .bike-cinema__spec[data-cinema="rise"].is-cinema-visible {
+    animation: ss-journeys-mood-in .7s var(--ease-island) both;
+    animation-delay: var(--cinema-delay, 0ms);
+  }
+
+  .cinema-enabled .bikes-page-client__picker[data-cinema="rise"].is-cinema-visible {
+    animation: ss-journeys-mood-in .65s var(--ease-island) both;
   }
 }
 

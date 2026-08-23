@@ -61,13 +61,17 @@ export default async function BikesPage() {
       />
       <section className="inner-hero inner-hero--bikes modern-section"><div className="container inner-hero__grid"><Reveal><div><span className="eyebrow eyebrow--light"><i />Bike rental Weligama</span><h1>Two wheels.<br /><em>One southern coast.</em></h1><p>Reliable scooter and motorbike rental in Weligama, with safety gear, a clear handover and local support for your ride.</p></div></Reveal><Reveal delay={100} className="inner-hero__art" direction="right"><figure data-scroll-motion><Image src="/images/bike-road.webp" alt="Motorbike rental for exploring Weligama and Sri Lanka's south coast"  width={1920} height={1280} sizes="(max-width: 1024px) 100vw, 50vw"/><figcaption><span>Weligama · Matara</span><strong>Helmet · Handover · Support</strong></figcaption></figure></Reveal></div></section>
       <ServiceBar active="bikes" />
-      <section className="section section--sand modern-section bikes-fleet-section">
+      <section className="section section--sand modern-section bikes-fleet-section" data-chapter="BIKE FLEET">
         <div className="container fleet-intro">
-          <div>
-            <span className="eyebrow"><i />Our fleet</span>
-            <h2>Choose the bike that fits your road.</h2>
-          </div>
-          <p>Select a model to see full details, then send a request. We confirm availability, licence requirements, deposit and final price before pickup.</p>
+          <Reveal>
+            <div>
+              <span className="eyebrow"><i />Our fleet</span>
+              <h2>Choose the bike that fits your road.</h2>
+            </div>
+          </Reveal>
+          <Reveal delay={80}>
+            <p>Select a model to see full details, then send a request. We confirm availability, licence requirements, deposit and final price before pickup.</p>
+          </Reveal>
         </div>
         <div className="container">
           {bikes.length > 0 ? (

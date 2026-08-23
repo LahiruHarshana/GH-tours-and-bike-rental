@@ -21,6 +21,7 @@ import "./styles/15-cinematic-motion.css";
 import "./styles/16-admin-editorial.css";
 import "./styles/17-custom-tours.css";
 import "./styles/18-airport-vehicles.css";
+import "./styles/20-bike-detail-cinematic.css";
 import { siteConfig } from "@/config/site";
 
 const instrumentSans = Instrument_Sans({
