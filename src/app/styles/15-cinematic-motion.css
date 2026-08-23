@@ -597,6 +597,40 @@
     box-shadow: 0 2.4rem 6rem rgb(0 0 0 / .38);
   }
 
+  .airport-hire-hero[data-scroll-motion] .airport-hire-hero__shell {
+    transform: translate3d(0, calc((1 - var(--motion-progress, 0)) * 2rem), 0);
+    opacity: calc(.35 + var(--motion-progress, 0) * .65);
+  }
+
+  .airport-hire-fares__shell[data-scroll-motion] {
+    transform: translate3d(0, calc((1 - var(--motion-progress, 0)) * 1.5rem), 0);
+    opacity: calc(.4 + var(--motion-progress, 0) * .6);
+  }
+
+  .cinema-enabled .airport-hire-steps__card[data-cinema="rise"].is-cinema-visible {
+    animation: ss-journeys-mood-in .75s var(--ease-island) both;
+  }
+
+  .cinema-enabled .airport-hire-steps__card[data-cinema="rise"]:nth-child(2).is-cinema-visible {
+    animation-delay: 70ms;
+  }
+
+  .cinema-enabled .airport-hire-steps__card[data-cinema="rise"]:nth-child(3).is-cinema-visible {
+    animation-delay: 140ms;
+  }
+
+  .cinema-enabled .airport-hire-fleet .vehicle-gallery__card[data-cinema="rise"].is-cinema-visible {
+    animation: ss-journeys-mood-in .7s var(--ease-island) both;
+  }
+
+  .cinema-enabled .airport-hire-fleet .vehicle-gallery__card[data-cinema="rise"]:nth-child(2).is-cinema-visible {
+    animation-delay: 60ms;
+  }
+
+  .cinema-enabled .airport-hire-fleet .vehicle-gallery__card[data-cinema="rise"]:nth-child(3).is-cinema-visible {
+    animation-delay: 120ms;
+  }
+
   .bike-cinema[data-scroll-motion] .bike-cinema__content {
     transform: translate3d(0, calc((1 - var(--motion-progress, 0)) * 2.2rem), 0);
     opacity: calc(.25 + var(--motion-progress, 0) * .75);

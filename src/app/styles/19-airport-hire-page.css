@@ -1,0 +1,465 @@
+/* Airport hire — cinematic landing page */
+
+.airport-hire-hero {
+  position: relative;
+  overflow: clip;
+  min-height: clamp(34rem, 72vh, 48rem);
+  padding: clamp(7.5rem, 12vw, 10rem) clamp(.75rem, 1.6vw, 1.75rem) clamp(3rem, 6vw, 5rem);
+  color: #f5f4f2;
+  background: #080909;
+}
+
+.airport-hire-hero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.airport-hire-hero__backdrop::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(115deg, rgb(8 9 9 / .88) 0%, rgb(8 9 9 / .52) 42%, rgb(8 9 9 / .28) 100%),
+    linear-gradient(180deg, rgb(8 9 9 / .35) 0%, transparent 28%, rgb(8 9 9 / .72) 100%);
+  content: "";
+  pointer-events: none;
+}
+
+.airport-hire-hero__image {
+  object-fit: cover;
+  object-position: center 42%;
+  transform: scale(calc(1.06 - var(--motion-progress, 0) * .05));
+  filter: saturate(1.04) contrast(1.03) brightness(.82);
+  transition: transform .2s linear;
+}
+
+.airport-hire-hero__shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1.5rem;
+  max-width: 72rem;
+}
+
+.airport-hire-hero__eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: .55rem;
+  padding: .42rem .72rem;
+  border: 1px solid rgb(255 129 8 / .35);
+  border-radius: 999px;
+  background: rgb(255 129 8 / .12);
+  color: var(--ss-orange);
+  font-size: .64rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.airport-hire-hero h1 {
+  max-width: 11ch;
+  margin: 0;
+  font-size: clamp(3.8rem, 8vw, 7.8rem);
+  font-weight: 470;
+  letter-spacing: -.09em;
+  line-height: .8;
+}
+
+.airport-hire-hero h1 em {
+  color: var(--ss-orange);
+  font-style: normal;
+}
+
+.airport-hire-hero__lead {
+  max-width: 38rem;
+  margin: 0;
+  color: rgb(245 244 242 / .78);
+  font-size: clamp(.92rem, 1.15vw, 1.05rem);
+  line-height: 1.58;
+}
+
+.airport-hire-hero__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin: .25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.airport-hire-hero__tags li {
+  padding: .38rem .72rem;
+  border: 1px solid rgb(255 255 255 / .14);
+  border-radius: 999px;
+  background: rgb(255 255 255 / .06);
+  color: rgb(245 244 242 / .82);
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.airport-hire-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  width: fit-content;
+  margin-top: .5rem;
+  padding: .85rem 1.2rem;
+  border-radius: 999px;
+  background: var(--ss-orange);
+  color: #111;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1), background .25s ease;
+}
+
+.airport-hire-hero__cta:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+.airport-hire-quickbook {
+  scroll-margin-top: 6rem;
+  padding: 0 clamp(.65rem, 1.5vw, 1.5rem) clamp(2rem, 4vw, 3rem);
+  background: var(--ss-bg);
+}
+
+.airport-hire-quickbook .airport-quick-book {
+  border: 1px solid rgb(8 9 9 / .08);
+  box-shadow: 0 2rem 5.5rem -3rem rgb(0 0 0 / .28);
+}
+
+.airport-hire-steps {
+  padding: clamp(3.5rem, 6vw, 5.5rem) clamp(.75rem, 1.6vw, 1.75rem);
+  background: var(--ss-bg);
+}
+
+.airport-hire-steps__head {
+  display: grid;
+  gap: .85rem;
+  max-width: 42rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.airport-hire-steps__head .eyebrow {
+  margin: 0;
+}
+
+.airport-hire-steps__head h2 {
+  margin: 0;
+  font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+  font-weight: 510;
+  letter-spacing: -.07em;
+  line-height: .9;
+}
+
+.airport-hire-steps__head p {
+  margin: 0;
+  color: var(--ss-muted);
+  font-size: .95rem;
+  line-height: 1.55;
+}
+
+.airport-hire-steps__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem;
+}
+
+.airport-hire-steps__card {
+  display: grid;
+  gap: .85rem;
+  min-height: 14rem;
+  padding: 1.5rem;
+  border: 1px solid var(--ss-line);
+  border-radius: calc(var(--ss-radius) - .35rem);
+  background: var(--ss-paper);
+  box-shadow: 0 1.2rem 3rem -2.2rem rgb(0 0 0 / .12);
+}
+
+.airport-hire-steps__card:first-child {
+  background: var(--ss-ink);
+  color: #f5f4f2;
+}
+
+.airport-hire-steps__card:first-child p {
+  color: rgb(245 244 242 / .72);
+}
+
+.airport-hire-steps__card span {
+  color: var(--ss-orange);
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.airport-hire-steps__card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 650;
+  letter-spacing: -.03em;
+}
+
+.airport-hire-steps__card p {
+  margin: 0;
+  color: var(--ss-muted);
+  font-size: .84rem;
+  line-height: 1.5;
+}
+
+.airport-hire-booking {
+  padding: clamp(3.5rem, 6vw, 5.5rem) clamp(.75rem, 1.6vw, 1.75rem);
+  background: var(--ss-paper);
+}
+
+.airport-hire-booking__grid {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(22rem, 1.1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.airport-hire-booking__copy {
+  display: grid;
+  gap: 1rem;
+}
+
+.airport-hire-booking__copy h2 {
+  max-width: 12ch;
+  margin: 0;
+  font-size: clamp(2.6rem, 4.5vw, 4.4rem);
+  font-weight: 510;
+  letter-spacing: -.075em;
+  line-height: .9;
+}
+
+.airport-hire-booking__copy > p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--ss-muted);
+  font-size: .94rem;
+  line-height: 1.55;
+}
+
+.airport-hire-booking__list {
+  display: grid;
+  gap: .55rem;
+  margin: .5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.airport-hire-booking__list li {
+  display: flex;
+  align-items: baseline;
+  gap: .55rem;
+  color: #5f564e;
+  font-size: .82rem;
+}
+
+.airport-hire-booking__list li::before {
+  color: var(--ss-orange);
+  content: "✓";
+  font-weight: 800;
+}
+
+.airport-hire-booking__panel {
+  overflow: hidden;
+  border: 1px solid var(--ss-line);
+  border-radius: var(--ss-radius);
+  background: var(--ss-paper);
+  box-shadow: 0 2rem 5rem -3rem rgb(0 0 0 / .18);
+}
+
+.airport-hire-booking__panel-head {
+  padding: 1.5rem 1.6rem 1.1rem;
+  border-bottom: 1px solid var(--ss-line);
+  background: var(--ss-ink);
+  color: #f5f4f2;
+}
+
+.airport-hire-booking__panel-head strong {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 650;
+  letter-spacing: -.03em;
+}
+
+.airport-hire-booking__panel-head small {
+  display: block;
+  margin-top: .35rem;
+  color: rgb(245 244 242 / .68);
+  font-size: .76rem;
+}
+
+.airport-hire-booking__panel .booking-form {
+  padding: 1.35rem 1.35rem 1.5rem;
+}
+
+.airport-hire-fleet {
+  margin: .7rem;
+  padding: clamp(4rem, 7vw, 6rem) clamp(1rem, 2vw, 2rem);
+  overflow: clip;
+  border-radius: var(--ss-radius);
+  background:
+    radial-gradient(circle at 82% 8%, rgb(255 129 8 / .14), transparent 24%),
+    radial-gradient(circle at 10% 92%, rgb(255 255 255 / .04), transparent 20%),
+    #080909;
+  color: #f5f4f2;
+}
+
+.airport-hire-fleet__head {
+  display: grid;
+  gap: .75rem;
+  max-width: 38rem;
+  margin-bottom: 2rem;
+}
+
+.airport-hire-fleet__head .eyebrow {
+  color: var(--ss-orange);
+}
+
+.airport-hire-fleet__head h2 {
+  margin: 0;
+  font-size: clamp(2.6rem, 4.8vw, 4.6rem);
+  font-weight: 510;
+  letter-spacing: -.075em;
+  line-height: .9;
+}
+
+.airport-hire-fleet__head p {
+  margin: 0;
+  color: rgb(245 244 242 / .68);
+  font-size: .92rem;
+  line-height: 1.55;
+}
+
+.airport-hire-fleet .vehicle-gallery--taxi {
+  margin-top: 0;
+}
+
+.airport-hire-fleet .vehicle-gallery__card {
+  border-color: rgb(255 255 255 / .1);
+  background: rgb(248 247 244 / .96);
+  color: var(--ss-ink);
+  transform: translate3d(0, calc((1 - var(--motion-progress, 1)) * 1.2rem), 0);
+  transition:
+    transform .5s cubic-bezier(.2, .8, .2, 1),
+    border-color .25s ease,
+    box-shadow .35s ease;
+}
+
+.airport-hire-fleet .vehicle-gallery__card:hover {
+  border-color: rgb(255 129 8 / .4);
+  box-shadow: 0 1.5rem 4rem -2rem rgb(0 0 0 / .35);
+  transform: translateY(-.35rem);
+}
+
+.airport-hire-fares {
+  padding: clamp(4rem, 7vw, 6rem) clamp(.75rem, 1.6vw, 1.75rem);
+  background: var(--ss-bg);
+}
+
+.airport-hire-fares__head {
+  display: grid;
+  gap: .75rem;
+  max-width: 40rem;
+  margin-bottom: 2rem;
+}
+
+.airport-hire-fares__head h2 {
+  margin: 0;
+  font-size: clamp(2.4rem, 4.5vw, 4rem);
+  font-weight: 510;
+  letter-spacing: -.07em;
+  line-height: .9;
+}
+
+.airport-hire-fares__shell {
+  overflow: hidden;
+  border: 1px solid var(--ss-line);
+  border-radius: calc(var(--ss-radius) - .25rem);
+  background: var(--ss-paper);
+  box-shadow: 0 1.5rem 4rem -3rem rgb(0 0 0 / .12);
+}
+
+.airport-hire-fares__shell .admin-table-wrap {
+  overflow-x: auto;
+}
+
+.airport-hire-fares__shell .airport-fare-table-wrap {
+  margin: 0;
+  padding: 1.25rem 1.25rem 1.5rem;
+}
+
+.airport-hire-fares__shell .airport-fare-table-wrap > p {
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ss-line);
+  color: var(--ss-muted);
+  font-size: .82rem;
+  line-height: 1.55;
+}
+
+.airport-hire-guide {
+  padding: clamp(4rem, 6vw, 6rem) clamp(.75rem, 1.6vw, 1.75rem) clamp(5rem, 8vw, 7rem);
+  border-top: 1px solid var(--ss-line);
+  background: var(--ss-paper);
+}
+
+.airport-hire-guide .seo-guide__grid h2 {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+}
+
+.airport-hire-guide .seo-faq {
+  margin-top: clamp(3rem, 5vw, 4.5rem);
+}
+
+.airport-hire-guide details {
+  border-color: var(--ss-line);
+  background: var(--ss-bg);
+}
+
+@media (max-width: 1020px) {
+  .airport-hire-steps__grid,
+  .airport-hire-booking__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .airport-hire-booking__panel {
+    width: min(100%, 44rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .airport-hire-hero {
+    min-height: 0;
+    padding-top: 7rem;
+  }
+
+  .airport-hire-hero h1 {
+    font-size: clamp(3rem, 14vw, 4.2rem);
+  }
+
+  .airport-hire-fleet {
+    margin-inline: .45rem;
+  }
+
+  .airport-hire-steps__card {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .airport-hire-hero__image {
+    transform: none;
+  }
+
+  .airport-hire-fleet .vehicle-gallery__card {
+    transform: none;
+  }
+}

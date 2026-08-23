@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { AirportQuickBook } from "@/components/booking/AirportQuickBook";
 import { BookingForm } from "@/components/booking/BookingForm";
 import { Reveal } from "@/components/public/motion/Reveal";
-import { ServiceBar } from "@/components/public/navigation/ServiceBar";
-import { AirportVehicleGallery } from "@/components/public/collections/AirportVehicleGallery";
 import { AirportFareTable } from "@/components/public/collections/AirportFareTable";
+import { AirportVehicleGallery } from "@/components/public/collections/AirportVehicleGallery";
+import { ServiceBar } from "@/components/public/navigation/ServiceBar";
 import { JsonLd } from "@/components/seo/JsonLd";
 import {
   absoluteUrl,
@@ -12,7 +14,6 @@ import {
   businessId,
   createPageMetadata,
 } from "@/lib/seo";
-import Image from "next/image";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Sri Lanka Airport Transfer to Weligama & Islandwide",
@@ -27,6 +28,24 @@ export const metadata: Metadata = createPageMetadata({
     "Bandaranaike airport taxi",
   ],
 });
+
+const steps = [
+  {
+    no: "01",
+    title: "Choose your town",
+    copy: "Weligama, Hikkaduwa, Hiriketiya, Arugam Bay, Kandy, Sigiriya, Bentota and nearby towns.",
+  },
+  {
+    no: "02",
+    title: "Pick a vehicle",
+    copy: "Budget or premium car for 1–3 people, or a van for up to 7.",
+  },
+  {
+    no: "03",
+    title: "Meet your driver",
+    copy: "Your name board is waiting in the arrivals hall—even when the flight is delayed.",
+  },
+] as const;
 
 export default function AirportHirePage() {
   return (
@@ -58,52 +77,144 @@ export default function AirportHirePage() {
           ],
         }}
       />
-      <section className="inner-hero inner-hero--airport modern-section">
-        <div className="container inner-hero__grid">
-          <Reveal><div><span className="eyebrow eyebrow--light"><i />Sri Lanka airport transfer</span><h1>Colombo airport<br /><em>to Weligama.</em></h1><p>Flight-tracked private transfers from Bandaranaike International Airport (CMB) to Weligama, the south coast and destinations across Sri Lanka.</p></div></Reveal>
-          <Reveal delay={100} className="inner-hero__art" direction="right"><figure data-scroll-motion><Image src="/images/south-coast.webp" alt="Private airport transfer to Weligama on Sri Lanka's south coast"  width={1920} height={1280} sizes="(max-width: 1024px) 100vw, 50vw"/><figcaption><span>CMB → Weligama</span><strong>Flight tracked · Driver waiting</strong></figcaption></figure></Reveal>
+
+      <section className="airport-hire-hero modern-section" data-scroll-motion data-range="enter">
+        <div className="airport-hire-hero__backdrop" aria-hidden="true">
+          <Image
+            src="/images/south-coast.webp"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="airport-hire-hero__image"
+          />
+        </div>
+        <div className="container airport-hire-hero__shell">
+          <Reveal>
+            <span className="airport-hire-hero__eyebrow">Sri Lanka airport transfer</span>
+            <h1>
+              Colombo airport
+              <br />
+              <em>to Weligama.</em>
+            </h1>
+            <p className="airport-hire-hero__lead">
+              Flight-tracked private transfers from Bandaranaike International Airport (CMB) to
+              Weligama, the south coast and destinations across Sri Lanka.
+            </p>
+            <ul className="airport-hire-hero__tags" aria-label="Transfer highlights">
+              <li>Flight tracked</li>
+              <li>Meet &amp; greet</li>
+              <li>Fixed fare in LKR</li>
+            </ul>
+            <Link href="#book" className="airport-hire-hero__cta">
+              Book your transfer
+              <span aria-hidden="true">↗</span>
+            </Link>
+          </Reveal>
         </div>
       </section>
+
       <ServiceBar active="airport" />
-      <section className="section airport-page modern-section">
-        <div className="container airport-page__grid">
-          <Reveal className="airport-page__copy">
-            <span className="eyebrow"><i />Simple from the start</span>
-            <h2>Private airport pickup, planned before you land.</h2>
-            <p>Choose the town you are heading to, then a budget car, premium car or van. The fare is shown in Sri Lankan rupees before you send the request.</p>
-            <div className="process-list">
-              <article><span>01</span><div><h3>Choose your town</h3><p>Weligama, Hikkaduwa, Hiriketiya, Arugam Bay, Kandy, Sigiriya, Bentota and nearby towns.</p></div></article>
-              <article><span>02</span><div><h3>Pick a vehicle</h3><p>Budget or premium car for 1–3 people, or a van for up to 7.</p></div></article>
-              <article><span>03</span><div><h3>Meet your driver</h3><p>Your name board is waiting in the arrivals hall—even when the flight is delayed.</p></div></article>
-            </div>
+
+      <section
+        id="book"
+        className="airport-hire-quickbook ss-airport-booking modern-section"
+        aria-label="Quick airport booking"
+      >
+        <div className="container">
+          <Reveal>
+            <AirportQuickBook />
           </Reveal>
-          <Reveal delay={100} className="booking-panel">
-            <div className="booking-panel__head"><span>Airport transfer request</span><small>We normally reply within 15–30 minutes.</small></div>
+        </div>
+      </section>
+
+      <section className="airport-hire-steps modern-section" data-scroll-motion aria-labelledby="airport-steps-title">
+        <div className="container">
+          <header className="airport-hire-steps__head" data-cinema="rise">
+            <span className="eyebrow"><i />Simple from the start</span>
+            <h2 id="airport-steps-title">Private airport pickup, planned before you land.</h2>
+            <p>
+              Choose the town you are heading to, then a budget car, premium car or van. The fare
+              is shown in Sri Lankan rupees before you send the request.
+            </p>
+          </header>
+          <div className="airport-hire-steps__grid">
+            {steps.map((step, index) => (
+              <article
+                key={step.no}
+                className="airport-hire-steps__card"
+                data-cinema="rise"
+                style={{ transitionDelay: `${index * 80}ms` }}
+              >
+                <span>{step.no}</span>
+                <h3>{step.title}</h3>
+                <p>{step.copy}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="airport-hire-booking modern-section" aria-labelledby="airport-request-title">
+        <div className="container airport-hire-booking__grid">
+          <Reveal className="airport-hire-booking__copy">
+            <span className="eyebrow"><i />Full request form</span>
+            <h2 id="airport-request-title">Send every detail in one request.</h2>
+            <p>
+              Add your flight number, hotel name and vehicle choice. We confirm the driver,
+              meeting point and final fare on WhatsApp—usually within 15–30 minutes.
+            </p>
+            <ul className="airport-hire-booking__list">
+              <li>Listed fares in Sri Lankan rupees</li>
+              <li>Budget car, premium car or van</li>
+              <li>Flight delays tracked automatically</li>
+            </ul>
+          </Reveal>
+          <Reveal delay={100} className="airport-hire-booking__panel">
+            <div className="airport-hire-booking__panel-head">
+              <strong>Airport transfer request</strong>
+              <small>We normally reply within 15–30 minutes.</small>
+            </div>
             <BookingForm type="AIRPORT" />
           </Reveal>
         </div>
       </section>
-      <section className="route-prices modern-section">
+
+      <section
+        className="airport-hire-fleet modern-section"
+        data-scroll-motion
+        aria-labelledby="airport-fleet-title"
+      >
         <div className="container">
-          <span className="eyebrow"><i />Sized to your group</span>
-          <h2>Budget car, premium car or van.</h2>
+          <header className="airport-hire-fleet__head" data-cinema="rise">
+            <span className="eyebrow"><i />Sized to your group</span>
+            <h2 id="airport-fleet-title">Budget car, premium car or van.</h2>
+            <p>Private vehicles with meet-and-greet, luggage space and a clear quoted fare before you travel.</p>
+          </header>
           <AirportVehicleGallery />
         </div>
       </section>
-      <section className="route-prices modern-section">
+
+      <section className="airport-hire-fares modern-section" aria-labelledby="airport-fares-title">
         <div className="container">
-          <span className="eyebrow"><i />Listed fares from CMB</span>
-          <h2>Check the price for your town, then book.</h2>
-          <AirportFareTable />
+          <header className="airport-hire-fares__head" data-cinema="rise">
+            <span className="eyebrow"><i />Listed fares from CMB</span>
+            <h2 id="airport-fares-title">Check the price for your town, then book.</h2>
+          </header>
+          <div className="airport-hire-fares__shell" data-scroll-motion data-range="enter">
+            <p className="airport-hire-fares__hint">Swipe to compare fares →</p>
+            <AirportFareTable />
+          </div>
         </div>
       </section>
-      <section className="section seo-guide modern-section" aria-labelledby="airport-guide-title">
+
+      <section className="airport-hire-guide seo-guide modern-section" aria-labelledby="airport-guide-title">
         <div className="container seo-guide__grid">
-          <div>
+          <div data-cinema="rise">
             <span className="eyebrow"><i />CMB to the south coast</span>
             <h2 id="airport-guide-title">Colombo Airport to Weligama without the arrival stress.</h2>
           </div>
-          <div className="seo-guide__copy">
+          <div className="seo-guide__copy" data-cinema="rise">
             <p>
               Weligama is on Sri Lanka&apos;s southern coast in Matara District.
               A private airport transfer normally follows the expressway and

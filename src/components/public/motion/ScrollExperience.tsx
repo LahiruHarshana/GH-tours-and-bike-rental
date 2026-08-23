@@ -38,6 +38,8 @@ const REVEAL_SELECTOR = [
   ".highlight-grid > div",
   ".seo-faq details",
   ".weligama-route-list > div",
+  ".weligama-route-timeline__item",
+  ".weligama-services__card",
 ].join(",");
 
 export function ScrollExperience() {

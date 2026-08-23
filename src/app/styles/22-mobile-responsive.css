@@ -1,0 +1,441 @@
+/* Mobile-only responsive fixes — max-width queries only; desktop untouched. */
+
+.airport-hire-fares__hint {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  .ss-airport-booking .airport-quick-book__fields {
+    grid-template-columns: 1fr;
+  }
+
+  .ss-airport-booking .airport-quick-book__fields > * {
+    min-height: 4.5rem;
+    border-right: 0;
+    border-bottom: 1px solid rgb(8 9 9 / .1);
+  }
+
+  .ss-airport-booking .airport-quick-book__fields > *:last-child {
+    border-bottom: 0;
+  }
+
+  .ss-airport-booking .airport-quick-book__submit {
+    grid-column: 1 / -1;
+    min-height: 4.2rem;
+    border-top: 1px solid rgb(8 9 9 / .1);
+  }
+}
+
+@media (max-width: 700px) {
+  /* --- Global layout safety --- */
+  .container {
+    width: min(100% - 1.5rem, 116rem);
+  }
+
+  .form-grid--2,
+  .form-span-2 {
+    grid-template-columns: 1fr;
+    grid-column: auto;
+  }
+
+  .highlight-grid,
+  .include-grid,
+  .about-values {
+    grid-template-columns: 1fr;
+  }
+
+  .itinerary article {
+    grid-template-columns: 1fr;
+    gap: .5rem;
+  }
+
+  /* --- Header / service bar --- */
+  .ss-inner-services {
+    padding-inline: .45rem;
+    overflow: visible;
+  }
+
+  .ss-inner-services .ss-planner {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    gap: .45rem;
+    padding-bottom: .15rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ss-inner-services .ss-planner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ss-inner-services .ss-planner__item {
+    display: grid !important;
+    flex: 0 0 min(78vw, 16rem);
+    scroll-snap-align: start;
+    min-height: 4.2rem;
+  }
+
+  .ss-inner-services .ss-round-arrow {
+    flex: 0 0 3.6rem;
+    width: 3.6rem;
+    min-width: 3.6rem;
+    scroll-snap-align: end;
+  }
+
+  /* --- Homepage --- */
+  .ss-local-intro {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 4.5rem 1rem 5rem;
+  }
+
+  .ss-local-intro h2 {
+    font-size: clamp(3rem, 14vw, 4.8rem);
+  }
+
+  .ss-dark__intro h2 {
+    font-size: clamp(3.4rem, 16vw, 5rem);
+  }
+
+  .ss-ride__supporting {
+    margin-inline: .45rem;
+    gap: .65rem;
+  }
+
+  .ss-ride__airport,
+  .ss-proof-card--ride {
+    min-height: 0;
+  }
+
+  .ss-proof-card {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    min-height: 0;
+    padding: 1.75rem;
+  }
+
+  .ss-proof-card__stats > div {
+    grid-template-columns: 4.5rem 1fr;
+    gap: .65rem;
+  }
+
+  .ss-proof-card__stats small {
+    display: block;
+    grid-column: 1 / -1;
+    padding-left: 4.5rem;
+  }
+
+  .ss-story {
+    min-height: 0;
+    padding-top: 5rem;
+  }
+
+  .ss-story > h2 {
+    font-size: clamp(3rem, 14vw, 4.8rem);
+  }
+
+  .ss-final-cta {
+    margin-inline: .45rem;
+    padding: 3rem 1.25rem;
+  }
+
+  /* Cinematic sections — shorter, touch-friendly on phones */
+  .ss-signature-reel.story-reel {
+    min-height: 300vh;
+  }
+
+  .ss-bike-reel.story-reel {
+    min-height: 340vh;
+  }
+
+  .story-reel__copy {
+    padding: 0 1rem 6.5rem;
+  }
+
+  .story-reel__copy-card,
+  .ss-bike-reel .story-reel__copy-card,
+  .ss-signature-reel .story-reel__copy-card {
+    width: 100%;
+    padding: 1.2rem 1.1rem 1.3rem;
+  }
+
+  .story-reel__copy h3,
+  .ss-signature-reel .story-reel__copy h3 {
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+    max-width: none;
+  }
+
+  .story-reel__chrome {
+    top: calc(var(--header-height, 5rem) + 1rem);
+    right: 1rem;
+    left: 1rem;
+    font-size: .5rem;
+    letter-spacing: .12em;
+  }
+
+  .story-reel__timeline,
+  .ss-bike-reel__timeline.story-reel__timeline,
+  .ss-signature-reel__timeline.story-reel__timeline {
+    right: 1rem;
+    bottom: .85rem;
+    left: 1rem;
+    gap: .25rem;
+  }
+
+  .story-reel__timeline-button,
+  .ss-bike-reel__timeline-button,
+  .ss-signature-reel__timeline-button {
+    min-height: 2.4rem;
+    padding-top: .65rem;
+  }
+
+  .ss-odyssey {
+    height: 220svh;
+    min-height: 88rem;
+  }
+
+  .ss-odyssey__sticky {
+    min-height: 34rem;
+  }
+
+  .ss-odyssey__intro h2 {
+    font-size: clamp(3.2rem, 15vw, 4.6rem);
+  }
+
+  /* --- Inner heroes --- */
+  .inner-hero h1 {
+    font-size: clamp(3.2rem, 14vw, 4.6rem);
+  }
+
+  .inner-hero__art figure {
+    height: clamp(22rem, 68vw, 30rem);
+  }
+
+  .tour-detail-hero {
+    min-height: clamp(26rem, 82vh, 34rem);
+  }
+
+  .tour-detail-hero h1 {
+    font-size: clamp(2.8rem, 12vw, 4rem);
+  }
+
+  /* --- Contact / about --- */
+  .contact-page__grid,
+  .about-page__grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .about-page figure {
+    min-height: 22rem;
+  }
+
+  .contact-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-panel {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* --- Airport hire --- */
+  .airport-hire-hero__lead {
+    font-size: .9rem;
+  }
+
+  .airport-hire-steps__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .airport-hire-booking__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .airport-hire-booking__panel {
+    width: 100%;
+    max-width: none;
+  }
+
+  .airport-hire-booking__panel .booking-form {
+    padding: 1.1rem;
+  }
+
+  .airport-hire-fleet {
+    padding-inline: 1rem;
+  }
+
+  .vehicle-gallery--taxi {
+    grid-template-columns: 1fr;
+  }
+
+  .airport-hire-fares__shell {
+    margin-inline: 0;
+    border-radius: 1.25rem;
+  }
+
+  .airport-hire-fares__shell .admin-table-wrap {
+    margin: 0 -1px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .airport-hire-fares__hint {
+    display: block;
+    margin: 0;
+    padding: .65rem 1.25rem 0;
+    color: var(--ss-muted);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  .airport-fare-table {
+    min-width: 44rem;
+  }
+
+  /* --- Bikes --- */
+  .bike-cinema__stage {
+    min-height: clamp(26rem, 78vh, 34rem);
+  }
+
+  .bikes-page-client__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fleet-intro {
+    gap: 1.25rem;
+  }
+
+  .rental-guide__grid article {
+    min-height: 0;
+  }
+
+  /* --- Tours listing --- */
+  .catalog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-route-band {
+    margin: .45rem;
+    padding: 3rem 0;
+  }
+
+  .custom-route-band h2 {
+    font-size: clamp(2.4rem, 12vw, 3.6rem);
+  }
+
+  /* --- Custom tour --- */
+  .custom-tour-form .destination-input-group {
+    flex-wrap: wrap;
+  }
+
+  .custom-tour-form .destination-input-group input {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .custom-tour-form .destination-input-group button {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+
+  /* --- Weligama --- */
+  .weligama-services__head,
+  .weligama-routes__grid,
+  .weligama-services__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .weligama-route-timeline__item {
+    grid-template-columns: 1fr;
+    gap: .75rem;
+  }
+
+  /* --- SEO / legal --- */
+  .seo-guide__grid,
+  .weligama-guide__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .seo-faq > h2 {
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+  }
+
+  .legal-page {
+    padding-top: 6rem;
+  }
+
+  .legal-page h1 {
+    font-size: clamp(2.5rem, 12vw, 3.8rem);
+  }
+
+  /* --- Booking modal --- */
+  .booking-modal .vehicle-picker--taxi .vehicle-picker__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .ss-hero h1 {
+    font-size: clamp(3.6rem, 18vw, 5rem);
+  }
+
+  .ss-hero .ss-planner {
+    display: flex;
+    overflow-x: auto;
+    gap: .45rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ss-hero .ss-planner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ss-hero .ss-planner__item {
+    display: grid !important;
+    flex: 0 0 min(78vw, 16rem);
+    scroll-snap-align: start;
+  }
+
+  .ss-hero .ss-round-arrow {
+    flex: 0 0 3.6rem;
+    scroll-snap-align: end;
+  }
+
+  .ss-hero__promise ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .45rem;
+  }
+
+  .story-reel__number {
+    font-size: 28vw;
+    bottom: 10rem;
+  }
+
+  .ss-bike-reel__actions,
+  .ss-bike-reel__specs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ss-bike-reel__cta {
+    justify-content: center;
+  }
+
+  .airport-hire-hero__tags li {
+    font-size: .58rem;
+  }
+
+  .process-list article {
+    grid-template-columns: 2rem 1fr;
+    gap: .75rem;
+  }
+}
