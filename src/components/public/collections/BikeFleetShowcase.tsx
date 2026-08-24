@@ -1,9 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BookingModal } from "@/components/booking/BookingModal";
+import { BikeFleetImage } from "@/components/public/collections/BikeFleetImage";
+import { getBikeMobileImage } from "@/lib/bike-mobile-images";
 import type { BikeDTO } from "@/types";
 
 function formatCategory(category: BikeDTO["category"]) {
@@ -41,7 +42,9 @@ export function BikeFleetShowcase({ bikes }: { bikes: BikeDTO[] }) {
     if (!sectionRef.current) return () => mediaQuery.removeEventListener("change", onChange);
 
     const imgs = Array.from(
-      sectionRef.current.querySelectorAll<HTMLImageElement>(".story-reel__image img"),
+      sectionRef.current.querySelectorAll<HTMLImageElement>(
+        ".story-reel__image img, .bike-fleet-picture__img",
+      ),
     );
 
     Promise.allSettled(
@@ -142,12 +145,10 @@ export function BikeFleetShowcase({ bikes }: { bikes: BikeDTO[] }) {
                   style={{ zIndex: bikes.length - index }}
                 >
                   <div className="story-reel__image">
-                    <Image
-                      src={bike.image}
+                    <BikeFleetImage
+                      desktopSrc={bike.image}
+                      mobileSrc={getBikeMobileImage(bike.slug)}
                       alt={`${bike.name} available for rental in Sri Lanka`}
-                      width={1920}
-                      height={1280}
-                      sizes="100vw"
                       priority={index < 2}
                       unoptimized={bike.image.startsWith("http")}
                     />

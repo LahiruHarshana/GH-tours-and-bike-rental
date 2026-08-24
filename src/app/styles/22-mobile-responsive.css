@@ -191,6 +191,18 @@
     padding-top: .65rem;
   }
 
+  .ss-signature-reel .signature-journey-picture__img,
+  .ss-signature-reel .story-reel__image img {
+    object-fit: cover;
+    object-position: center 38%;
+  }
+
+  .ss-bike-reel .bike-fleet-picture__img,
+  .ss-bike-reel .story-reel__image img {
+    object-fit: cover;
+    object-position: center 40%;
+  }
+
   .ss-odyssey {
     height: 220svh;
     min-height: 88rem;

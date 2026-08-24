@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { signatureDestinations } from "@/lib/signature-destinations";
+import { SignatureJourneyImage } from "@/components/public/collections/SignatureJourneyImage";
 
 const frames = signatureDestinations;
 
@@ -34,7 +34,9 @@ export function SignatureJourneysReel() {
     if (!sectionRef.current) return () => mediaQuery.removeEventListener("change", onChange);
 
     const imgs = Array.from(
-      sectionRef.current.querySelectorAll<HTMLImageElement>(".story-reel__image img"),
+      sectionRef.current.querySelectorAll<HTMLImageElement>(
+        ".story-reel__image .signature-journey-picture__img, .story-reel__image img",
+      ),
     );
 
     Promise.allSettled(
@@ -133,12 +135,10 @@ export function SignatureJourneysReel() {
                 style={{ zIndex: frames.length - index }}
               >
                 <div className="story-reel__image">
-                  <Image
-                    src={item.image}
+                  <SignatureJourneyImage
+                    desktopSrc={item.image}
+                    mobileSrc={item.mobileImage}
                     alt={item.alt}
-                    width={1920}
-                    height={1280}
-                    sizes="100vw"
                     priority={index < 2}
                   />
                 </div>

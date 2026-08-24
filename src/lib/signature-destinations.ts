@@ -6,9 +6,12 @@ export type SignatureDestination = {
   title: string;
   copy: string;
   image: string;
+  mobileImage: string;
   alt: string;
   slug: string;
 };
+
+const MOBILE_JOURNEY_IMAGE_BASE = "/images/journeys/sri-lanka-mobile-webp-images";
 
 export const signatureDestinations: SignatureDestination[] = [
   {
@@ -19,6 +22,7 @@ export const signatureDestinations: SignatureDestination[] = [
     title: "Tea air. Train windows.",
     copy: "Nine Arch Bridge, cloud forest and the hill-country railway — weave Ella into a custom highland chapter at your pace.",
     image: "/images/journeys/ella.webp",
+    mobileImage: `${MOBILE_JOURNEY_IMAGE_BASE}/ella-mobile.webp`,
     alt: "Colourful train crossing the Nine Arch Bridge in Ella, Sri Lanka",
     slug: "ella",
   },
@@ -30,6 +34,7 @@ export const signatureDestinations: SignatureDestination[] = [
     title: "Sacred city. Living rhythm.",
     copy: "Temple of the Tooth, lake walks and spice gardens — add Kandy as a cultural anchor on your private route.",
     image: "/images/journeys/kandy.webp",
+    mobileImage: `${MOBILE_JOURNEY_IMAGE_BASE}/kandy-mobile.webp`,
     alt: "Historic Queen's Hotel and street life in Kandy, Sri Lanka",
     slug: "kandy",
   },
@@ -41,6 +46,7 @@ export const signatureDestinations: SignatureDestination[] = [
     title: "Hidden bay. Slow surf.",
     copy: "A horseshoe cove tucked between palms — perfect for a relaxed south-coast stop on a tailor-made journey.",
     image: "/images/journeys/hiriketiya.webp",
+    mobileImage: `${MOBILE_JOURNEY_IMAGE_BASE}/hiriketiya-mobile.webp`,
     alt: "Aerial view of Hiriketiya Bay on Sri Lanka's south coast",
     slug: "hiriketiya",
   },
@@ -52,6 +58,7 @@ export const signatureDestinations: SignatureDestination[] = [
     title: "Dust tracks. Wild eyes.",
     copy: "Leopards, elephants and open savannah — slot a private safari day into your custom island itinerary.",
     image: "/images/journeys/yala.webp",
+    mobileImage: `${MOBILE_JOURNEY_IMAGE_BASE}/yala-mobile.webp`,
     alt: "Sri Lankan leopard in Yala National Park",
     slug: "yala",
   },
@@ -63,6 +70,7 @@ export const signatureDestinations: SignatureDestination[] = [
     title: "Green cathedral. Rare air.",
     copy: "UNESCO rainforest trails, endemic birds and cool streams — for travellers who want nature woven in.",
     image: "/images/journeys/sinharaja.webp",
+    mobileImage: `${MOBILE_JOURNEY_IMAGE_BASE}/sinharaja-mobile.webp`,
     alt: "Lush stream and waterfall in Sinharaja Forest Reserve",
     slug: "sinharaja",
   },
@@ -74,6 +82,7 @@ export const signatureDestinations: SignatureDestination[] = [
     title: "Surf horizon. Open road.",
     copy: "World-class waves, lagoon light and empty beaches — build an east-coast chapter from Arugam Bay outward.",
     image: "/images/journeys/arugam-bay.webp",
+    mobileImage: `${MOBILE_JOURNEY_IMAGE_BASE}/arugam-bay-mobile.webp`,
     alt: "Clifftop view over Arugam Bay and the tropical coastline",
     slug: "arugam-bay",
   },
@@ -85,6 +94,7 @@ export const signatureDestinations: SignatureDestination[] = [
     title: "Shallow sea. Long light.",
     copy: "Calm turquoise shallows and palm-lined sand — ideal for a slow, sun-soaked finale on your custom route.",
     image: "/images/journeys/pasikuda.webp",
+    mobileImage: `${MOBILE_JOURNEY_IMAGE_BASE}/pasikuda-mobile.webp`,
     alt: "Palm trees and turquoise water at Pasikuda Beach",
     slug: "pasikuda",
   },

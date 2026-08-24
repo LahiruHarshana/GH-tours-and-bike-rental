@@ -1871,7 +1871,16 @@ a.ss-product-card:hover {
     linear-gradient(180deg, rgb(8 9 9 / .35) 0%, transparent 22%, transparent 62%, rgb(8 9 9 / .72) 100%);
 }
 
-.ss-signature-reel .story-reel__image img {
+.ss-signature-reel .story-reel__image .signature-journey-picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ss-signature-reel .story-reel__image img,
+.ss-signature-reel .signature-journey-picture__img {
   filter: saturate(1.04) contrast(1.03) brightness(.94);
   object-position: center;
 }
@@ -2170,7 +2179,16 @@ a.ss-product-card:hover {
     linear-gradient(180deg, rgb(8 9 9 / .42) 0%, transparent 20%, transparent 58%, rgb(8 9 9 / .78) 100%);
 }
 
-.ss-bike-reel .story-reel__image img {
+.ss-bike-reel .story-reel__image .bike-fleet-picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ss-bike-reel .story-reel__image img,
+.ss-bike-reel .bike-fleet-picture__img {
   filter: saturate(1.06) contrast(1.04) brightness(.9);
   object-position: center 42%;
 }
